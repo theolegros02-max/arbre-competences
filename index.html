@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Menu Latéral v25)</title>
+    <title>Arbre de Compétences - Théo Legros (Centrage Corrigé v26)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -438,15 +438,16 @@
 
         function resetView() { 
             scale = 0.40; 
-            panX = 0; 
+            // Compensation du décalage induit par le menu latéral pour viser le centre exact de la fenêtre visible
+            panX = 150; 
             panY = 0; 
             updateTransform(); 
         }
 
         function centerOnNode(dx, dy) {
-            scale = 0.85; // Zoom focus sur la node sélectionnée
-            panX = -dx;
-            panY = -dy;
+            scale = 0.85; 
+            panX = 150 - dx * scale;
+            panY = -dy * scale;
             updateTransform();
         }
 
@@ -505,7 +506,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v25');
+            const saved = localStorage.getItem('theo_final_app_skills_v26');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -526,7 +527,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v25', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v26', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -694,7 +695,12 @@
         initGalaxy();
         initGraph();
         buildSidebarMenu();
+        
+        // Initialisation de la vue centrée en tenant compte de la largeur du menu
+        panX = 150;
+        panY = 0;
         updateTransform();
+
         setupPanAndZoom();
     </script>
 </body>
