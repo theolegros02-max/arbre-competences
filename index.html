@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Micro-Nœuds Nord & Sud v17)</title>
+    <title>Arbre de Compétences - Théo Legros (CAPES Ultra-Atomisé v18)</title>
     <style>
         :root {
             --bg-color: #05070f;
             --panel-bg: #101420;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
-            --color-b: #3b82f6; /* Est / Bleu - Formation Expert */
-            --color-c: #10b981; /* Sud / Vert - Pédagogie & Youth Expert */
-            --color-d: #a855f7; /* Ouest / Violet - CAPES & Anglais */
+            --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM */
+            --color-b: #3b82f6; /* Est / Bleu - Formation RH */
+            --color-c: #10b981; /* Sud / Vert - Pédagogie Youth */
+            --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert */
             --locked-color: #2a344a;
         }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             user-select: none;
         }
 
@@ -29,8 +28,7 @@
             color: var(--text-main);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             overflow: hidden;
-            width: 100vw;
-            height: 100vh;
+            width: 100vw; height: 100vh;
             position: relative;
         }
 
@@ -42,8 +40,7 @@
         }
 
         .star {
-            position: absolute;
-            background: #ffffff;
+            position: absolute; background: #ffffff;
             border-radius: 50%;
             animation: twinkle var(--duration) infinite ease-in-out;
         }
@@ -55,9 +52,7 @@
 
         #world {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            transform-origin: 0 0;
-            cursor: grab;
-            z-index: 1;
+            transform-origin: 0 0; cursor: grab; z-index: 1;
         }
 
         #world:active { cursor: grabbing; }
@@ -70,8 +65,7 @@
 
         .connection-line {
             stroke: var(--locked-color);
-            stroke-width: 2.5px;
-            stroke-dasharray: 5;
+            stroke-width: 2.5px; stroke-dasharray: 5;
             transition: stroke 0.3s ease;
         }
 
@@ -87,28 +81,21 @@
         }
 
         .skill-node-wrapper {
-            position: absolute;
-            transform: translate(-50%, -50%);
+            position: absolute; transform: translate(-50%, -50%);
             display: flex; align-items: center;
-            pointer-events: auto; cursor: pointer;
-            gap: 8px;
+            pointer-events: auto; cursor: pointer; gap: 8px;
         }
 
         .skill-node {
-            width: 46px; height: 46px;
-            border-radius: 50%;
-            background: #0f172a;
-            border: 2px solid var(--locked-color);
+            width: 46px; height: 46px; border-radius: 50%;
+            background: #0f172a; border: 2px solid var(--locked-color);
             display: flex; align-items: center; justify-content: center;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s, border-color 0.3s;
             box-shadow: 0 4px 18px rgba(0,0,0,0.8);
             position: relative; flex-shrink: 0;
         }
 
-        .skill-node-wrapper:hover .skill-node {
-            transform: scale(1.25);
-            z-index: 10;
-        }
+        .skill-node-wrapper:hover .skill-node { transform: scale(1.25); z-index: 10; }
 
         .skill-node.center-node {
             width: 68px; height: 68px;
@@ -127,8 +114,7 @@
 
         .node-title-label {
             font-size: 0.7em; font-weight: 700;
-            color: var(--text-main); text-align: center;
-            white-space: nowrap;
+            color: var(--text-main); text-align: center; white-space: nowrap;
             background: rgba(14, 20, 36, 0.95);
             padding: 5px 10px; border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.2);
@@ -140,10 +126,7 @@
             z-index: 20; pointer-events: none;
         }
 
-        .skill-node-wrapper:hover .node-title-label {
-            opacity: 1; visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
+        .skill-node-wrapper:hover .node-title-label { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
         .check-badge {
             position: absolute; bottom: -3px; right: -3px;
@@ -155,21 +138,19 @@
 
         #hud-scores {
             position: fixed; top: 20px; left: 20px; z-index: 10;
-            background: rgba(16, 20, 32, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid #334155; padding: 14px;
-            border-radius: 12px; display: flex; flex-direction: column; gap: 6px;
-            min-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            pointer-events: auto;
+            background: rgba(16, 20, 32, 0.85); backdrop-filter: blur(8px);
+            border: 1px solid #334155; padding: 14px; border-radius: 12px;
+            display: flex; flex-direction: column; gap: 6px; min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: auto;
         }
 
         .hud-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.8em; }
 
         .reset-view-btn {
-            margin-top: 6px; padding: 6px;
-            background: #1e293b; border: 1px solid #475569;
-            color: #cbd5e1; font-size: 0.75em; font-weight: 700;
-            border-radius: 6px; cursor: pointer; transition: background 0.2s;
+            margin-top: 6px; padding: 6px; background: #1e293b;
+            border: 1px solid #475569; color: #cbd5e1;
+            font-size: 0.75em; font-weight: 700; border-radius: 6px;
+            cursor: pointer; transition: background 0.2s;
         }
         .reset-view-btn:hover { background: #334155; color: #fff; }
 
@@ -184,8 +165,7 @@
             background: var(--panel-bg); border-radius: 16px;
             width: 90%; max-width: 480px; padding: 25px;
             border: 2px solid var(--text-muted);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9); position: relative;
         }
 
         .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
@@ -219,7 +199,7 @@
         <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage ACM):</span> <span id="score-a">0</span></div>
         <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation RH):</span> <span id="score-b">0</span></div>
         <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie Youth):</span> <span id="score-c">0</span></div>
-        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES & Anglais):</span> <span id="score-d">0</span></div>
+        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES Anglais):</span> <span id="score-d">0</span></div>
         <button class="reset-view-btn" onclick="resetView()">🎯 Centrer & Réinitialiser la vue</button>
     </div>
 
@@ -273,27 +253,19 @@
                     key: "A", name: "🔴 PILOTAGE, STRATÉGIE & DIRECTION ACM (NORD)", color: "var(--color-a)",
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale ACM", parent: "CENTER", dx: 0, dy: -220, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un ACM.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
-                        
-                        /* --- AXE NORD 1 : STRATÉGIE & PROJET ÉDUCATIF --- */
                         { id: "A1.1", icon: "🎯", label: "Projet Pédagogique (Rédaction)", parent: "A1", dx: -200, dy: -360, unlocked: false, link: "", desc: "Déclinaison de la vision éducative en objectifs opérationnels.", details: "Mise en œuvre des valeurs citoyennes, démarches méthodologiques et évaluation." },
                         { id: "A1.2", icon: "🏛️", label: "Ancrage PEDT & Territoires", parent: "A1.1", dx: -360, dy: -480, unlocked: false, link: "", desc: "Articulation du projet avec le Projet Éducatif de Territoire.", details: "Négociation partenariale avec les SDJES, CAF, mairies et intercommunalités." },
                         { id: "A1.3", icon: "👪", label: "Relations Familles & Alliance", parent: "A1.1", dx: -200, dy: -480, unlocked: false, link: "", desc: "Co-construction éducative et accueil personnalisé des parents.", details: "Temps d'échange réguliers, médiation et régulation des demandes parentales." },
                         { id: "A1.4", icon: "📈", label: "Bilan Qualitatif & Audit ACM", parent: "A1.1", dx: -360, dy: -360, unlocked: false, link: "", desc: "Rédaction des bilans d'activité et auto-évaluation d'équipe.", details: "Indicateurs de mesure d'impact éducatif et rapport moral annuel." },
-
-                        /* --- AXE NORD 2 : RÉGLEMENTATION, DROIT & CRISES --- */
                         { id: "A2.1", icon: "📋", label: "Code Action Sociale (CASF)", parent: "A1", dx: 0, dy: -380, unlocked: false, link: "", desc: "Conformité légale et déclarations réglementaires.", details: "Taux d'encadrement, qualifications exigées, locaux et déclarations SDJES." },
                         { id: "A2.2", icon: "⚖️", label: "Droit du Travail & CEE/Éclat", parent: "A2.1", dx: -140, dy: -520, unlocked: false, link: "", desc: "Gestion des contrats d'animation et durée du travail.", details: "Contrats CEE, repos compensateurs, grille Éclat et conventions collectives." },
                         { id: "A2.3", icon: "🚨", label: "PPMS & Plan de Sûreté", parent: "A2.1", dx: 0, dy: -520, unlocked: false, link: "", desc: "Conception et entraînement au Plan Particulier de Mise en Sûreté.", details: "Risques majeurs, consignes anti-intrusion/attentat et exercices d'évacuation." },
                         { id: "A2.4", icon: "🔥", label: "Gestion de Crise & EIG", parent: "A2.1", dx: 140, dy: -520, unlocked: false, link: "", desc: "Procédures en cas d'Événement Indésirable Grave.", details: "Cellule de crise, communication d'urgence et déclaration SDJES en moins de 24h." },
                         { id: "A2.5", icon: "🛡️", label: "Protection Enfance & CRIP", parent: "A2.4", dx: 280, dy: -620, unlocked: false, link: "", desc: "Protocole de signalement des maltraitances et suspicions.", details: "Saisine de la CRIP, coordination médicale et accompagnement juridique des victimes." },
-
-                        /* --- AXE NORD 3 : FINANCES, HYGIÈNE & LOGISTIQUE --- */
                         { id: "A3.1", icon: "💰", label: "Gestion Budgétaire & Régie", parent: "A1", dx: 200, dy: -360, unlocked: false, link: "", desc: "Équilibre financier prévisionnel et comptabilité.", details: "Gestion des régies d'avance, contrôle des coûts/jour/enfant et bilans comptables." },
                         { id: "A3.2", icon: "📄", label: "Dossiers Subventions (CAF/FDVA)", parent: "A3.1", dx: 360, dy: -480, unlocked: false, link: "", desc: "Montage de dossiers de financement public.", details: "Sollicitation des fonds CAF, FDVA, ANS et bilans de justification." },
                         { id: "A3.3", icon: "🍳", label: "HACCP & Hygiène Alimentaire", parent: "A3.1", dx: 200, dy: -480, unlocked: false, link: "", desc: "Sécurité sanitaire des aliments et chaîne du froid.", details: "Plan de maîtrise sanitaire (PMS), contrôles vétérinaires et traçabilité." },
                         { id: "A3.4", icon: "🩺", label: "Traçabilité PAI Alimentaires", parent: "A3.3", dx: 360, dy: -600, unlocked: false, link: "", desc: "Prise en charge des allergies et régimes spécifiques.", details: "Gestion des Projets d'Accueil Individualisé et protocoles d'urgence médicale." },
-
-                        /* --- AXE NORD 4 : MANAGEMENT RH & TRANSITION --- */
                         { id: "A4.1", icon: "👥", label: "Recrutement & Sourcing RH", parent: "A1", dx: -100, dy: -260, unlocked: false, link: "", desc: "Attraction des talents et entretiens de sélection.", details: "Constitution d'équipes équilibrées et vérification des casiers judiciaires (B2)." },
                         { id: "A4.2", icon: "🧘", label: "Prévention RPS & Climat QVT", parent: "A4.1", dx: -260, dy: -260, unlocked: false, link: "", desc: "Santé mentale et gestion de la fatigue saisonnière.", details: "Régulation de la charge de travail, plannings de repos et bien-être au travail." },
                         { id: "A4.3", icon: "🎓", label: "Tutorat Stagiaires BAFD/BPJEPS", parent: "A4.1", dx: -260, dy: -180, unlocked: false, link: "", desc: "Accompagnement des futurs cadres de l'animation.", details: "Positionnement quotidien, livret de formation et évaluation des compétences." },
@@ -332,47 +304,57 @@
                     key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 220, unlocked: true, link: "", desc: "Maîtrise des postures éducatives, de la sécurité affective et de la démocratie participative.", details: "Gestion des dynamiques de groupes de mineurs et animation d'activités à fort impact." },
-                        
-                        /* --- AXE SUD 1 : SÉCURITÉ AFFECTIVE & BIENTRAITANCE --- */
                         { id: "C1.1", icon: "🛡️", label: "Repérage des Signaux Faibles", parent: "C1", dx: -200, dy: 360, unlocked: false, link: "", desc: "Détection précoce du mal-être et changement de comportement.", details: "Observation fine, écoute bienveillante et traçabilité des incidents éducatifs." },
                         { id: "C1.2", icon: "⚠️", label: "Prévention Harcèlement & Violences", parent: "C1.1", dx: -360, dy: 480, unlocked: false, link: "", desc: "Lutte contre le bouc émissaire, cyberharcèlement et violences physiques/verbales.", details: "Mise en place de protocoles de régulation et séances de sensibilisation." },
                         { id: "C1.3", icon: "🔥", label: "Gestion de Crise Comportementale", parent: "C1.1", dx: -200, dy: 480, unlocked: false, link: "", desc: "Désamorçage des conflits aigus et crises d'agressivité.", details: "Techniques d'apaisement, tiers de confiance et mise en sécurité collective." },
                         { id: "C1.4", icon: "💬", label: "Entretiens Individuels de Soutien", parent: "C1.1", dx: -360, dy: 360, unlocked: false, link: "", desc: "Accompagnement personnalisé des jeunes vulnérables.", details: "Postures d'écoute active, formulation d'objectifs de progrès et alliance éducative." },
-
-                        /* --- AXE SUD 2 : DÉMOCRATIE & ÉDUCATION MÉDIAS --- */
                         { id: "C2.1", icon: "🎨", label: "Expression Libre & Art", parent: "C1", dx: 0, dy: 380, unlocked: false, link: "", desc: "Libération de la parole par la création artistique.", details: "Ateliers théâtre, arts plastiques, écriture créative et improvisation." },
                         { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes & Règles", parent: "C2.1", dx: -140, dy: 520, unlocked: false, link: "", desc: "Co-construction des règles de vie et civisme au quotidien.", details: "Animation d'instances participatives, votes démocratiques et responsabilisation." },
                         { id: "C2.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.1", dx: 0, dy: 520, unlocked: false, link: "", desc: "Esprit critique, vérification des sources et fake news.", details: "Décryptage de l'information, algorithmes et création de médias ludo-éducatifs." },
                         { id: "C2.4", icon: "📱", label: "Sobriété Numérique & Écrans", parent: "C2.1", dx: 140, dy: 520, unlocked: false, link: "", desc: "Sensibilisation aux dérives des réseaux sociaux.", details: "Ateliers de déconnexion, charte d'utilisation des smartphones et alternative ludique." },
-
-                        /* --- AXE SUD 3 : INGÉNIERIE LUDIQUE & INCLUSION --- */
                         { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux (GN)", parent: "C1", dx: 200, dy: 360, unlocked: false, link: "", desc: "Création d'univers immersifs de grande envergure.", details: "Écriture de trames narratives complexes, personnages (PNJ) et mécanique de règles." },
                         { id: "C3.2", icon: "🗺️", label: "Logistique des Espaces de Jeu", parent: "C3.1", dx: 360, dy: 480, unlocked: false, link: "", desc: "Aménagement sécurisé et balisage des terrains de jeu.", details: "Gestion des flux de participants, sécurité matériel et régulation des rôles." },
                         { id: "C3.3", icon: "🧩", label: "PAI/PAP & Intégration Handicap", parent: "C3.1", dx: 200, dy: 480, unlocked: false, link: "", desc: "Accueil universel des enfants à besoins particuliers.", details: "Adaptation des consignes, intégration des auxiliaires (AESH) et liens spécialisés." },
                         { id: "C3.4", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: 360, dy: 600, unlocked: false, link: "", desc: "Accessibilité de toutes les activités sans stigmatisation.", details: "Variabilité des supports, rythmes d'apprentissage personnalisés et valorisation." },
-
-                        /* --- AXE SUD 4 : OUTDOOR EDUCATION & NATURE --- */
                         { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste (EEDD)", parent: "C1", dx: -100, dy: 260, unlocked: false, link: "", desc: "Immersion nature et éco-citoyenneté.", details: "Ateliers de découverte de la biodiversité, sensibilisation à la faune/flore et zéro déchet." },
                         { id: "C4.2", icon: "⛺", label: "Bivouacs & Vie sous Tente", parent: "C4.1", dx: -260, dy: 260, unlocked: false, link: "", desc: "Organisation de séjours et camps en pleine autonomie.", details: "Montage des campements, cuisine au feu de bois, hygiène et vie collective outdoor." },
                         { id: "C4.3", icon: "🧭", label: "Risques & Sécurité en Milieu Naturel", parent: "C4.1", dx: -260, dy: 180, unlocked: false, link: "", desc: "Gestion des aléas météo et itinéraires isolés.", details: "Lecture de carte IGN, pharmacie de secours, ravitaillement eau/nourriture et communication d'urgence." }
                     ]
                 },
                 {
-                    key: "D", name: "🟣 EXPERTISE CAPES & ANGLAIS (OUEST)", color: "var(--color-d)",
+                    key: "D", name: "🟣 EXPERTISE CAPES ANGLAIS (OUEST - ULTRA-ATOMISÉ)", color: "var(--color-d)",
                     nodes: [
-                        { id: "D1", icon: "✏️", label: "Pôle Admissibilité (Écrit CAPES)", parent: "CENTER", dx: -200, dy: 0, unlocked: true, link: "", desc: "Expertise méthodologique, linguistique et disciplinaire dédiée à l'épreuve écrite.", details: "Consolidations académiques rigoureuses exigées par le jury du concours." },
-                        { id: "D1.1", icon: "📑", label: "Synthèse & Problématisation", parent: "D1", dx: -380, dy: -200, unlocked: false, link: "", desc: "Méthodologie de la note de synthèse et confrontation de corpus.", details: "Extraction des axes de convergence/divergence, problématique centrale et plan structuré." },
-                        { id: "D1.2", icon: "📖", label: "Analyse Stylistique & Registres", parent: "D1.1", dx: -560, dy: -280, unlocked: false, link: "", desc: "Analyse littéraire et journalistique des documents du corpus.", details: "Étude des registres, métaphores, polyphonie, ironie et posture énonciative des auteurs." },
-                        { id: "D1.3", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -560, dy: -200, unlocked: false, link: "", desc: "Confrontation critique de l'image (caricature, peinture, affiche).", details: "Composition, cadrage, implicite visuel et mise en résonance avec les textes du corpus." },
-                        { id: "D1.4", icon: "✍️", label: "Aisance Rédactionnelle (C1+)", parent: "D1.1", dx: -560, dy: -120, unlocked: false, link: "", desc: "Rigueur d'expression écrite en langue étrangère à niveau agrégatif/C1+.", details: "Lexique académique, variété des structures syntaxiques, cohérence et cohésion textuelle." },
-                        { id: "D2.1", icon: "🗣️", label: "Linguistique Énonciative (TOPE)", parent: "D1", dx: -380, dy: -60, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli) appliquée à l'écrit.", details: "Analyse du repérage énonciatif (S0/T0), opérations d'instanciation et prédication." },
-                        { id: "D2.2", icon: "⚙️", label: "Groupe Verbal & Modalisateurs", parent: "D2.1", dx: -560, dy: -40, unlocked: false, link: "", desc: "Déconstruction du système verbal anglais sur corpus épreuves.", details: "Auxiliaires modaux (valeurs épistémiques/déontiques), aspect be+-ing, have+-en, passif et causatives." },
-                        { id: "D2.3", icon: "🏷️", label: "Groupe Nominal & Détermination", parent: "D2.1", dx: -560, dy: 40, unlocked: false, link: "", desc: "Analyse fine du système de détermination et quantification.", details: "Fonctionnement des articles (a/the/Ø), génitifs, quantificateurs et relatives déterminatives/appositives." },
-                        { id: "D3.1", icon: "🔤", label: "Transcription API & Variétés", parent: "D1", dx: -380, dy: 80, unlocked: true, link: "", desc: "Transcription phonétique rigoureuse en RP (Received Pronunciation) et GA.", details: "Maîtrise complète de l'Alphabet Phonétique International, voyelles, diphthongues et consonnes." },
-                        { id: "D3.2", icon: "🎵", label: "Règles Accentuelles & Suffixes", parent: "D3.1", dx: -560, dy: 120, unlocked: false, link: "", desc: "Justification théorique du placement de l'accent primaire/secondaire.", details: "Incidence des suffixes contraints/neutres, stress shift, règles de dérivation et composé verbal/nominal." },
-                        { id: "D3.3", icon: "🔊", label: "Morpho-Phonologie & Réductions", parent: "D3.1", dx: -560, dy: 200, unlocked: false, link: "", desc: "Analyse de la réduction vocalique (schwa) et désinences morphologiques.", details: "Règles d'allomorphie des morphes {-ed} et {-s}, formes fortes/faibles et assimilations." },
-                        { id: "D4.1", icon: "🏫", label: "Différenciation 6e-BTS", parent: "D1", dx: -300, dy: 220, unlocked: true, link: "", desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, BTS)." },
-                        { id: "D4.2", icon: "📋", label: "Conception Séquence (CECRL)", parent: "D4.1", dx: -480, dy: 300, unlocked: false, link: "", desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents déclencheurs et rétroplanning." }
+                        { id: "D1", icon: "🇬🇧", label: "Pôle Réussite CAPES Anglais", parent: "CENTER", dx: -220, dy: 0, unlocked: true, link: "", desc: "Centre de préparation intensive au CAPES externe d'anglais (Écrit & Oral).", details: "Maîtrise académique de l'admissibilité et précision didactique de l'admission." },
+                        
+                        /* --- AXE OUEST 1 : ÉCRIT ADMISSIBILITÉ (SYNTHÈSE & CORPUS) --- */
+                        { id: "D1.1", icon: "📑", label: "Méthodologie de la Synthèse", parent: "D1", dx: -380, dy: -280, unlocked: false, link: "", desc: "Analyse croisée d'un corpus documentaire tridimensionnel.", details: "Extraction des convergences/divergences, problématisation et plan analytique en 3 parties." },
+                        { id: "D1.2", icon: "📖", label: "Analyse Stylistique & Littéraire", parent: "D1.1", dx: -560, dy: -360, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires.", details: "Registres (épique, tragique, comique), polyphonie, tropes, métaphores et figures de style." },
+                        { id: "D1.3", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -560, dy: -280, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photo, caricature, affiche).", details: "Composition, cadrage, jeux de lumière, implicite visuel et mise en résonance avec le corpus." },
+                        { id: "D1.4", icon: "📰", label: "Analyse de la Presse Anglophone", parent: "D1.1", dx: -560, dy: -200, unlocked: false, link: "", desc: "Étude des articles de fond (UK/US) et rhétorique journalistique.", details: "Biais éditoriaux, registres de langue, procédés d'argumentation et prise de position." },
+                        { id: "D1.5", icon: "✍️", label: "Aisance Rédactionnelle (C1+)", parent: "D1.1", dx: -560, dy: -120, unlocked: false, link: "", desc: "Qualité académique de la langue anglaise écrite.", details: "Lexique de spécialité, variété des structures syntaxiques, connecteurs et cohésion textuelle." },
+
+                        /* --- AXE OUEST 2 : LINGUISTIQUE & ÉNONCIATION (TOPE) --- */
+                        { id: "D2.1", icon: "🗣️", label: "Repérage Énonciatif (S0/T0)", parent: "D1", dx: -380, dy: -100, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives de Culioli sur corpus.", details: "Repères origines, opérations de prédication, instanciation et centrage/balayage." },
+                        { id: "D2.2", icon: "⚙️", label: "Système Verbal & Modalisateurs", parent: "D2.1", dx: -560, dy: -40, unlocked: false, link: "", desc: "Déconstruction fine du groupe verbal anglais.", details: "Auxiliaires modaux (valeurs épistémiques/déontiques), valeur de *will/would*, aspect *be+-ing* et *have+-en*." },
+                        { id: "D2.3", icon: "🔗", label: "Passif, Causatives & Subordonnées", parent: "D2.1", dx: -560, dy: 40, unlocked: false, link: "", desc: "Analyse des structures complexes et enchâssements.", details: "Constructions passives, causatives (*make/have/get*), hypothèses et conditionnelles." },
+                        { id: "D2.4", icon: "🏷️", label: "Système de Détermination Nominal", parent: "D2.1", dx: -560, dy: 120, unlocked: false, link: "", desc: "Grammaire fine du groupe nominal et quantification.", details: "Fonctionnement des articles ($a/the/\emptyset$), génitifs, quantificateurs et relatives." },
+
+                        /* --- AXE OUEST 3 : PHONOLOGIE & MORPHO-PHONOLOGIE --- */
+                        { id: "D3.1", icon: "🔤", label: "Transcriptions Phonétiques (API)", parent: "D1", dx: -380, dy: 80, unlocked: true, link: "", desc: "Transcriptions API irréprochables en RP et GA.", details: "Symboles phonétiques, voyelles, diphthongues, consonnes et variantes régionales." },
+                        { id: "D3.2", icon: "🎵", label: "Accentuation & Suffixation", parent: "D3.1", dx: -560, dy: 180, unlocked: false, link: "", desc: "Règles de placement des accents primaire et secondaire.", details: "Incidence des suffixes contraints (imposants/attirants) et neutres sur le schéma accentuel." },
+                        { id: "D3.3", icon: "⚡", label: "Stress Shift & Composés", parent: "D3.2", dx: -740, dy: 180, unlocked: false, link: "", desc: "Dynamique intonative et accentuation des mots composés.", details: "Déplacement d'accent (*stress shift*) en contexte et règles accentuelles N+N, Adj+N, V+Prep." },
+                        { id: "D3.4", icon: "🔊", label: "Morpho-Phonologie des Désinences", parent: "D3.1", dx: -560, dy: 260, unlocked: false, link: "", desc: "Processus d'allomorphie et réductions vocaliques.", details: "Règles des morphes {-ed} (/t/, /d/, /ɪd/) et {-s} (/s/, /z/, /ɪz/), formes fortes/faibles et schwa (/ə/)." },
+
+                        /* --- AXE OUEST 4 : DIDACTIQUE & LEÇON (ADMISSION) --- */
+                        { id: "D4.1", icon: "🏫", label: "Transposition Didactique", parent: "D1", dx: -380, dy: 220, unlocked: true, link: "", desc: "Exploitation pédagogique de documents authentiques.", details: "Extraction des faits de langue, faits de culture et adéquation avec les axes du programme." },
+                        { id: "D4.2", icon: "📋", label: "Architecture de Séquence (CECRL)", parent: "D4.1", dx: -560, dy: 340, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs linguistiques/culturels/pragmatiques et articulation des 5 activités langagières." },
+                        { id: "D4.3", icon: "⚖️", label: "Stratégies de Différenciation (6e-BTS)", parent: "D4.1", dx: -560, dy: 420, unlocked: false, link: "", desc: "Gestion de l'hétérogénéité des classes du collège au lycée.", details: "Adaptations pour élèves Dys/EIP/PAP/PAI, variabilité des étayages et pédagogie différenciée." },
+                        { id: "D4.4", icon: "🎯", label: "Évaluation & Tâches Finales", parent: "D4.2", dx: -740, dy: 340, unlocked: false, link: "", desc: "Mesure des apprentissages et création de grilles d'évaluation.", details: "Évaluations formatives/sommatives, auto-évaluation et création de tâches finales ancrées dans le réel." },
+
+                        /* --- AXE OUEST 5 : ENTRETIEN, POSTURE & VALEURS --- */
+                        { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République & Laïcité", parent: "D1", dx: -260, dy: 320, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Application de la loi de 1905, charte de la laïcité à l'école, neutralité et égalité filles-garçons." },
+                        { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire d'État", parent: "D1", dx: -420, dy: 380, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté, secret professionnel et travail en équipe éducative." },
+                        { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat Scolaire", parent: "D5.2", dx: -600, dy: 480, unlocked: false, link: "", desc: "Autorité bienveillante et prévention des incivilités.", details: "Mise en place du cadre de travail, gestion des perturbations et partenariat avec la Vie Scolaire (CPE)." }
                     ]
                 }
             ]
@@ -418,7 +400,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v17');
+            const saved = localStorage.getItem('theo_final_app_skills_v18');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -439,7 +421,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v17', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v18', JSON.stringify(data));
         }
 
         function initGraph() {
