@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences Radiale - Théo Legros</title>
+    <title>Arbre de Compétences Radiale</title>
     <style>
         :root {
             --bg-color: #0b0d14;
@@ -34,7 +34,7 @@
             height: 100vh;
         }
 
-        /* SVG & Graph Canvas */
+        /* SVG Canvas */
         #svg-canvas {
             width: 100%;
             height: 100%;
@@ -67,39 +67,42 @@
             pointer-events: none;
         }
 
-        .skill-node {
+        .skill-node-wrapper {
             position: absolute;
             transform: translate(-50%, -50%);
-            width: 44px;
-            height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .skill-node {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: #0f172a;
             border: 2px solid var(--locked-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            pointer-events: auto;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            position: relative;
         }
 
-        .skill-node:hover {
-            transform: translate(-50%, -50%) scale(1.25);
+        .skill-node-wrapper:hover .skill-node {
+            transform: scale(1.25);
             z-index: 10;
         }
 
         .skill-node.center-node {
-            width: 76px;
-            height: 76px;
+            width: 70px;
+            height: 70px;
             background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
             border: 3px solid #fef3c7;
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
-            color: #fff;
-            font-weight: 800;
-            font-size: 0.8em;
-            text-align: center;
-            line-height: 1.1;
+            font-size: 1.8em;
         }
 
         .skill-node.unlocked-a { border-color: var(--color-a); background: var(--color-a); color: #fff; box-shadow: 0 0 14px var(--color-a); }
@@ -107,14 +110,30 @@
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 14px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 14px var(--color-d); }
 
-        .skill-node .node-id {
-            font-size: 0.7em;
-            font-weight: 700;
+        .node-icon {
+            font-size: 1.2em;
         }
 
-        .skill-node .badge-counter {
+        .node-title-label {
+            margin-top: 4px;
+            font-size: 0.68em;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            white-space: nowrap;
+            background: rgba(11, 13, 20, 0.85);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .badge-counter {
             position: absolute;
-            bottom: -8px;
+            bottom: -6px;
+            right: -6px;
             background: #000;
             border: 1px solid currentColor;
             border-radius: 8px;
@@ -123,18 +142,7 @@
             font-weight: 800;
         }
 
-        /* Labels overlay */
-        .region-header-label {
-            position: absolute;
-            font-weight: 800;
-            font-size: 0.85em;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            pointer-events: none;
-            opacity: 0.9;
-        }
-
-        /* Score Dashboard HUD */
+        /* HUD Score Board */
         #hud-scores {
             position: absolute;
             top: 20px;
@@ -148,7 +156,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            min-width: 220px;
+            min-width: 230px;
         }
 
         .hud-row {
@@ -230,56 +238,54 @@
     </div>
 
     <script>
-        // DONNÉES COMPLÈTES AVEC FUTURES COMPÉTENCES
         const graphData = {
-            center: { id: "CENTER", label: "THÉO\nLEGROS", desc: "Nœud central de compétences universelles.", details: "Enseignant, Formateur et Manager." },
+            center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences universelles.", details: "Enseignement, Ingénierie & Management." },
             regions: [
                 {
                     key: "A", name: "🔴 PILOTAGE, STRATÉGIE & RÉSEAUX (NORD)", color: "var(--color-a)", angle: -90,
                     nodes: [
-                        { id: "A1", label: "Animation Réseaux", maxPts: 1, currentPts: 1, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique et suivi de l'engagement." },
-                        { id: "A1.1", label: "Raison d'être réseau", maxPts: 5, currentPts: 0, desc: "Définition des objectifs fondamentaux du réseau.", details: "Cadrer la mission selon le contexte géographique/social." },
-                        { id: "A2.1", label: "Diagnostic Stratégique", maxPts: 5, currentPts: 0, desc: "Réalisation d'audit stratégique global.", details: "Analyse SWOT et cadrage des besoins de transformation." },
-                        { id: "A2.6", label: "Sobriété & Transition Écolo", maxPts: 5, currentPts: 0, desc: "Nouveau : Stratégie de sobriété et de transition écologique dans les projets.", details: "Planification écologique appliquée au public et associatif." },
-                        { id: "A2.7", label: "Numérique Éthique & RGPD", maxPts: 5, currentPts: 0, desc: "Nouveau : Pilotage de la transformation numérique éthique et souveraine.", details: "Gouvernance des outils collaboratifs et conformité RGPD." },
-                        { id: "A4.6", label: "Ingénierie Hybride/Distanciel", maxPts: 5, currentPts: 0, desc: "Nouveau : Ingénierie de projet hybride et gestion d'équipes à distance.", details: "Piloter des collectifs en synchrone et asynchrone." }
+                        { id: "A1", icon: "🌐", label: "Animation Réseaux", maxPts: 1, currentPts: 1, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique et suivi de l'engagement." },
+                        { id: "A1.1", icon: "🎯", label: "Raison d'être", maxPts: 5, currentPts: 0, desc: "Définition des objectifs fondamentaux du réseau.", details: "Cadrer la mission selon le contexte géographique/social." },
+                        { id: "A2.1", icon: "📊", label: "Diagnostic Stratégique", maxPts: 5, currentPts: 0, desc: "Réalisation d'audit stratégique global.", details: "Analyse SWOT et cadrage des besoins de transformation." },
+                        { id: "A2.6", icon: "🌱", label: "Sobriété & Écologie", maxPts: 5, currentPts: 0, desc: "Stratégie de sobriété et de transition écologique dans les projets.", details: "Planification écologique appliquée au secteur public et associatif." },
+                        { id: "A2.7", icon: "🔒", label: "Numérique & RGPD", maxPts: 5, currentPts: 0, desc: "Pilotage de la transformation numérique éthique et souveraine.", details: "Gouvernance des outils collaboratifs et conformité RGPD." },
+                        { id: "A4.6", icon: "💻", label: "Ingénierie Hybride", maxPts: 5, currentPts: 0, desc: "Ingénierie de projet hybride et gestion d'équipes à distance.", details: "Piloter des collectifs en synchrone et asynchrone." }
                     ]
                 },
                 {
                     key: "B", name: "🔵 FORMATION, INGÉNIERIE & RH (EST)", color: "var(--color-b)", angle: 0,
                     nodes: [
-                        { id: "B1", label: "Ingénierie Pédagogique", maxPts: 1, currentPts: 1, desc: "Conception de dispositifs de formation d'adultes.", details: "Méthodes actives et ingénierie andragogique." },
-                        { id: "B1.1", label: "Alignement Pédagogique", maxPts: 5, currentPts: 0, desc: "Garantie de cohérence Objectifs/Méthodes/Évaluations.", details: "Formuler des attendus explicites." },
-                        { id: "B1.6", label: "Blended & Micro-Learning", maxPts: 5, currentPts: 0, desc: "Nouveau : Conception de formations Blended Learning et Micro-learning.", details: "Modules e-learning, classes virtuelles et présentiel." },
-                        { id: "B1.7", label: "IA Générative en Formation", maxPts: 5, currentPts: 0, desc: "Nouveau : Intégration raisonnée des IA génératives en ingénierie.", details: "Création assistée de scénarios et supports d'évaluation." },
-                        { id: "B3.6", label: "RPS & Qualité de Vie au Travail", maxPts: 5, currentPts: 0, desc: "Nouveau : Prévention des RPS et gestion de la QVT.", details: "Suivi du bien-être et de la charge mentale des bénévoles/salariés." },
-                        { id: "B3.7", label: "Inclusion & Neurodiversité", maxPts: 5, currentPts: 0, desc: "Nouveau : Management de la diversité et neurodiversité.", details: "Accompagnement des profils DYS, TSA et intergénérationnels." }
+                        { id: "B1", icon: "🎓", label: "Ingénierie Formation", maxPts: 1, currentPts: 1, desc: "Conception de dispositifs de formation d'adultes.", details: "Méthodes actives et ingénierie andragogique." },
+                        { id: "B1.1", icon: "📐", label: "Alignement Pédago", maxPts: 5, currentPts: 0, desc: "Garantie de cohérence Objectifs/Méthodes/Évaluations.", details: "Formuler des attendus explicites." },
+                        { id: "B1.6", icon: "📱", label: "Blended Learning", maxPts: 5, currentPts: 0, desc: "Conception de formations Blended Learning et Micro-learning.", details: "Modules e-learning, classes virtuelles et présentiel." },
+                        { id: "B1.7", icon: "🤖", label: "IA en Formation", maxPts: 5, currentPts: 0, desc: "Intégration raisonnée des IA génératives en ingénierie.", details: "Création assistée de scénarios et supports d'évaluation." },
+                        { id: "B3.6", icon: "⚖️", label: "RPS & QVT", maxPts: 5, currentPts: 0, desc: "Prévention des RPS et gestion de la Qualité de Vie au Travail.", details: "Suivi du bien-être et de la charge mentale des équipes." },
+                        { id: "B3.7", icon: "🤝", label: "Inclusion & DYS/TSA", maxPts: 5, currentPts: 0, desc: "Management de la diversité et neurodiversité.", details: "Accompagnement des profils atypiques et intergénérationnels." }
                     ]
                 },
                 {
                     key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & PROJET (SUD)", color: "var(--color-c)", angle: 90,
                     nodes: [
-                        { id: "C1", label: "Animation d'Activités", maxPts: 1, currentPts: 1, desc: "Gestion et animation de groupes de jeunes.", details: "Sécurité physique et affective." },
-                        { id: "C3.1", label: "Protection & Bientraitance", maxPts: 5, currentPts: 0, desc: "Cadres de bientraitance et prévention.", details: "Créer des espaces sécurisants et émancipateurs." },
-                        { id: "C2.6", label: "Éducation aux Médias (EMI)", maxPts: 5, currentPts: 0, desc: "Nouveau : Éducation aux médias, à l'information et esprit critique.", details: "Lutte contre les infox et accompagnement aux réseaux." },
-                        { id: "C2.7", label: "Pédagogie par la Nature", maxPts: 5, currentPts: 0, desc: "Nouveau : Pédagogie par la nature (Outdoor Education).", details: "Apprentissage immersif en plein air adossé à l'écologie." }
+                        { id: "C1", icon: "🏕️", label: "Animation Activités", maxPts: 1, currentPts: 1, desc: "Gestion et animation de groupes de jeunes.", details: "Sécurité physique et affective." },
+                        { id: "C3.1", icon: "🛡️", label: "Protection & Bientraitance", maxPts: 5, currentPts: 0, desc: "Cadres de bientraitance et prévention.", details: "Créer des espaces sécurisants et émancipateurs." },
+                        { id: "C2.6", icon: "📰", label: "Éducation Médias (EMI)", maxPts: 5, currentPts: 0, desc: "Éducation aux médias, à l'information et esprit critique.", details: "Lutte contre les infox et accompagnement aux réseaux." },
+                        { id: "C2.7", label: "Pédagogie Nature", icon: "🌿", maxPts: 5, currentPts: 0, desc: "Pédagogie par la nature (Outdoor Education).", details: "Apprentissage immersif en plein air adossé à l'écologie." }
                     ]
                 },
                 {
                     key: "D", name: "🟣 EXPERTISE CAPES & LINGUISTIQUE (OUEST)", color: "var(--color-d)", angle: 180,
                     nodes: [
-                        { id: "D1.A", label: "Analyse Syntaxique SVO", maxPts: 1, currentPts: 1, desc: "Syntaxe anglaise et relations prédicatives.", details: "Théorie des opérations énonciatives." },
-                        { id: "D1.B", label: "Phonologie -ed", maxPts: 1, currentPts: 1, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification des variantes phonétiques." },
-                        { id: "D2.A", label: "Différenciation 6e-BTS", maxPts: 1, currentPts: 1, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine aux contextes et niveaux." },
-                        { id: "D1.6", label: "Analyse de Discours Numériques", maxPts: 5, currentPts: 0, desc: "Nouveau : Analyse de corpus de discours numériques contemporains.", details: "Linguistique des médias et réseaux anglophones." },
-                        { id: "D2.6", label: "IA & Différenciation en Anglais", maxPts: 5, currentPts: 0, desc: "Nouveau : Intégration de l'IA pour la différenciation индивидуаisée.", details: "Exercices génératifs sur-mesure pour les élèves." },
-                        { id: "D2.7", label: "Parcours Éducatifs Transversaux", maxPts: 5, currentPts: 0, desc: "Nouveau : Didactique des parcours Citoyen, EAC et Santé.", details: "Articuler cours d'anglais et citoyenneté globale." }
+                        { id: "D1.A", icon: "🗣️", label: "Syntaxe SVO", maxPts: 1, currentPts: 1, desc: "Syntaxe anglaise et relations prédicatives.", details: "Théorie des opérations énonciatives." },
+                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed", maxPts: 1, currentPts: 1, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification des variantes phonétiques." },
+                        { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", maxPts: 1, currentPts: 1, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine aux contextes et niveaux." },
+                        { id: "D1.6", icon: "💬", label: "Discours Numériques", maxPts: 5, currentPts: 0, desc: "Analyse de corpus de discours numériques contemporains.", details: "Linguistique des médias et réseaux anglophones." },
+                        { id: "D2.6", icon: "⚡", label: "IA & Anglais", maxPts: 5, currentPts: 0, desc: "Intégration de l'IA pour la différenciation individualisée.", details: "Exercices génératifs sur-mesure pour les élèves." },
+                        { id: "D2.7", icon: "🌍", label: "Parcours Transversaux", maxPts: 5, currentPts: 0, desc: "Didactique des parcours Citoyen, EAC et Santé.", details: "Articuler cours d'anglais et citoyenneté globale." }
                     ]
                 }
             ]
         };
 
-        // RENDER & GEOMETRY
         let activeNode = null;
 
         function loadSavedState() {
@@ -311,13 +317,17 @@
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
 
-            // Center Node
+            // Nœud Central (icône seule, plus de texte Théos Legros)
+            const centerWrap = document.createElement('div');
+            centerWrap.className = 'skill-node-wrapper';
+            centerWrap.style.left = `${cx}px`;
+            centerWrap.style.top = `${cy}px`;
+
             const centerEl = document.createElement('div');
             centerEl.className = 'skill-node center-node';
-            centerEl.style.left = `${cx}px`;
-            centerEl.style.top = `${cy}px`;
-            centerEl.innerText = "THÉO\nLEGROS";
-            container.appendChild(centerEl);
+            centerEl.innerHTML = `<span class="node-icon">${graphData.center.icon}</span>`;
+            centerWrap.appendChild(centerEl);
+            container.appendChild(centerWrap);
 
             let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
@@ -327,14 +337,14 @@
 
                 r.nodes.forEach((n, idx) => {
                     regionScore += n.currentPts;
-                    const distance = 110 + (idx * 55);
+                    const distance = 110 + (idx * 60);
                     const nx = cx + Math.cos(rad) * distance;
                     const ny = cy + Math.sin(rad) * distance;
 
-                    // Line connection
+                    // Ligne de connexion SVG
                     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    const parentX = idx === 0 ? cx : cx + Math.cos(rad) * (110 + (idx - 1) * 55);
-                    const parentY = idx === 0 ? cy : cy + Math.sin(rad) * (110 + (idx - 1) * 55);
+                    const parentX = idx === 0 ? cx : cx + Math.cos(rad) * (110 + (idx - 1) * 60);
+                    const parentY = idx === 0 ? cy : cy + Math.sin(rad) * (110 + (idx - 1) * 60);
 
                     line.setAttribute('x1', parentX);
                     line.setAttribute('y1', parentY);
@@ -343,40 +353,50 @@
                     line.setAttribute('class', `connection-line ${n.currentPts > 0 ? 'active-' + r.key.toLowerCase() : ''}`);
                     svg.appendChild(line);
 
-                    // Node DOM
-                    const nodeEl = document.createElement('div');
+                    // Wrapper du Nœud
+                    const nodeWrap = document.createElement('div');
+                    nodeWrap.className = 'skill-node-wrapper';
+                    nodeWrap.style.left = `${nx}px`;
+                    nodeWrap.style.top = `${ny}px`;
+
                     const isUnlocked = n.currentPts > 0;
+                    const nodeEl = document.createElement('div');
                     nodeEl.className = `skill-node ${isUnlocked ? 'unlocked-' + r.key.toLowerCase() : ''}`;
-                    nodeEl.style.left = `${nx}px`;
-                    nodeEl.style.top = `${ny}px`;
 
                     nodeEl.innerHTML = `
-                        <span class="node-id">${n.id}</span>
+                        <span class="node-icon">${n.icon}</span>
                         <span class="badge-counter" style="color:${r.color}">${n.currentPts}/${n.maxPts}</span>
                     `;
 
-                    nodeEl.onclick = () => openModal(n, r);
-                    container.appendChild(nodeEl);
+                    // Titre visible
+                    const labelEl = document.createElement('div');
+                    labelEl.className = 'node-title-label';
+                    labelEl.innerText = n.label;
+
+                    nodeWrap.appendChild(nodeEl);
+                    nodeWrap.appendChild(labelEl);
+                    nodeWrap.onclick = () => openModal(n, r);
+
+                    container.appendChild(nodeWrap);
                 });
 
                 hudScores[r.key] = regionScore;
             });
 
-            // Update Scores HUD
+            // HUD
             document.getElementById('score-a').innerText = hudScores.A;
             document.getElementById('score-b').innerText = hudScores.B;
             document.getElementById('score-c').innerText = hudScores.C;
             document.getElementById('score-d').innerText = hudScores.D;
         }
 
-        // MODAL
         function openModal(node, region) {
             activeNode = node;
             const modal = document.getElementById('modal');
             const card = document.getElementById('modal-card');
             
             card.style.borderColor = region.color;
-            document.getElementById('modal-title').innerText = `${node.id} - ${node.label}`;
+            document.getElementById('modal-title').innerText = `${node.icon} ${node.id} - ${node.label}`;
             document.getElementById('modal-desc').innerText = node.desc;
             document.getElementById('modal-details').innerText = node.details;
 
