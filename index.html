@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Gestion des Liens)</title>
+    <title>Arbre de Compétences - Théo Legros (Galaxie)</title>
     <style>
         :root {
-            --bg-color: #0b0d14;
-            --panel-bg: #141722;
+            --bg-color: #05070f;
+            --panel-bg: #101420;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
             --color-a: #ef4444; /* Nord / Rouge - Pilotage & ACM */
             --color-b: #3b82f6; /* Est / Bleu - Formation & RH */
             --color-c: #10b981; /* Sud / Vert - Pédagogie & Animation */
             --color-d: #a855f7; /* Ouest / Violet - CAPES & Anglais */
-            --locked-color: #334155;
+            --locked-color: #2a344a;
         }
 
         * {
@@ -31,9 +31,33 @@
             overflow: hidden;
             width: 100vw;
             height: 100vh;
+            position: relative;
         }
 
-        /* Canvas SVG */
+        /* Arrière-plan Galaxie & Étoiles */
+        #galaxy-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle at 50% 50%, #0d1224 0%, #05070f 70%);
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 4px #ffffff); }
+        }
+
+        /* Canvas SVG pour les lignes */
         #svg-canvas {
             width: 100%;
             height: 100%;
@@ -86,7 +110,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
             position: relative;
             flex-shrink: 0;
         }
@@ -101,31 +125,31 @@
             height: 60px;
             background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
             border: 3px solid #fef3c7;
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.7);
             font-size: 1.5em;
         }
 
-        .skill-node.unlocked-a { border-color: var(--color-a); background: var(--color-a); color: #fff; box-shadow: 0 0 12px var(--color-a); }
-        .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 12px var(--color-b); }
-        .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 12px var(--color-c); }
-        .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 12px var(--color-d); }
+        .skill-node.unlocked-a { border-color: var(--color-a); background: var(--color-a); color: #fff; box-shadow: 0 0 15px var(--color-a); }
+        .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 15px var(--color-b); }
+        .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 15px var(--color-c); }
+        .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 15px var(--color-d); }
 
         .node-icon {
             font-size: 1em;
         }
 
-        /* Titre masqué par défaut, visible au survol uniquement */
+        /* Titre au survol */
         .node-title-label {
             font-size: 0.65em;
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
             white-space: nowrap;
-            background: rgba(11, 13, 20, 0.95);
+            background: rgba(14, 20, 36, 0.95);
             padding: 4px 8px;
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.25s ease, transform 0.25s ease;
@@ -165,7 +189,7 @@
             top: 20px;
             left: 20px;
             z-index: 5;
-            background: rgba(20, 23, 34, 0.85);
+            background: rgba(16, 20, 32, 0.85);
             backdrop-filter: blur(8px);
             border: 1px solid #334155;
             padding: 12px;
@@ -174,6 +198,7 @@
             flex-direction: column;
             gap: 6px;
             min-width: 230px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .hud-row {
@@ -187,8 +212,8 @@
         .modal-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
             z-index: 100;
             display: none;
             align-items: center;
@@ -202,7 +227,7 @@
             max-width: 480px;
             padding: 25px;
             border: 2px solid var(--text-muted);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             position: relative;
         }
 
@@ -232,7 +257,7 @@
         .link-input {
             width: 100%;
             padding: 8px 12px;
-            background: #0f172a;
+            background: #090d16;
             border: 1px solid #334155;
             color: var(--text-main);
             border-radius: 6px;
@@ -253,6 +278,9 @@
 </head>
 <body>
 
+    <!-- Arrière-plan Galaxie -->
+    <div id="galaxy-bg"></div>
+
     <div id="hud-scores">
         <div style="font-size: 0.85em; font-weight: 800; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 4px;">MAÎTRISE GLOBALE</div>
         <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage/ACM):</span> <span id="score-a">0</span></div>
@@ -271,7 +299,7 @@
             <div id="modal-badge" style="display:inline-block; padding: 3px 10px; border-radius: 12px; font-weight:800; font-size:0.75em; margin-bottom: 10px;"></div>
             <h2 id="modal-title" style="margin-bottom: 8px; font-size: 1.2em;"></h2>
             <p id="modal-desc" style="color: var(--text-muted); font-size:0.9em; margin-bottom:15px; line-height: 1.4;"></p>
-            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
                 <strong style="font-size:0.8em; color: var(--text-muted);">ACTIONS & DÉTAILS :</strong>
                 <p id="modal-details" style="font-size: 0.85em; margin-top: 5px;"></p>
             </div>
@@ -290,6 +318,24 @@
     </div>
 
     <script>
+        // Génération automatique d'un champ d'étoiles pour l'effet galaxie
+        function initGalaxy() {
+            const bg = document.getElementById('galaxy-bg');
+            const starCount = 120;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2.5 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                bg.appendChild(star);
+            }
+        }
+
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
             regions: [
@@ -469,13 +515,10 @@
             document.getElementById('modal-desc').innerText = node.desc;
             document.getElementById('modal-details').innerText = node.details;
 
-            // Remplir le champ de saisie du lien
             const linkInput = document.getElementById('node-link-input');
             linkInput.value = node.link || "";
 
-            // Gérer l'affichage du bouton d'ouverture direct
             updateDocButtonUI();
-
             updateModalUI(region);
             modal.style.display = 'flex';
         }
@@ -536,6 +579,7 @@
 
         window.onresize = initGraph;
         loadSavedState();
+        initGalaxy();
         initGraph();
     </script>
 </body>
