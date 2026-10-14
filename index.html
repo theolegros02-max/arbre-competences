@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version 32 - Liens Dynamiques par Maîtrise)</title>
+    <title>Arbre de Compétences - Théo Legros (Version 33 - Correction Canvas & Clics)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -51,7 +51,7 @@
         }
 
         #world {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 10000px; height: 10000px;
             transform-origin: 0 0; cursor: grab; z-index: 1;
         }
 
@@ -59,7 +59,7 @@
 
         #svg-canvas {
             width: 10000px; height: 10000px;
-            position: absolute; top: -5000px; left: -5000px;
+            position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
 
@@ -75,7 +75,7 @@
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
 
         #nodes-container {
-            width: 100%; height: 100%;
+            width: 10000px; height: 10000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -138,7 +138,7 @@
 
         /* --- MENU LATÉRAL GAUCHE --- */
         #sidebar {
-            position: fixed; top: 20px; left: 20px; z-index: 20;
+            position: fixed; top: 20px; left: 20px; z-index: 200;
             background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);
             border: 1px solid #334155; border-radius: 14px;
             width: 310px; max-height: calc(100vh - 40px);
@@ -156,7 +156,7 @@
         }
 
         .sidebar-toggle-btn {
-            position: fixed; top: 20px; left: 345px; z-index: 25;
+            position: fixed; top: 20px; left: 345px; z-index: 205;
             background: #1e293b; border: 1px solid #475569; color: #fff;
             padding: 10px 12px; border-radius: 8px; cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold;
@@ -199,7 +199,7 @@
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
-            z-index: 100; display: none; align-items: center; justify-content: center;
+            z-index: 300; display: none; align-items: center; justify-content: center;
             pointer-events: auto;
         }
 
@@ -383,7 +383,7 @@
                         { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle", parent: "C3.3", dx: -50, dy: 1950, unlocked: false, link: "", desc: "Accessibilité de toutes les activités sans stigmatisation.", details: "Variabilité des supports, rythmes d'apprentissage personnalisés et valorisation." },
                         { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste (EEDD)", parent: "C1", dx: 700, dy: 950, unlocked: false, link: "", desc: "Immersion nature et éco-citoyenneté.", details: "Ateliers de découverte de la biodiversité, sensibilisation à la faune/flore et zéro déchet." },
                         { id: "C4.2", icon: "⛺", label: "Ingénierie Bivouacs & Camps", parent: "C4.1", dx: 1100, dy: 1350, unlocked: false, link: "", desc: "Organisation de séjours et camps en pleine autonomie.", details: "Montage des campements, cuisine au feu de bois, hygiène et vie collective outdoor." },
-                        { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène", parent: "C4.2", dx: 1350, dy: 1650, unlocked: false, link: "", desc: "Respect des normes d'hygiène et techniques en milieu naturel.", details: "Maîtrise de la chaîne du froid nomade et gestion des denrées en autonomie." },
+                        { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène", parent: "C4.2", dx: 1350, dy: 1650, unlocked: false, link: "", desc: "Respect des normes d'hygiène et techniques en milieu naturel.", details: "Maîtrise la chaîne du froid nomade et gestion des denrées en autonomie." },
                         { id: "C4.4", icon: "🧭", label: "Risques & Météo Plein Air", parent: "C4.1", dx: 700, dy: 1400, unlocked: false, link: "", desc: "Lecture de cartes IGN et anticipation des aléas climatiques.", details: "Orientation, gestion des itinéraires isolés et communication d'urgence." },
                         { id: "C4.5", icon: "🩺", label: "Secours Milieu Isolé (SMI)", parent: "C4.4", dx: 1100, dy: 1750, unlocked: false, link: "", desc: "Protocoles d'alerte d'urgence et gestion des trousses de secours.", details: "Réactions face aux accidents isolés, bilans et procédures de hélitreuillage/secours." }
                     ]
@@ -440,15 +440,15 @@
 
         function resetView() { 
             scale = 0.20; 
-            panX = window.innerWidth / 2; 
-            panY = window.innerHeight / 2; 
+            panX = (window.innerWidth / 2) - (5000 * scale);
+            panY = (window.innerHeight / 2) - (5000 * scale);
             updateTransform(); 
         }
 
         function centerOnNode(dx, dy) {
             scale = 0.60; 
-            panX = (window.innerWidth / 2) - (dx * scale);
-            panY = (window.innerHeight / 2) - (dy * scale);
+            panX = (window.innerWidth / 2) - ((5000 + dx) * scale);
+            panY = (window.innerHeight / 2) - ((5000 + dy) * scale);
             updateTransform();
         }
 
@@ -514,7 +514,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v32');
+            const saved = localStorage.getItem('theo_final_app_skills_v33');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -535,7 +535,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v32', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v33', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
@@ -584,7 +584,6 @@
                     const pos = nodePositions[n.id];
                     const parentPos = nodePositions[n.parent];
 
-                    // Le lien s'affiche uniquement si le parent direct est débloqué/maîtrisé
                     if (parentPos && isNodeUnlocked(n.parent)) {
                         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                         line.setAttribute('x1', parentPos.x); line.setAttribute('y1', parentPos.y);
