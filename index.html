@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Titres au Survol)</title>
+    <title>Arbre de Compétences - Théo Legros (Gestion des Liens)</title>
     <style>
         :root {
             --bg-color: #0b0d14;
@@ -229,10 +229,26 @@
             font-size: 0.9em;
         }
 
+        .link-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: var(--text-main);
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            outline: none;
+        }
+
+        .link-input:focus {
+            border-color: #3b82f6;
+        }
+
         .doc-btn { background: #3b82f6; color: #fff; }
         .doc-btn:hover { background: #2563eb; }
-        .copy-btn { background: #475569; color: #fff; }
-        .copy-btn:hover { background: #334155; }
+        .save-btn { background: #10b981; color: #fff; }
+        .save-btn:hover { background: #059669; }
     </style>
 </head>
 <body>
@@ -259,8 +275,16 @@
                 <strong style="font-size:0.8em; color: var(--text-muted);">ACTIONS & DÉTAILS :</strong>
                 <p id="modal-details" style="font-size: 0.85em; margin-top: 5px;"></p>
             </div>
-            <a id="modal-doc-link" href="#" target="_blank" class="modal-btn doc-btn" style="display: none;">📄 Ouvrir le document (GDoc)</a>
-            <button id="modal-copy-btn" class="modal-btn copy-btn" onclick="copyDocLink()" style="display: none;">📋 Copier le lien du document</button>
+
+            <!-- Champ de saisie dynamique du lien GDoc -->
+            <div style="margin-bottom: 15px;">
+                <label style="font-size: 0.75em; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">LIEN DU DOCUMENT (GDOC) :</label>
+                <input type="text" id="node-link-input" class="link-input" placeholder="Collez votre lien Google Doc ici...">
+                <button class="modal-btn save-btn" onclick="saveNodeLink()" style="margin-top: 4px;">💾 Enregistrer le lien</button>
+            </div>
+
+            <!-- Bouton pour ouvrir le document s'il existe -->
+            <a id="modal-doc-link" href="#" target="_blank" class="modal-btn doc-btn" style="display: none; margin-bottom: 8px;">📄 Ouvrir le document (GDoc)</a>
             <button class="modal-btn" id="btn-toggle" onclick="toggleSkill()"></button>
         </div>
     </div>
@@ -332,23 +356,28 @@
         let nodePositions = {};
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills');
+            const saved = localStorage.getItem('theo_final_app_skills_v2');
             if (saved) {
-                const map = JSON.parse(saved);
+                const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
                     r.nodes.forEach(n => {
-                        if (map[n.id] !== undefined) n.unlocked = map[n.id];
+                        if (data[n.id]) {
+                            if (data[n.id].unlocked !== undefined) n.unlocked = data[n.id].unlocked;
+                            if (data[n.id].link !== undefined) n.link = data[n.id].link;
+                        }
                     });
                 });
             }
         }
 
         function saveState() {
-            const map = {};
+            const data = {};
             graphData.regions.forEach(r => {
-                r.nodes.forEach(n => { map[n.id] = n.unlocked; });
+                r.nodes.forEach(n => {
+                    data[n.id] = { unlocked: n.unlocked, link: n.link };
+                });
             });
-            localStorage.setItem('theo_final_app_skills', JSON.stringify(map));
+            localStorage.setItem('theo_final_app_skills_v2', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -440,34 +469,34 @@
             document.getElementById('modal-desc').innerText = node.desc;
             document.getElementById('modal-details').innerText = node.details;
 
-            const docLinkBtn = document.getElementById('modal-doc-link');
-            const copyBtn = document.getElementById('modal-copy-btn');
+            // Remplir le champ de saisie du lien
+            const linkInput = document.getElementById('node-link-input');
+            linkInput.value = node.link || "";
 
-            if (node.link && node.link.trim() !== "") {
-                docLinkBtn.href = node.link;
-                docLinkBtn.style.display = "inline-block";
-                copyBtn.style.display = "inline-block";
-                copyBtn.innerText = "📋 Copier le lien du document";
-            } else {
-                docLinkBtn.style.display = "none";
-                copyBtn.style.display = "none";
-            }
+            // Gérer l'affichage du bouton d'ouverture direct
+            updateDocButtonUI();
 
             updateModalUI(region);
             modal.style.display = 'flex';
         }
 
-        function copyDocLink() {
-            if (activeNode && activeNode.link) {
-                navigator.clipboard.writeText(activeNode.link).then(() => {
-                    const copyBtn = document.getElementById('modal-copy-btn');
-                    copyBtn.innerText = "✅ Lien copié !";
-                    setTimeout(() => {
-                        copyBtn.innerText = "📋 Copier le lien du document";
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Erreur lors de la copie :', err);
-                });
+        function saveNodeLink() {
+            if (activeNode) {
+                const linkInput = document.getElementById('node-link-input');
+                activeNode.link = linkInput.value.trim();
+                saveState();
+                updateDocButtonUI();
+                alert("Lien enregistré avec succès !");
+            }
+        }
+
+        function updateDocButtonUI() {
+            const docLinkBtn = document.getElementById('modal-doc-link');
+            if (activeNode && activeNode.link && activeNode.link !== "") {
+                docLinkBtn.href = activeNode.link;
+                docLinkBtn.style.display = "inline-block";
+            } else {
+                docLinkBtn.style.display = "none";
             }
         }
 
