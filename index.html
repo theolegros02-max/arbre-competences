@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Pan & Zoom)</title>
+    <title>Arbre de Compétences - Théo Legros (Expertise Nord Ultime)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -358,7 +358,6 @@
     </div>
 
     <script>
-        // Génération de la galaxie
         function initGalaxy() {
             const bg = document.getElementById('galaxy-bg');
             const starCount = 150;
@@ -376,7 +375,6 @@
             }
         }
 
-        // Structure de données avec des distances amplement élargies pour éviter les encombrements
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
             regions: [
@@ -385,32 +383,36 @@
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale ACM", parent: "CENTER", dx: 0, dy: -140, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un Accueil Collectif de Mineurs.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
 
-                        /* A1 : Projet Éducatif & Vision */
-                        { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -180, dy: -260, unlocked: false, link: "", desc: "Rédaction, opérationnalisation et évaluation de la vision éducative.", details: "Déclinaison des valeurs citoyennes et des objectifs en actions concrètes pour l'équipe." },
-                        { id: "A1.2", icon: "🏛️", label: "Ancrage PEDT & Territoire", parent: "A1.1", dx: -340, dy: -360, unlocked: false, link: "", desc: "Articulation du projet avec le Projet Éducatif de Territoire (PEDT) et collectivités.", details: "Négociation partenariale avec les SDJES, CAF, mairies et intercommunalités." },
-                        { id: "A1.3", icon: "👪", label: "Gouvernance & Familles", parent: "A1.1", dx: -280, dy: -460, unlocked: false, link: "", desc: "Co-construction éducative, conseils de jeunes et alliance avec les parents.", details: "Mise en place de temps d'échange réguliers, accueil individualisé des familles et médiation." },
+                        /* Branche A1 : Projet Pédagogique & Territoire */
+                        { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -200, dy: -260, unlocked: false, link: "", desc: "Rédaction et animation de la vision éducative du séjour.", details: "Formalisation des objectifs et déclinaison opérationnelle pour l'équipe." },
+                        { id: "A1.2", icon: "🏛️", label: "Ancrage PEDT & Territoire", parent: "A1.1", dx: -380, dy: -360, unlocked: false, link: "", desc: "Articulation du projet avec le Projet Éducatif de Territoire (PEDT) et collectivités.", details: "Négociation partenariale avec les SDJES, CAF, mairies et intercommunalités." },
+                        { id: "A1.3", icon: "🤝", label: "Partenariats Institutionnels", parent: "A1.2", dx: -540, dy: -420, unlocked: false, link: "", desc: "Gouvernance partagée avec les acteurs éducatifs locaux.", details: "Travail en réseau avec les associations sportives, culturelles et services jeunesse." },
+                        { id: "A1.4", icon: "👪", label: "Gouvernance & Familles", parent: "A1.1", dx: -300, dy: -480, unlocked: false, link: "", desc: "Co-construction éducative, conseils de jeunes et alliance avec les parents.", details: "Mise en place de temps d'échange réguliers, accueil individualisé et médiation." },
 
-                        /* A2 : Juridique & Crises */
-                        { id: "A2.1", icon: "📋", label: "Conformité & Réglementation", parent: "A1", dx: 0, dy: -280, unlocked: false, link: "", desc: "Maîtrise du Code de l'Action Sociale et des Familles (CASF).", details: "Contrôle des taux d'encadrement, qualifications, locaux et déclarations SDJES." },
-                        { id: "A2.2", icon: "⚖️", label: "Droit du Travail & CEE", parent: "A2.1", dx: -110, dy: -420, unlocked: false, link: "", desc: "Gestion des contrats (CEE, Convention Éclat), repos et temps de travail.", details: "Application stricte de la législation du travail adaptée à l'animation volontaire et professionnelle." },
-                        { id: "A2.3", icon: "🚨", label: "PPMS & Plan de Sûreté", parent: "A2.1", dx: 0, dy: -440, unlocked: false, link: "", desc: "Conception et entraînement au Plan Particulier de Mise en Sûreté.", details: "Gestion des risques majeurs (intrusion, risque naturel, attentat) et exercices réguliers." },
-                        { id: "A2.4", icon: "🔥", label: "Gestion de Crise & EIG", parent: "A2.1", dx: 110, dy: -420, unlocked: false, link: "", desc: "Gestion des Événements Indésirables Graves et communication d'urgence.", details: "Déclaration SDJES en moins de 24h, cellule de crise, accompagnement psychologique et média-training." },
-                        { id: "A2.5", icon: "🛡️", label: "Signalements & CRIP", parent: "A2.2", dx: -180, dy: -560, unlocked: false, link: "", desc: "Protocole de protection de l'enfance, prévention des violences et signalement.", details: "Repérage des signaux d'alerte, saisie de la CRIP et coordination avec les services sociaux." },
+                        /* Branche A2 : Juridique, Droit & Crises */
+                        { id: "A2.1", icon: "📋", label: "Conformité & Réglementation", parent: "A1", dx: 0, dy: -300, unlocked: false, link: "", desc: "Maîtrise du Code de l'Action Sociale et des Familles (CASF).", details: "Contrôle des taux d'encadrement, qualifications, locaux et déclarations SDJES." },
+                        { id: "A2.2", icon: "⚖️", label: "Droit du Travail & CEE", parent: "A2.1", dx: -130, dy: -440, unlocked: false, link: "", desc: "Gestion des contrats (CEE, Convention Éclat), repos et temps de travail.", details: "Application stricte de la législation du travail adaptée à l'animation." },
+                        { id: "A2.3", icon: "📜", label: "Responsabilité Civile/Pénale", parent: "A2.2", dx: -260, dy: -560, unlocked: false, link: "", desc: "Maîtrise des responsabilités juridiques du directeur.", details: "Prévention des risques de mise en cause personnelle, délégation de pouvoirs et assurances." },
+                        { id: "A2.4", icon: "🚨", label: "PPMS & Plan de Sûreté", parent: "A2.1", dx: 0, dy: -460, unlocked: false, link: "", desc: "Conception et entraînement au Plan Particulier de Mise en Sûreté.", details: "Gestion des risques majeurs (intrusion, risque naturel, attentat) et exercices." },
+                        { id: "A2.5", icon: "🔥", label: "Gestion de Crise & EIG", parent: "A2.1", dx: 130, dy: -440, unlocked: false, link: "", desc: "Gestion des Événements Indésirables Graves et communication d'urgence.", details: "Déclaration SDJES en moins de 24h, cellule de crise et accompagnement psychologique." },
+                        { id: "A2.6", icon: "🛡️", label: "Signalements & CRIP", parent: "A2.2", dx: -130, dy: -600, unlocked: false, link: "", desc: "Protocole de protection de l'enfance et prévention des violences.", details: "Repérage des signaux d'alerte, saisine de la CRIP et coordination avec les services sociaux." },
 
-                        /* A3 : Finance & Logistique */
-                        { id: "A3.1", icon: "💰", label: "Budget & Gestion Financière", parent: "A1", dx: 180, dy: -260, unlocked: false, link: "", desc: "Gestion de la régie, compta prévisionnelle et analyse des coûts.", details: "Équilibre budgétaire, maîtrise des coûts/jour/enfant et clôture des bilans financiers." },
-                        { id: "A3.2", icon: "📄", label: "Subventions & Marchés", parent: "A3.1", dx: 280, dy: -400, unlocked: false, link: "", desc: "Montage de dossiers de subvention (CAF - Prestation de Service, FDVA, ANS).", details: "Réponse aux appels d'offres publics et dossiers de justification d'emplois d'aide." },
-                        { id: "A3.3", icon: "🍳", label: "HACCP & Restauration", parent: "A3.1", dx: 380, dy: -320, unlocked: false, link: "", desc: "Sécurité sanitaire des aliments et maîtrise des procédures HACCP.", details: "Contrôle de la chaîne du froid, traçabilité des repas, PAI alimentaires et hygiène." },
-                        { id: "A3.4", icon: "🚌", label: "Logistique & Mobilités", parent: "A3.2", dx: 420, dy: -520, unlocked: false, link: "", desc: "Organisation des transports, séjours itinérants et à l'étranger.", details: "Conformité des véhicules, autorisations de sortie de territoire, assurances et rapatriments." },
+                        /* Branche A3 : Finances, Logistique & HACCP */
+                        { id: "A3.1", icon: "💰", label: "Budget & Gestion Financière", parent: "A1", dx: 200, dy: -260, unlocked: false, link: "", desc: "Gestion de la régie, compta prévisionnelle et analyse des coûts.", details: "Équilibre budgétaire, maîtrise des coûts/jour/enfant et clôture des bilans." },
+                        { id: "A3.2", icon: "📄", label: "Subventions & Marchés", parent: "A3.1", dx: 340, dy: -380, unlocked: false, link: "", desc: "Montage de dossiers de subvention (CAF, FDVA, ANS).", details: "Réponse aux appels d'offres publics et dossiers de justification d'emplois d'aide." },
+                        { id: "A3.3", icon: "🍳", label: "HACCP & Restauration", parent: "A3.1", dx: 440, dy: -260, unlocked: false, link: "", desc: "Sécurité sanitaire des aliments et maîtrise des procédures HACCP.", details: "Contrôle de la chaîne du froid, traçabilité des repas, PAI alimentaires et hygiène." },
+                        { id: "A3.4", icon: "🚌", label: "Logistique & Mobilités", parent: "A3.2", dx: 480, dy: -500, unlocked: false, link: "", desc: "Organisation des transports, séjours itinérants et à l'étranger.", details: "Conformité des véhicules, autorisations de sortie de territoire et assurances." },
 
-                        /* A4 : Management RH */
-                        { id: "A4.1", icon: "👥", label: "Management RH & Recrutement", parent: "A1.1", dx: -120, dy: -310, unlocked: false, link: "", desc: "Attraction des talents, entretiens de sélection et fidélisation.", details: "Constitution d'équipes pluridisciplinaires équilibrées et profils complémentaires." },
-                        { id: "A4.2", icon: "⚖️", label: "RPS, QVT & Burn-out", parent: "A4.1", dx: -260, dy: -580, unlocked: false, link: "", desc: "Prévention de la charge mentale et bien-être au travail en ACM.", details: "Régulation du stress saisonnier, suivi des plannings de repos et climat bienveillant." },
-                        { id: "A4.3", icon: "🎓", label: "Accompagnement Pro (BAFD/BPJEPS)", parent: "A4.1", dx: -90, dy: -580, unlocked: false, link: "", desc: "Tutorat, formation continue et accompagnement des stagiaires.", details: "Évaluations formatives quotidiennes, livret de suivi BAFD/BPJEPS et transmission de compétences." },
+                        /* Branche A4 : Management RH, QVT & Formation Interne */
+                        { id: "A4.1", icon: "👥", label: "Management RH & Recrutement", parent: "A1.1", dx: -130, dy: -180, unlocked: false, link: "", desc: "Attraction des talents, entretiens de sélection et fidélisation.", details: "Constitution d'équipes pluridisciplinaires équilibrées et profils complémentaires." },
+                        { id: "A4.2", icon: "⚖️", label: "RPS, QVT & Burn-out", parent: "A4.1", dx: -280, dy: -120, unlocked: false, link: "", desc: "Prévention de la charge mentale et bien-être au travail en ACM.", details: "Régulation du stress saisonnier, suivi des plannings de repos et climat bienveillant." },
+                        { id: "A4.3", icon: "💬", label: "Régulation de Conflits", parent: "A4.2", dx: -440, dy: -100, unlocked: false, link: "", desc: "Techniques de communication non-violente et médiation d'équipe.", details: "Désamorçage des tensions interpersonnelles et entretiens de recadrage constructifs." },
+                        { id: "A4.4", icon: "🎓", label: "Accompagnement Pro (BAFD/BPJEPS)", parent: "A4.1", dx: -220, dy: -20, unlocked: false, link: "", desc: "Tutorat, formation continue et accompagnement des stagiaires.", details: "Évaluations formatives quotidiennes, livret de suivi BAFD/BPJEPS." },
 
-                        /* A5 : Éco & Bilan */
-                        { id: "A5.1", icon: "🌱", label: "Éco-Responsabilité & Bilan Carbone", parent: "A3.3", dx: 500, dy: -420, unlocked: false, link: "", desc: "Transition écologique globale du centre de loisirs.", details: "Réduction des déchets, approvisionnement bio/local, sobriété énergétique et achats responsables." },
-                        { id: "A5.2", icon: "📈", label: "Bilan Qualitatif & Audit", parent: "A1", dx: 100, dy: -190, unlocked: false, link: "", desc: "Évaluation d'impact éducatif et rédaction des bilans d'activité.", details: "Mise en place d'indicateurs d'évaluation, auto-évaluation d'équipe et rapport moral." }
+                        /* Branche A5 : Éco-responsabilité & Bilans */
+                        { id: "A5.1", icon: "🌱", label: "Éco-Responsabilité & Bilan Carbone", parent: "A3.3", dx: 600, dy: -360, unlocked: false, link: "", desc: "Transition écologique globale du centre de loisirs.", details: "Réduction des déchets, approvisionnement bio/local, sobriété énergétique." },
+                        { id: "A5.2", icon: "💡", label: "Sobriété Numérique & Énergie", parent: "A5.1", dx: 740, dy: -420, unlocked: false, link: "", desc: "Gestion éco-responsable des ressources et des équipements.", details: "Optimisation des consommations d'eau/électricité et sensibilisation des publics." },
+                        { id: "A5.3", icon: "📈", label: "Bilan Qualitatif & Audit", parent: "A1", dx: 110, dy: -160, unlocked: false, link: "", desc: "Évaluation d'impact éducatif et rédaction des bilans d'activité.", details: "Mise en place d'indicateurs d'évaluation, auto-évaluation d'équipe et rapport moral." }
                     ]
                 },
                 {
@@ -468,7 +470,6 @@
         let activeNode = null;
         let nodePositions = {};
 
-        // Variables pour le Pan & Zoom
         let scale = 1;
         let panX = 0;
         let panY = 0;
@@ -525,7 +526,6 @@
                     scale /= (1 + zoomIntensity);
                 }
 
-                // Limites de zoom (0.3x à 3x)
                 scale = Math.max(0.3, Math.min(3, scale));
 
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
@@ -536,7 +536,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v6');
+            const saved = localStorage.getItem('theo_final_app_skills_v7');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -557,7 +557,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v6', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v7', JSON.stringify(data));
         }
 
         function initGraph() {
