@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Centré sur le Noyau v23)</title>
+    <title>Arbre de Compétences - Théo Legros (Menu Latéral v25)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -136,24 +136,66 @@
             font-size: 0.6em; font-weight: 900;
         }
 
-        #hud-scores {
-            position: fixed; top: 20px; left: 20px; z-index: 10;
-            background: rgba(16, 20, 32, 0.85); backdrop-filter: blur(8px);
-            border: 1px solid #334155; padding: 14px; border-radius: 12px;
-            display: flex; flex-direction: column; gap: 6px; min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: auto;
+        /* --- MENU LATÉRAL GAUCHE --- */
+        #sidebar {
+            position: fixed; top: 20px; left: 20px; z-index: 20;
+            background: rgba(16, 20, 32, 0.92); backdrop-filter: blur(10px);
+            border: 1px solid #334155; border-radius: 14px;
+            width: 300px; max-height: calc(100vh - 40px);
+            display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); pointer-events: auto;
+            transition: transform 0.3s ease;
         }
 
-        .hud-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.8em; }
+        #sidebar.closed { transform: translateX(-330px); }
+
+        .sidebar-header {
+            padding: 14px; border-bottom: 1px solid #334155;
+            display: flex; justify-content: space-between; align-items: center;
+            font-weight: 800; font-size: 0.85em;
+        }
+
+        .sidebar-toggle-btn {
+            position: fixed; top: 20px; left: 335px; z-index: 25;
+            background: #1e293b; border: 1px solid #475569; color: #fff;
+            padding: 10px 12px; border-radius: 8px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold;
+            transition: left 0.3s ease, background 0.2s;
+        }
+        #sidebar.closed ~ .sidebar-toggle-btn { left: 20px; }
+        .sidebar-toggle-btn:hover { background: #334155; }
+
+        .sidebar-content {
+            overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .menu-region-title {
+            font-size: 0.75em; font-weight: 800; padding: 4px 8px; border-radius: 6px;
+            margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .menu-node-item {
+            padding: 6px 10px; border-radius: 6px; font-size: 0.75em;
+            color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .menu-node-item:hover { background: rgba(255,255,255,0.08); color: var(--text-main); transform: translateX(4px); }
+
+        .hud-scores-box {
+            padding: 12px; border-top: 1px solid #334155; background: rgba(10, 14, 24, 0.5);
+            display: flex; flex-direction: column; gap: 4px; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
+        }
+        .hud-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.75em; }
 
         .reset-view-btn {
-            margin-top: 6px; padding: 6px; background: #1e293b;
+            margin-top: 4px; padding: 6px; background: #1e293b;
             border: 1px solid #475569; color: #cbd5e1;
             font-size: 0.75em; font-weight: 700; border-radius: 6px;
-            cursor: pointer; transition: background 0.2s;
+            cursor: pointer; transition: background 0.2s; text-align: center;
         }
         .reset-view-btn:hover { background: #334155; color: #fff; }
 
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
@@ -194,14 +236,24 @@
 
     <div id="galaxy-bg"></div>
 
-    <div id="hud-scores">
-        <div style="font-size: 0.85em; font-weight: 800; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 4px;">MAÎTRISE GLOBALE</div>
-        <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage ACM):</span> <span id="score-a">0</span></div>
-        <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation RH):</span> <span id="score-b">0</span></div>
-        <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie Youth):</span> <span id="score-c">0</span></div>
-        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES Anglais):</span> <span id="score-d">0</span></div>
-        <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
+    <!-- MENU LATÉRAL -->
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <span>📚 NAVIGATION DES NÔUDS</span>
+        </div>
+        <div class="sidebar-content" id="sidebar-menu-list">
+            <!-- Rempli dynamiquement par JS -->
+        </div>
+        <div class="hud-scores-box">
+            <div style="font-size: 0.75em; font-weight: 800; margin-bottom: 2px;">MAÎTRISE GLOBALE</div>
+            <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord:</span> <span id="score-a">0</span></div>
+            <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est:</span> <span id="score-b">0</span></div>
+            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud:</span> <span id="score-c">0</span></div>
+            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest:</span> <span id="score-d">0</span></div>
+            <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
+        </div>
     </div>
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰ Menu</button>
 
     <div id="world">
         <svg id="svg-canvas"></svg>
@@ -250,7 +302,7 @@
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
             regions: [
                 {
-                    key: "A", name: "🔴 PILOTAGE, STRATÉGIE & DIRECTION ACM (NORD)", color: "var(--color-a)",
+                    key: "A", name: "🔴 Nord (Pilotage ACM)", color: "var(--color-a)",
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale ACM", parent: "CENTER", dx: 0, dy: -280, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un ACM.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
                         { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -280, dy: -440, unlocked: false, link: "", desc: "Traduction de la vision éducative en objectifs mesurables.", details: "Mise en œuvre des valeurs citoyennes, démarches méthodologiques et évaluation." },
@@ -281,7 +333,7 @@
                     ]
                 },
                 {
-                    key: "B", name: "🔵 FORMATION, INGÉNIERIE & RH (EST)", color: "var(--color-b)",
+                    key: "B", name: "🔵 Est (Formation RH)", color: "var(--color-b)",
                     nodes: [
                         { id: "B1", icon: "🎓", label: "Pôle Ingénierie de Formation", parent: "CENTER", dx: 280, dy: 0, unlocked: true, link: "", desc: "Direction globale de l'ingénierie pédagogique, de l'andragogie et de la conformité RH.", details: "Architecture complète des parcours de formation professionnels et certifiants." },
                         { id: "B1.1", icon: "🔍", label: "ADDIE - Phase A (Analyse)", parent: "B1", dx: 480, dy: -340, unlocked: false, link: "", desc: "Cadrage amont de la demande et cartographie des écarts de compétences.", details: "Entretiens de positionnement, analyse des postes de travail et formulation du besoin opérationnel." },
@@ -309,7 +361,7 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
+                    key: "C", name: "🟢 Sud (Pédagogie Youth)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 280, unlocked: true, link: "", desc: "Maîtrise absolue de la sécurité affective, de la bientraitance et de la démocratie participative.", details: "Encadrement expert de groupes de mineurs et animation d'activités à fort impact éducatif." },
                         { id: "C1.1", icon: "🛡️", label: "Repérage Signaux Faibles", parent: "C1", dx: -280, dy: 440, unlocked: false, link: "", desc: "Détection précoce du mal-être et changements de comportements.", details: "Observation fine, écoute bienveillante et traçabilité des incidents éducatifs." },
@@ -335,37 +387,37 @@
                     ]
                 },
                 {
-                    key: "D", name: "🟣 EXPERTISE CAPES ANGLAIS (OUEST - HYPER-ATOMISÉ)", color: "var(--color-d)",
+                    key: "D", name: "🟣 Ouest (CAPES Anglais)", color: "var(--color-d)",
                     nodes: [
                         { id: "D1", icon: "🇬🇧", label: "Pôle Réussite CAPES Anglais", parent: "CENTER", dx: -280, dy: 0, unlocked: true, link: "", desc: "Centre de préparation intensive au CAPES externe d'anglais (Écrit & Oral).", details: "Maîtrise académique de l'admissibilité et précision didactique de l'admission." },
                         { id: "D1.1", icon: "📑", label: "Méthodologie Comparée Corpus", parent: "D1", dx: -480, dy: -340, unlocked: false, link: "", desc: "Analyse croisée d'un corpus documentaire tridimensionnel.", details: "Extraction des convergences, divergences et problématisation globale." },
-                        { id: "D1.2", icon: "🧭", label: "Problématisation & Plan en 3 Parties", parent: "D1.1", dx: -700, dy: -440, unlocked: false, link: "", desc: "Construction logique et dialectique de la dissertation.", details: "Élaboration de la problématique centrale et articulation rigoureuse des parties." },
-                        { id: "D1.3", icon: "📖", label: "Stylistique & Rhétorique Littéraire", parent: "D1.1", dx: -920, dy: -540, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires.", details: "Registres, polyphonie, tropes, métaphores et figures de style." },
-                        { id: "D1.4", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -700, dy: -240, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photo, caricature, affiche).", details: "Composition, cadrage, jeux de lumière et implicite visuel." },
+                        { id: "D1.2", icon: "🧭", label: "Problématisation & Plan", parent: "D1.1", dx: -700, dy: -440, unlocked: false, link: "", desc: "Construction logique et dialectique de la dissertation.", details: "Élaboration de la problématique centrale et articulation rigoureuse des parties." },
+                        { id: "D1.3", icon: "📖", label: "Stylistique & Rhétorique", parent: "D1.2", dx: -920, dy: -540, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires.", details: "Registres, polyphonie, tropes, métaphores et figures de style." },
+                        { id: "D1.4", icon: "🖼️", label: "Analyse Iconographique", parent: "D1.1", dx: -700, dy: -240, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photo, caricature, affiche).", details: "Composition, cadrage, jeux de lumière et implicite visuel." },
                         { id: "D1.5", icon: "📰", label: "Analyse Presse Anglophone", parent: "D1.4", dx: -920, dy: -240, unlocked: false, link: "", desc: "Étude des articles de fond (UK/US) et rhétorique journalistique.", details: "Biais éditoriaux, registres de langue et prise de position." },
-                        { id: "D1.6", icon: "✍️", label: "Langue Académique Écrite (C1/C2)", parent: "D1.1", dx: -500, dy: -540, unlocked: false, link: "", desc: "Maîtrise de l'anglais écrit de niveau agrégatif.", details: "Lexique de spécialité, variété syntaxique et cohésion textuelle." },
+                        { id: "D1.6", icon: "✍️", label: "Langue Académique Écrite", parent: "D1.1", dx: -500, dy: -540, unlocked: false, link: "", desc: "Maîtrise de l'anglais écrit de niveau agrégatif.", details: "Lexique de spécialité, variété syntaxique et cohésion textuelle." },
                         { id: "D2.1", icon: "🗣️", label: "Théorie Culioli (TOPE)", parent: "D1", dx: -480, dy: -140, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives appliquée sur corpus.", details: "Repères origines, opérations de prédication et instanciation." },
                         { id: "D2.2", icon: "📍", label: "Repérage Énonciatif S0/T0", parent: "D2.1", dx: -700, dy: -80, unlocked: false, link: "", desc: "Analyse fine du ancrage temporel et subjectif.", details: "Opérations de centrage, balayage et rupture." },
-                        { id: "D2.3", icon: "⚙️", label: "Système Verbal & Modalisateurs", parent: "D2.1", dx: -920, dy: 0, unlocked: false, link: "", desc: "Déconstruction du groupe verbal et auxiliaires modaux.", details: "Valeurs épistémiques/déontiques, valeur de will/would." },
-                        { id: "D2.4", icon: "⏳", label: "Aspectualité (be+-ing / have+-en)", parent: "D2.3", dx: -1140, dy: 0, unlocked: false, link: "", desc: "Valeurs aspectuelles et repérages inter-locuteurs.", details: "Effets de sens de l'auxiliation et parcours." },
-                        { id: "D2.5", icon: "🔗", label: "Passif, Causatives & Subordonnées", parent: "D2.1", dx: -700, dy: 60, unlocked: false, link: "", desc: "Analyse des structures complexes et enchâssements.", details: "Constructions passives, causatives (make/have/get) et hypothèses." },
-                        { id: "D2.6", icon: "🏷️", label: "Détermination Nominale & Quantif.", parent: "D2.1", dx: -920, dy: 100, unlocked: false, link: "", desc: "Grammaire fine du groupe nominal et quantification.", details: "Fonctionnement des articles (a/the/\emptyset), génitifs et relatives." },
-                        { id: "D3.1", icon: "🔤", label: "Transcriptions API (RP & GA)", parent: "D1", dx: -480, dy: 120, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables en RP et GA.", details: "Symboles phonétiques, voyelles, diphthongues et consonnes." },
+                        { id: "D2.3", icon: "⚙️", label: "Système Verbal & Modaux", parent: "D2.1", dx: -920, dy: 0, unlocked: false, link: "", desc: "Déconstruction du groupe verbal et auxiliaires modaux.", details: "Valeurs épistémiques/déontiques, valeur de will/would." },
+                        { id: "D2.4", icon: "⏳", label: "Aspectualité (be/have)", parent: "D2.3", dx: -1140, dy: 0, unlocked: false, link: "", desc: "Valeurs aspectuelles et repérages inter-locuteurs.", details: "Effets de sens de l'auxiliation et parcours." },
+                        { id: "D2.5", icon: "🔗", label: "Passif, Causatives & Sub.", parent: "D2.1", dx: -700, dy: 60, unlocked: false, link: "", desc: "Analyse des structures complexes et enchâssements.", details: "Constructions passives, causatives (make/have/get) et hypothèses." },
+                        { id: "D2.6", icon: "🏷️", label: "Détermination & Quantif.", parent: "D2.1", dx: -920, dy: 100, unlocked: false, link: "", desc: "Grammaire fine du groupe nominal et quantification.", details: "Fonctionnement des articles (a/the/\emptyset), génitifs et relatives." },
+                        { id: "D3.1", icon: "🔤", label: "Transcriptions API (RP/GA)", parent: "D1", dx: -480, dy: 120, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables en RP et GA.", details: "Symboles phonétiques, voyelles, diphthongues et consonnes." },
                         { id: "D3.2", icon: "🎵", label: "Accentuation Mots Simples", parent: "D3.1", dx: -700, dy: 220, unlocked: false, link: "", desc: "Règles de placement des accents primaire et secondaire.", details: "Schémas accentuels lexicaux fondamentaux." },
-                        { id: "D3.3", icon: "📌", label: "Suffixation Contrainte vs Neutre", parent: "D3.2", dx: -920, dy: 220, unlocked: false, link: "", desc: "Incidence des suffixes sur le placement de l'accent.", details: "Suffixes attirants/imposants vs suffixes transparents." },
+                        { id: "D3.3", icon: "📌", label: "Suffixation Contrainte/Neutre", parent: "D3.2", dx: -920, dy: 220, unlocked: false, link: "", desc: "Incidence des suffixes sur le placement de l'accent.", details: "Suffixes attirants/imposants vs suffixes transparents." },
                         { id: "D3.4", icon: "⚡", label: "Stress Shift (Déplacement)", parent: "D3.3", dx: -1140, dy: 220, unlocked: false, link: "", desc: "Dynamique intonative en contexte rythmique de phrase.", details: "Règles de déplacement de l'accent principal." },
                         { id: "D3.5", icon: "🧩", label: "Accentuation des Composés", parent: "D3.2", dx: -920, dy: 320, unlocked: false, link: "", desc: "Règles accentuelles N+N, Adj+N, Verbe+Particule.", details: "Compound stress rule vs phrasal stress." },
                         { id: "D3.6", icon: "🔊", label: "Morpho-Phonologie & Schwa", parent: "D3.1", dx: -700, dy: 340, unlocked: false, link: "", desc: "Allomorphie des désinences et réductions vocaliques.", details: "Règles des morphes -ed/-s et formes fortes/faibles." },
                         { id: "D4.1", icon: "🏫", label: "Transposition Didactique", parent: "D1", dx: -480, dy: 340, unlocked: true, link: "", desc: "Exploitation pédagogique de documents authentiques.", details: "Extraction des faits de langue, faits de culture et programmes." },
-                        { id: "D4.2", icon: "📋", label: "Architecture de Séquence (CECRL)", parent: "D4.1", dx: -700, dy: 460, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs et articulation des 5 activités langagières." },
+                        { id: "D4.2", icon: "📋", label: "Architecture de Séquence", parent: "D4.1", dx: -700, dy: 460, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs et articulation des 5 activités langagières." },
                         { id: "D4.3", icon: "🎯", label: "Activités Langagières & Tâches", parent: "D4.2", dx: -920, dy: 460, unlocked: false, link: "", desc: "Mise en œuvre de la réception, production et interaction.", details: "Création de tâches finales ancrées dans le réel." },
                         { id: "D4.4", icon: "⚖️", label: "Différenciation (6e-BTS)", parent: "D4.1", dx: -700, dy: 580, unlocked: false, link: "", desc: "Gestion de l'hétérogénéité des classes du collège au lycée.", details: "Adaptations pour élèves Dys/EIP/PAP/PAI et étayages." },
-                        { id: "D4.5", icon: "📊", label: "Évaluation Formative & Sommative", parent: "D4.2", dx: -920, dy: 580, unlocked: false, link: "", desc: "Mesure des apprentissages et grilles d'évaluation.", details: "Critères de réussite et auto-évaluation apprenante." },
-                        { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République & Laïcité", parent: "D1", dx: -340, dy: 440, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Loi de 1905, charte de la laïcité, neutralité et égalité." },
-                        { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire d'État", parent: "D5.1", dx: -520, dy: 600, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté et secret pro." },
+                        { id: "D4.5", icon: "📊", label: "Évaluation Formative/Somm.", parent: "D4.2", dx: -920, dy: 580, unlocked: false, link: "", desc: "Mesure des apprentissages et grilles d'évaluation.", details: "Critères de réussite et auto-évaluation apprenante." },
+                        { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République", parent: "D1", dx: -340, dy: 440, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Loi de 1905, charte de la laïcité, neutralité et égalité." },
+                        { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire", parent: "D5.1", dx: -520, dy: 600, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté et secret pro." },
                         { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat", parent: "D5.1", dx: -340, dy: 620, unlocked: false, link: "", desc: "Autorité bienveillante et prévention des incivilités.", details: "Cadre de travail, gestion des perturbations et partenariat CPE." },
                         { id: "D5.4", icon: "🤝", label: "Partenariat Institutionnel", parent: "D5.3", dx: -520, dy: 740, unlocked: false, link: "", desc: "Travail en équipe pluridisciplinaire et médico-sociale.", details: "Rôle du professeur principal, liaison école-famille et réseaux." },
-                        { id: "D5.5", icon: "🧩", label: "Inclusion & Élèves à Besoins (EBEP)", parent: "D5.3", dx: -340, dy: 760, unlocked: false, link: "", desc: "Accueil des élèves à besoins éducatifs particuliers.", details: "Coordination avec les AESH et application des dispositifs adaptés." }
+                        { id: "D5.5", icon: "🧩", label: "Inclusion & EBEP", parent: "D5.3", dx: -340, dy: 760, unlocked: false, link: "", desc: "Accueil des élèves à besoins éducatifs particuliers.", details: "Coordination avec les AESH et application des dispositifs adaptés." }
                     ]
                 }
             ]
@@ -374,7 +426,6 @@
         let activeNode = null;
         let nodePositions = {};
 
-        // Zoom initial à 0.40 et centrage strict sur le noyau central (panX = 0, panY = 0)
         let scale = 0.40; 
         let panX = 0; 
         let panY = 0; 
@@ -392,10 +443,45 @@
             updateTransform(); 
         }
 
+        function centerOnNode(dx, dy) {
+            scale = 0.85; // Zoom focus sur la node sélectionnée
+            panX = -dx;
+            panY = -dy;
+            updateTransform();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('closed');
+        }
+
+        function buildSidebarMenu() {
+            const listContainer = document.getElementById('sidebar-menu-list');
+            listContainer.innerHTML = '';
+
+            graphData.regions.forEach(r => {
+                const regTitle = document.createElement('div');
+                regTitle.className = 'menu-region-title';
+                regTitle.style.color = r.color;
+                regTitle.innerText = r.name;
+                listContainer.appendChild(regTitle);
+
+                r.nodes.forEach(n => {
+                    const item = document.createElement('div');
+                    item.className = 'menu-node-item';
+                    item.innerHTML = `<span>${n.icon}</span> <span>${n.id} - ${n.label}</span>`;
+                    item.onclick = () => {
+                        centerOnNode(n.dx, n.dy);
+                    };
+                    listContainer.appendChild(item);
+                });
+            });
+        }
+
         function setupPanAndZoom() {
             const world = document.getElementById('world');
             window.addEventListener('mousedown', (e) => {
-                if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay')) return;
+                if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay') || e.target.closest('#sidebar') || e.target.closest('.sidebar-toggle-btn')) return;
                 isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
             });
             window.addEventListener('mousemove', (e) => {
@@ -404,7 +490,7 @@
             });
             window.addEventListener('mouseup', () => { isDragging = false; });
             window.addEventListener('wheel', (e) => {
-                if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay')) return;
+                if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay') || e.target.closest('#sidebar') || e.target.closest('.sidebar-toggle-btn')) return;
                 e.preventDefault();
                 const zoomIntensity = 0.1;
                 const rect = world.getBoundingClientRect();
@@ -419,7 +505,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v23');
+            const saved = localStorage.getItem('theo_final_app_skills_v25');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -440,7 +526,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v23', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v25', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -461,8 +547,6 @@
             centerEl.className = 'skill-node center-node';
             centerEl.innerHTML = `<span class="node-icon">${graphData.center.icon}</span>`;
             centerWrap.appendChild(centerEl); 
-            
-            // Clic sur le nœud central pour afficher ses détails dans la modale
             centerWrap.onclick = (e) => { e.stopPropagation(); openCenterModal(); };
             container.appendChild(centerWrap);
 
@@ -609,6 +693,7 @@
         loadSavedState();
         initGalaxy();
         initGraph();
+        buildSidebarMenu();
         updateTransform();
         setupPanAndZoom();
     </script>
