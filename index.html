@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (CAPES Approfondi)</title>
+    <title>Arbre de Compétences - Théo Legros (Complet)</title>
     <style>
         :root {
             --bg-color: #0b0d14;
             --panel-bg: #141722;
             --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --color-a: #ef4444; /* Nord / Rouge */
-            --color-b: #3b82f6; /* Est / Bleu */
-            --color-c: #10b981; /* Sud / Vert */
-            --color-d: #a855f7; /* Ouest / Violet */
+            --color-a: #ef4444; /* Nord / Rouge - Pilotage & ACM */
+            --color-b: #3b82f6; /* Est / Bleu - Formation & RH */
+            --color-c: #10b981; /* Sud / Vert - Pédagogie & Animation */
+            --color-d: #a855f7; /* Ouest / Violet - CAPES & Anglais */
             --locked-color: #334155;
         }
 
@@ -159,7 +159,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            min-width: 220px;
+            min-width: 230px;
         }
 
         .hud-row {
@@ -216,10 +216,10 @@
 
     <div id="hud-scores">
         <div style="font-size: 0.85em; font-weight: 800; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 4px;">MAÎTRISE GLOBALE</div>
-        <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage):</span> <span id="score-a">0</span></div>
-        <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation):</span> <span id="score-b">0</span></div>
-        <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie):</span> <span id="score-c">0</span></div>
-        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
+        <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage/ACM):</span> <span id="score-a">0</span></div>
+        <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation/RH):</span> <span id="score-b">0</span></div>
+        <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie/Animation):</span> <span id="score-c">0</span></div>
+        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES & Anglais):</span> <span id="score-d">0</span></div>
     </div>
 
     <svg id="svg-canvas"></svg>
@@ -245,16 +245,16 @@
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
             regions: [
                 {
-                    key: "A", name: "🔴 PILOTAGE, STRATÉGIE & RÉSEAUX (NORD)", color: "var(--color-a)",
+                    key: "A", name: "🔴 PILOTAGE & DIRECTION ACM (NORD)", color: "var(--color-a)",
                     nodes: [
-                        { id: "A1", icon: "🌐", label: "Pilotage Réseaux", parent: "CENTER", dx: 0, dy: -80, unlocked: true, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique et suivi de l'engagement des acteurs." },
-                        { id: "A1.1", icon: "🎯", label: "Raison d'être", parent: "A1", dx: -60, dy: -150, unlocked: false, desc: "Définition des objectifs fondamentaux et vision.", details: "Cadrer la mission selon le contexte géographique et social." },
-                        { id: "A1.2", icon: "🧭", label: "Gouvernance", parent: "A1", dx: 60, dy: -150, unlocked: false, desc: "Animation des instances décisionnelles.", details: "Pilotage participatif et répartition des rôles." },
-                        { id: "A2.1", icon: "📊", label: "Audit Stratégique", parent: "A1.1", dx: -120, dy: -230, unlocked: false, desc: "Réalisation d'audits et analyses SWOT.", details: "Cadrage des besoins de transformation organisationnelle." },
-                        { id: "A2.2", icon: "📋", label: "Cadrage Projet", parent: "A1.1", dx: -40, dy: -230, unlocked: false, desc: "Rédaction de feuilles de route et rétroplanning.", details: "Planification des livrables et gestion des risques." },
-                        { id: "A2.6", icon: "🌱", label: "Sobriété & Éco", parent: "A1.2", dx: 40, dy: -230, unlocked: false, desc: "Stratégie de transition écologique.", details: "Planification éco-responsable appliquée aux structures." },
-                        { id: "A2.7", icon: "🔒", label: "Numérique & RGPD", parent: "A1.2", dx: 120, dy: -230, unlocked: false, desc: "Gouvernance des données et outils éthiques.", details: "Sécurisation des environnements numériques et conformité." },
-                        { id: "A4.6", icon: "💻", label: "Management Hybride", parent: "A2.1", dx: -120, dy: -310, unlocked: false, desc: "Pilotage d'équipes à distance et synchrone.", details: "Animation de collectifs hybrides et outils collaboratifs." }
+                        { id: "A1", icon: "🏕️", label: "Direction d'ACM", parent: "CENTER", dx: 0, dy: -80, unlocked: true, desc: "Pilotage global d'un Accueil Collectif de Mineurs.", details: "Coordination générale administrative, humaine et pédagogique d'un centre." },
+                        { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -70, dy: -150, unlocked: false, desc: "Rédaction et animation de la vision éducative du séjour.", details: "Formalisation des objectifs et déclinaison opérationnelle pour l'équipe." },
+                        { id: "A2.1", icon: "📋", label: "Conformité DDCS", parent: "A1", dx: 70, dy: -150, unlocked: false, desc: "Respect strict de la réglementation Jeunesse & Sports.", details: "Vérification des taux d'encadrement, diplômes, normes sanitaires et d'hygiène." },
+                        { id: "A3.1", icon: "👥", label: "Management Équipe", parent: "A1.1", dx: -130, dy: -230, unlocked: false, desc: "Recrutement, animation des réunions et suivi des animateurs.", details: "Accompagnement des stagiaires BAFA, débriefings et régulation du collectif." },
+                        { id: "A2.2", icon: "💰", label: "Budget & Logistique", parent: "A1.1", dx: -50, dy: -230, unlocked: false, desc: "Gestion de la régie, des achats et de l'intendance du séjour.", details: "Suivi budgétaire prévisionnel et gestion des prestataires/partenaires." },
+                        { id: "A4.1", icon: "🚨", label: "Sécurité & PPMS", parent: "A2.1", dx: 50, dy: -230, unlocked: false, desc: "Gestion des risques, urgences médicales et plans de sûreté.", details: "Application des protocoles d'évacuation, soins et liaisons familles." },
+                        { id: "A4.2", icon: "🌱", label: "Éco-ACM & Sobriété", parent: "A2.1", dx: 130, dy: -230, unlocked: false, desc: "Intégration de la sobriété et de l'écologie en centre de loisirs.", details: "Gestion des déchets, circuits courts et sensibilisation environnementale." },
+                        { id: "A3.2", icon: "📈", label: "Bilan & Évaluation", parent: "A3.1", dx: -130, dy: -310, unlocked: false, desc: "Évaluation globale de l'accueil et rédaction du bilan qualitatif.", details: "Rapports pour l'organisateur, bilans financiers et enquêtes de satisfaction." }
                     ]
                 },
                 {
@@ -272,37 +272,30 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & PROJET (SUD)", color: "var(--color-c)",
+                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
                     nodes: [
-                        { id: "C1", icon: "🏕️", label: "Animation & ACM", parent: "CENTER", dx: 0, dy: 80, unlocked: true, desc: "Encadrement de groupes de jeunes (BAFA/BAFD).", details: "Sécurité physique, affective et animation du quotidien." },
-                        { id: "C1.1", icon: "🛡️", label: "Bientraitance", parent: "C1", dx: -70, dy: 150, unlocked: false, desc: "Cadre protecteur et émancipateur.", details: "Prévention des violences et écoute active des mineurs." },
-                        { id: "C1.2", icon: "📋", label: "Réglementation ACM", parent: "C1", dx: 70, dy: 150, unlocked: false, desc: "Respect des normes DDCS / Jeunesse & Sports.", details: "Gestion des risques, taux d'encadrement et sécurité." },
-                        { id: "C2.1", icon: "🎲", label: "Pédagogie Active", parent: "C1.1", dx: -130, dy: 230, unlocked: false, desc: "Apprentissage par l'expérience et le jeu.", details: "Grands jeux, ateliers manuels et projets d'expression." },
-                        { id: "C2.2", icon: "🤝", label: "Dynamique de Groupe", parent: "C1.2", dx: 130, dy: 230, unlocked: false, desc: "Cohérence collective et vivre-ensemble.", details: "Conseils de jeunes, médiation et règles partagées." },
-                        { id: "C3.1", icon: "📰", label: "Éducation Médias", parent: "C2.1", dx: -180, dy: 310, unlocked: false, desc: "Développement de l'esprit critique (EMI).", details: "Décryptage des infox et usages responsables du web." },
-                        { id: "C3.2", icon: "🌿", label: "Pédagogie Nature", parent: "C2.1", dx: -100, dy: 310, unlocked: false, desc: "Immersion en plein air (Outdoor Education).", details: "Connexion au vivant et éco-citoyenneté active." },
-                        { id: "C3.3", icon: "🗺️", label: "Projets Territoriaux", parent: "C2.2", dx: 130, dy: 310, unlocked: false, desc: "Partenariats culturels et associatifs locaux.", details: "Conduite de projets d'animation ancrés sur le territoire." }
+                        { id: "C1", icon: "🏕️", label: "Animation & ACM", parent: "CENTER", dx: 0, dy: 80, unlocked: true, desc: "Encadrement global et animation de groupes de jeunes (BAFA/BAFD).", details: "Garantie du cadre de vie, sécurité physique et animation du quotidien." },
+                        { id: "C1.1", icon: "🛡️", label: "Bientraitance & Écoute", parent: "C1", dx: -80, dy: 150, unlocked: false, desc: "Sécurité affective, bienveillance et repérage des signaux faibles.", details: "Offrir un espace de parole sécurisant et individualisé pour chaque mineur." },
+                        { id: "C1.2", icon: "🎲", label: "Grands Jeux & Veillées", parent: "C1", dx: 80, dy: 150, unlocked: false, desc: "Scénarisation et animation d'univers immersifs collectifs.", details: "Création de jeux de piste, grands jeux de rôle et gestion des temps forts." },
+                        { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression", parent: "C1.1", dx: -140, dy: 230, unlocked: false, desc: "Activités manuelles, artistiques et valorisation des talents.", details: "Projets de création libre, bricolage, théâtre et arts plastiques." },
+                        { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes", parent: "C1.2", dx: 140, dy: 230, unlocked: false, desc: "Co-élaboration des règles de vie et régulation collective.", details: "Animation d'instances participatives et médiation par le dialogue." },
+                        { id: "C3.1", icon: "📰", label: "Éducation Médias (EMI)", parent: "C2.1", dx: -200, dy: 310, unlocked: false, desc: "Sensibilisation ludique aux écrans et esprit critique.", details: "Ateliers de décryptage de l'information et création de supports partagés." },
+                        { id: "C3.2", icon: "🌿", label: "Pédagogie Nature", parent: "C2.1", dx: -120, dy: 310, unlocked: false, desc: "Immersion en plein air et Outdoor Education.", details: "Bivouacs, exploration de l'environnement et sensibilisation écologique." },
+                        { id: "C3.3", icon: "🧩", label: "Inclusion & Diversité", parent: "C2.2", dx: 140, dy: 310, unlocked: false, desc: "Accueil de tous les publics et lutte contre l'exclusion.", details: "Adaptation des activités et accompagnement des profils spécifiques." }
                     ]
                 },
                 {
                     key: "D", name: "🟣 EXPERTISE CAPES & ANGLAIS (OUEST)", color: "var(--color-d)",
                     nodes: [
-                        // Nœuds d'ancrage central
                         { id: "D1.A", icon: "🗣️", label: "Syntaxe & Énonciation", parent: "CENTER", dx: -90, dy: -35, unlocked: true, desc: "Analyse syntaxique SVO et théorie des opérations énonciatives.", details: "Déconstruction rigoureuse des structures de phrase en contexte." },
                         { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", parent: "CENTER", dx: -90, dy: 35, unlocked: true, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, BTS)." },
-
-                        // Branche Linguistique & Phonologie (Haut-Ouest)
                         { id: "D1.B", icon: "🔤", label: "Phonologie -ed", parent: "D1.A", dx: -170, dy: -100, unlocked: true, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification phonétique rigoureuse (/t/, /d/, /id/)." },
                         { id: "D1.C", icon: "🎵", label: "Accentuation & Rythme", parent: "D1.B", dx: -250, dy: -140, unlocked: false, desc: "Maîtrise des schémas intonatifs et accentuels.", details: "Analyse phonologique avancée (stress shift, intonation contour)." },
                         { id: "D1.D", icon: "📖", label: "Opérations Énonciatives", parent: "D1.B", dx: -250, dy: -70, unlocked: false, desc: "Application de la TOPE (Culioli) sur corpus.", details: "Étude des marqueurs modaux, aspectuels et temporels." },
-
-                        // Branche Analyse de Dossier & Culturel (Milieu-Ouest)
                         { id: "D2.B", icon: "📑", label: "Analyse de Dossier", parent: "D1.A", dx: -170, dy: -25, unlocked: false, desc: "Critique de corpus documentaires (Épreuve Disciplinaire).", details: "Présentation, confrontation et mise en perspective sur un axe culturel." },
                         { id: "D2.C", icon: "🏛️", label: "Civilisation & Contextes", parent: "D2.B", dx: -250, dy: -10, unlocked: false, desc: "Maîtrise des repères historiques et politiques du monde anglophone.", details: "Analyse des enjeux civilisationnels (ex: Territoire et mémoire, arts, sociétés)." },
-
-                        // Branche Pédagogie & Didactique du Secondaire (Bas-Ouest)
                         { id: "D3.A", icon: "📝", label: "Objectifs Langagiers", parent: "D2.A", dx: -170, dy: 50, unlocked: false, desc: "Transposition didactique d'un fait de langue.", details: "Extraction d'attendus grammaticaux et lexicaux adaptés à la classe." },
-                        { id: "D3.B", icon: "📋", label: "Conception de Séquence", parent: "D3.A", dx: -250, dy: 55, unlocked: false, desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents et rétroplanning." },
+                        { id: "D3.B", icon: "📋", label: "Conception Séquence", parent: "D3.A", dx: -250, dy: 55, unlocked: false, desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents et rétroplanning." },
                         { id: "D3.C", icon: "🎯", label: "Évaluation & Tâches", parent: "D3.B", dx: -330, dy: 20, unlocked: false, desc: "Création de grilles critériées et tâches finales.", details: "Évaluation sommative et formative alignée sur le CECRL." },
                         { id: "D3.D", icon: "⚡", label: "IA & Différenciation", parent: "D3.B", dx: -330, dy: 90, unlocked: false, desc: "Intégration de l'IA pour l'anglais.", details: "Génération d'exercices adaptatifs sur-mesure pour élèves à Besoins Particuliers." }
                     ]
@@ -314,7 +307,7 @@
         let nodePositions = {};
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_capes_deep_skills');
+            const saved = localStorage.getItem('theo_final_app_skills');
             if (saved) {
                 const map = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -330,7 +323,7 @@
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => { map[n.id] = n.unlocked; });
             });
-            localStorage.setItem('theo_capes_deep_skills', JSON.stringify(map));
+            localStorage.setItem('theo_final_app_skills', JSON.stringify(map));
         }
 
         function initGraph() {
