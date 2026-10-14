@@ -3,744 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Arbre de Compétences Radiale - Théo Legros</title>
     <style>
         :root {
-            --bg-color: #12141d;
-            --card-bg: #1a1d29;
-            --text-main: #f0f3f8;
-            --text-muted: #7e859b;
-            --locked-node: #252836;
-            --locked-border: #3d4257;
-            --locked-line: #2d3245;
-            
-            /* Color schemes per region */
-            --red-main: #ff334b;
-            --red-glow: rgba(255, 51, 75, 0.4);
-            --blue-main: #2bb0ff;
-            --blue-glow: rgba(43, 176, 255, 0.4);
-            --green-main: #2ecc71;
-            --green-glow: rgba(46, 204, 113, 0.4);
-            --purple-main: #a55eea;
-            --purple-glow: rgba(165, 94, 234, 0.4);
+            --bg-color: #0b0d14;
+            --panel-bg: #141722;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --color-a: #ef4444; /* Nord / Rouge */
+            --color-b: #3b82f6; /* Est / Bleu */
+            --color-c: #10b981; /* Sud / Vert */
+            --color-d: #a855f7; /* Ouest / Violet */
+            --center-color: #f59e0b;
+            --locked-color: #334155;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             user-select: none;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: 'Rajdhani', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            overflow-x: auto;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 50% 30%, #1e2235 0%, #12141d 70%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
         }
 
-        header {
-            text-align: center;
-            padding: 25px 20px 10px;
-            position: relative;
-            z-index: 10;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.2rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            font-weight: 800;
-        }
-
-        header p {
-            margin: 6px 0 0;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-        }
-
-        /* Skill Tree Container & Canvas SVG */
-        .tree-viewport {
-            position: relative;
-            width: 1480px;
-            height: 900px;
-            margin: 0 auto;
-            display: block;
-        }
-
-        svg#connection-svg {
+        /* SVG & Graph Canvas */
+        #svg-canvas {
+            width: 100%;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke: var(--locked-color);
+            stroke-width: 2px;
+            stroke-dasharray: 4;
+            transition: all 0.5s ease;
+        }
+
+        .connection-line.active-a { stroke: var(--color-a); stroke-dasharray: none; stroke-width: 3px; filter: drop-shadow(0 0 6px var(--color-a)); }
+        .connection-line.active-b { stroke: var(--color-b); stroke-dasharray: none; stroke-width: 3px; filter: drop-shadow(0 0 6px var(--color-b)); }
+        .connection-line.active-c { stroke: var(--color-c); stroke-dasharray: none; stroke-width: 3px; filter: drop-shadow(0 0 6px var(--color-c)); }
+        .connection-line.active-d { stroke: var(--color-d); stroke-dasharray: none; stroke-width: 3px; filter: drop-shadow(0 0 6px var(--color-d)); }
+
+        /* DOM Nodes Layer */
+        #nodes-container {
             width: 100%;
             height: 100%;
-            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
             pointer-events: none;
         }
 
-        .branch-line {
-            fill: none;
-            stroke-linecap: round;
-            transition: stroke 0.4s ease, stroke-width 0.4s ease, filter 0.4s ease;
-        }
-
-        /* Region Summaries / Subtitles */
-        .region-header {
-            position: absolute;
-            text-align: center;
-            z-index: 5;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-        }
-
-        .region-header .title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .region-header .score {
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-top: -2px;
-            line-height: 1;
-        }
-
-        /* Nodes Visual Style */
-        .node {
+        .skill-node {
             position: absolute;
             transform: translate(-50%, -50%);
-            z-index: 5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .node:hover {
-            transform: translate(-50%, -50%) scale(1.18);
-            z-index: 20;
-        }
-
-        .node-circle {
-            width: 58px;
-            height: 58px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: var(--locked-node);
-            border: 3px solid var(--locked-border);
+            background: #0f172a;
+            border: 2px solid var(--locked-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            transition: all 0.3s ease;
-            color: var(--text-muted);
-            font-size: 1.2rem;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
 
-        .node.root-node .node-circle {
-            width: 72px;
-            height: 72px;
-            font-size: 1.6rem;
+        .skill-node:hover {
+            transform: translate(-50%, -50%) scale(1.25);
+            z-index: 10;
         }
 
-        /* Node Counters (e.g. 5/5, 0/5) */
-        .node-badge {
+        .skill-node.center-node {
+            width: 76px;
+            height: 76px;
+            background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
+            border: 3px solid #fef3c7;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.6);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.8em;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .skill-node.unlocked-a { border-color: var(--color-a); background: var(--color-a); color: #fff; box-shadow: 0 0 14px var(--color-a); }
+        .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 14px var(--color-b); }
+        .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 14px var(--color-c); }
+        .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 14px var(--color-d); }
+
+        .skill-node .node-id {
+            font-size: 0.7em;
+            font-weight: 700;
+        }
+
+        .skill-node .badge-counter {
             position: absolute;
             bottom: -8px;
-            background: #10121a;
-            border: 1.5px solid var(--locked-border);
-            border-radius: 10px;
-            padding: 1px 6px;
-            font-size: 0.7rem;
+            background: #000;
+            border: 1px solid currentColor;
+            border-radius: 8px;
+            padding: 1px 4px;
+            font-size: 0.6em;
             font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.8);
-            transition: all 0.3s ease;
         }
 
-        .node-title-sub {
+        /* Labels overlay */
+        .region-header-label {
             position: absolute;
-            top: 100%;
-            margin-top: 10px;
-            font-size: 0.72rem;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 0.85em;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            text-align: center;
-            width: 110px;
             pointer-events: none;
-            line-height: 1.1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            opacity: 0.9;
         }
 
-        /* Unlocked Node Glow Effects by Region */
-        .node[data-region="A"].unlocked .node-circle {
-            border-color: var(--red-main);
-            color: var(--red-main);
-            box-shadow: 0 0 18px var(--red-glow), inset 0 0 10px var(--red-glow);
-            background: radial-gradient(circle, #3d1017 0%, #1a1d29 100%);
-        }
-        .node[data-region="A"].unlocked .node-badge {
-            border-color: var(--red-main);
-            color: #fff;
-            background: var(--red-main);
-        }
-
-        .node[data-region="B"].unlocked .node-circle {
-            border-color: var(--blue-main);
-            color: var(--blue-main);
-            box-shadow: 0 0 18px var(--blue-glow), inset 0 0 10px var(--blue-glow);
-            background: radial-gradient(circle, #0e2b40 0%, #1a1d29 100%);
-        }
-        .node[data-region="B"].unlocked .node-badge {
-            border-color: var(--blue-main);
-            color: #fff;
-            background: var(--blue-main);
+        /* Score Dashboard HUD */
+        #hud-scores {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 5;
+            background: rgba(20, 23, 34, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 220px;
         }
 
-        .node[data-region="C"].unlocked .node-circle {
-            border-color: var(--green-main);
-            color: var(--green-main);
-            box-shadow: 0 0 18px var(--green-glow), inset 0 0 10px var(--green-glow);
-            background: radial-gradient(circle, #0e3d20 0%, #1a1d29 100%);
-        }
-        .node[data-region="C"].unlocked .node-badge {
-            border-color: var(--green-main);
-            color: #111;
-            background: var(--green-main);
+        .hud-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 0.85em;
         }
 
-        .node[data-region="D"].unlocked .node-circle {
-            border-color: var(--purple-main);
-            color: var(--purple-main);
-            box-shadow: 0 0 18px var(--purple-glow), inset 0 0 10px var(--purple-glow);
-            background: radial-gradient(circle, #2f1245 0%, #1a1d29 100%);
-        }
-        .node[data-region="D"].unlocked .node-badge {
-            border-color: var(--purple-main);
-            color: #fff;
-            background: var(--purple-main);
-        }
-
-        /* Fully Mastered Nodes (Max points) */
-        .node.mastered .node-circle {
-            animation: pulse-glow 2.5s infinite alternate;
-        }
-
-        @keyframes pulse-glow {
-            0% { filter: brightness(1); }
-            100% { filter: brightness(1.35); }
-        }
-
-        /* Popup / Modal */
+        /* Modal Overlay */
         .modal-overlay {
-            display: none;
-            position: fixed;
+            position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 10, 15, 0.85);
-            backdrop-filter: blur(6px);
-            justify-content: center;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: none;
             align-items: center;
-            z-index: 1000;
-            animation: fadeIn 0.25s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            justify-content: center;
         }
 
         .modal-card {
-            background: #161925;
-            border: 2px solid var(--locked-border);
+            background: var(--panel-bg);
             border-radius: 16px;
             width: 90%;
-            max-width: 520px;
-            padding: 28px;
-            position: relative;
+            max-width: 480px;
+            padding: 25px;
+            border: 2px solid var(--text-muted);
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            transform: translateY(0);
-            transition: border-color 0.3s ease;
+            position: relative;
         }
 
-        .modal-close {
+        .close-btn {
             position: absolute;
-            top: 18px;
-            right: 20px;
-            font-size: 1.4rem;
+            top: 15px; right: 20px;
+            font-size: 1.5em;
+            cursor: pointer;
             color: var(--text-muted);
-            cursor: pointer;
-            transition: color 0.2s;
         }
 
-        .modal-close:hover {
-            color: #fff;
-        }
-
-        .modal-tag {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-
-        .modal-title {
-            margin: 0 0 10px;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.25;
-        }
-
-        .modal-desc {
-            color: #b0b8ce;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .modal-details {
-            background: rgba(0,0,0,0.3);
-            border-left: 3px solid var(--locked-border);
-            padding: 12px 15px;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.88rem;
-            color: #d1d7e6;
-            margin-bottom: 25px;
-            line-height: 1.45;
-        }
-
-        /* Controls inside modal */
-        .level-control-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.03);
-            padding: 12px 18px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.06);
-            margin-bottom: 20px;
-        }
-
-        .level-btn {
-            background: var(--locked-node);
-            border: 1px solid var(--locked-border);
-            color: #fff;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .level-btn:hover:not(:disabled) {
-            background: var(--locked-border);
-            transform: scale(1.05);
-        }
-
-        .level-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .level-display {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .btn-toggle-max {
+        .modal-btn {
             width: 100%;
             padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        /* Floating Controls bottom */
-        .reset-bar {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .btn-reset {
-            background: rgba(26, 29, 41, 0.9);
-            border: 1px solid var(--locked-border);
-            color: var(--text-muted);
-            padding: 10px 16px;
+            margin-top: 10px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            border: none;
             font-weight: 700;
             cursor: pointer;
-            backdrop-filter: blur(4px);
             transition: all 0.2s;
-        }
-
-        .btn-reset:hover {
-            color: #fff;
-            border-color: var(--red-main);
-            background: rgba(231, 76, 60, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1><i class="fa-solid fa-gem" style="color: #2bb0ff; font-size: 1.8rem; margin-right: 10px;"></i>Arbre de Compétences</h1>
-        <p>Théo Legros • Profil d'Expertise & Progression Médio-Territoriale</p>
-    </header>
-
-    <div class="tree-viewport" id="treeViewport">
-        <!-- SVG Canvas layer for visual branch lines -->
-        <svg id="connection-svg"></svg>
-
-        <!-- Dynamic Headers and Nodes will be rendered here -->
+    <div id="hud-scores">
+        <div style="font-size: 0.9em; font-weight: 800; border-bottom: 1px solid #334155; padding-bottom: 5px; margin-bottom: 5px;">PROGRESSION GLOBALE</div>
+        <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage & Réseaux):</span> <span id="score-a">0</span></div>
+        <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation & RH):</span> <span id="score-b">0</span></div>
+        <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie & Projet):</span> <span id="score-c">0</span></div>
+        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (Disciplinaire/CAPES):</span> <span id="score-d">0</span></div>
     </div>
 
+    <svg id="svg-canvas"></svg>
+    <div id="nodes-container"></div>
+
     <!-- Modal Popup -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card" id="modalCard">
-            <span class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
-            <div class="modal-tag" id="modalTag">REGION</div>
-            <h2 class="modal-title" id="modalTitle">Node Title</h2>
-            <div class="modal-desc" id="modalDesc">Short description...</div>
-            
-            <div class="modal-details" id="modalDetails">
-                Extended details and specific objectives...
+    <div class="modal-overlay" id="modal">
+        <div class="modal-card" id="modal-card">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modal-badge" style="display:inline-block; padding: 3px 10px; border-radius: 12px; font-weight:800; font-size:0.75em; margin-bottom: 10px;"></div>
+            <h2 id="modal-title" style="margin-bottom: 8px; font-size: 1.2em;"></h2>
+            <p id="modal-desc" style="color: var(--text-muted); font-size:0.9em; margin-bottom:15px; line-height: 1.4;"></p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                <strong style="font-size:0.8em; color: var(--text-muted);">ACTIONS & DÉTAILS :</strong>
+                <p id="modal-details" style="font-size: 0.85em; margin-top: 5px;"></p>
             </div>
-
-            <div class="level-control-box">
-                <span style="font-size: 0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Niveau d'Expertise :</span>
-                <div style="display:flex; align-items:center; gap: 12px;">
-                    <button class="level-btn" id="btnDec" onclick="adjustLevel(-1)">-</button>
-                    <span class="level-display" id="levelDisplay">0 / 5</span>
-                    <button class="level-btn" id="btnInc" onclick="adjustLevel(1)">+</button>
-                </div>
-            </div>
-
-            <button class="btn-toggle-max" id="btnToggleMax" onclick="toggleMaxLevel()">
-                Maximaliser (Débloquer Tout)
-            </button>
+            <button class="modal-btn" id="btn-toggle" onclick="toggleSkill()"></button>
         </div>
     </div>
 
-    <!-- Bottom Reset Bar -->
-    <div class="reset-bar">
-        <button class="btn-reset" onclick="resetProgress()"><i class="fa-solid fa-rotate-left" style="margin-right:6px;"></i>Réinitialiser la progression</button>
-    </div>
-
     <script>
-        // DATA STRUCTURE: 4 REGIONS WITH GAMIFIED FAN-OUT GRAPH POSITIONS
-        const regionConfig = {
-            A: { name: "PILOTAGE & RÉSEAUX", color: "#ff334b", glow: "rgba(255, 51, 75, 0.4)", headerPos: { x: 370, y: 780 } },
-            B: { name: "FORMATION & RH", color: "#2bb0ff", glow: "rgba(43, 176, 255, 0.4)", headerPos: { x: 740, y: 830 } },
-            C: { name: "PÉDAGOGIE & JEUNESSE", color: "#2ecc71", glow: "rgba(46, 204, 113, 0.4)", headerPos: { x: 1110, y: 780 } },
-            D: { name: "CAPES & LINGUISTIQUE", color: "#a55eea", glow: "rgba(165, 94, 234, 0.4)", headerPos: { x: 740, y: 320 } }
+        // DONNÉES COMPLÈTES AVEC FUTURES COMPÉTENCES
+        const graphData = {
+            center: { id: "CENTER", label: "THÉO\nLEGROS", desc: "Nœud central de compétences universelles.", details: "Enseignant, Formateur et Manager." },
+            regions: [
+                {
+                    key: "A", name: "🔴 PILOTAGE, STRATÉGIE & RÉSEAUX (NORD)", color: "var(--color-a)", angle: -90,
+                    nodes: [
+                        { id: "A1", label: "Animation Réseaux", maxPts: 1, currentPts: 1, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique et suivi de l'engagement." },
+                        { id: "A1.1", label: "Raison d'être réseau", maxPts: 5, currentPts: 0, desc: "Définition des objectifs fondamentaux du réseau.", details: "Cadrer la mission selon le contexte géographique/social." },
+                        { id: "A2.1", label: "Diagnostic Stratégique", maxPts: 5, currentPts: 0, desc: "Réalisation d'audit stratégique global.", details: "Analyse SWOT et cadrage des besoins de transformation." },
+                        { id: "A2.6", label: "Sobriété & Transition Écolo", maxPts: 5, currentPts: 0, desc: "Nouveau : Stratégie de sobriété et de transition écologique dans les projets.", details: "Planification écologique appliquée au public et associatif." },
+                        { id: "A2.7", label: "Numérique Éthique & RGPD", maxPts: 5, currentPts: 0, desc: "Nouveau : Pilotage de la transformation numérique éthique et souveraine.", details: "Gouvernance des outils collaboratifs et conformité RGPD." },
+                        { id: "A4.6", label: "Ingénierie Hybride/Distanciel", maxPts: 5, currentPts: 0, desc: "Nouveau : Ingénierie de projet hybride et gestion d'équipes à distance.", details: "Piloter des collectifs en synchrone et asynchrone." }
+                    ]
+                },
+                {
+                    key: "B", name: "🔵 FORMATION, INGÉNIERIE & RH (EST)", color: "var(--color-b)", angle: 0,
+                    nodes: [
+                        { id: "B1", label: "Ingénierie Pédagogique", maxPts: 1, currentPts: 1, desc: "Conception de dispositifs de formation d'adultes.", details: "Méthodes actives et ingénierie andragogique." },
+                        { id: "B1.1", label: "Alignement Pédagogique", maxPts: 5, currentPts: 0, desc: "Garantie de cohérence Objectifs/Méthodes/Évaluations.", details: "Formuler des attendus explicites." },
+                        { id: "B1.6", label: "Blended & Micro-Learning", maxPts: 5, currentPts: 0, desc: "Nouveau : Conception de formations Blended Learning et Micro-learning.", details: "Modules e-learning, classes virtuelles et présentiel." },
+                        { id: "B1.7", label: "IA Générative en Formation", maxPts: 5, currentPts: 0, desc: "Nouveau : Intégration raisonnée des IA génératives en ingénierie.", details: "Création assistée de scénarios et supports d'évaluation." },
+                        { id: "B3.6", label: "RPS & Qualité de Vie au Travail", maxPts: 5, currentPts: 0, desc: "Nouveau : Prévention des RPS et gestion de la QVT.", details: "Suivi du bien-être et de la charge mentale des bénévoles/salariés." },
+                        { id: "B3.7", label: "Inclusion & Neurodiversité", maxPts: 5, currentPts: 0, desc: "Nouveau : Management de la diversité et neurodiversité.", details: "Accompagnement des profils DYS, TSA et intergénérationnels." }
+                    ]
+                },
+                {
+                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & PROJET (SUD)", color: "var(--color-c)", angle: 90,
+                    nodes: [
+                        { id: "C1", label: "Animation d'Activités", maxPts: 1, currentPts: 1, desc: "Gestion et animation de groupes de jeunes.", details: "Sécurité physique et affective." },
+                        { id: "C3.1", label: "Protection & Bientraitance", maxPts: 5, currentPts: 0, desc: "Cadres de bientraitance et prévention.", details: "Créer des espaces sécurisants et émancipateurs." },
+                        { id: "C2.6", label: "Éducation aux Médias (EMI)", maxPts: 5, currentPts: 0, desc: "Nouveau : Éducation aux médias, à l'information et esprit critique.", details: "Lutte contre les infox et accompagnement aux réseaux." },
+                        { id: "C2.7", label: "Pédagogie par la Nature", maxPts: 5, currentPts: 0, desc: "Nouveau : Pédagogie par la nature (Outdoor Education).", details: "Apprentissage immersif en plein air adossé à l'écologie." }
+                    ]
+                },
+                {
+                    key: "D", name: "🟣 EXPERTISE CAPES & LINGUISTIQUE (OUEST)", color: "var(--color-d)", angle: 180,
+                    nodes: [
+                        { id: "D1.A", label: "Analyse Syntaxique SVO", maxPts: 1, currentPts: 1, desc: "Syntaxe anglaise et relations prédicatives.", details: "Théorie des opérations énonciatives." },
+                        { id: "D1.B", label: "Phonologie -ed", maxPts: 1, currentPts: 1, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification des variantes phonétiques." },
+                        { id: "D2.A", label: "Différenciation 6e-BTS", maxPts: 1, currentPts: 1, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine aux contextes et niveaux." },
+                        { id: "D1.6", label: "Analyse de Discours Numériques", maxPts: 5, currentPts: 0, desc: "Nouveau : Analyse de corpus de discours numériques contemporains.", details: "Linguistique des médias et réseaux anglophones." },
+                        { id: "D2.6", label: "IA & Différenciation en Anglais", maxPts: 5, currentPts: 0, desc: "Nouveau : Intégration de l'IA pour la différenciation индивидуаisée.", details: "Exercices génératifs sur-mesure pour les élèves." },
+                        { id: "D2.7", label: "Parcours Éducatifs Transversaux", maxPts: 5, currentPts: 0, desc: "Nouveau : Didactique des parcours Citoyen, EAC et Santé.", details: "Articuler cours d'anglais et citoyenneté globale." }
+                    ]
+                }
+            ]
         };
 
-        const nodesData = [
-            // ==========================================
-            // 🔴 REGION A: PILOTAGE & RÉSEAUX (Left Wing)
-            // ==========================================
-            { id: "A_ROOT", region: "A", icon: "fa-sitemap", x: 370, y: 680, title: "Pilotage & Réseaux", maxPoints: 1, desc: "Cœur de compétences en animation territoriale et ingénierie de réseaux.", details: "Pilotage global de réseaux, gouvernance et démarches stratégiques.", parent: null, isRoot: true },
-            
-            { id: "A1", region: "A", icon: "fa-diagram-project", x: 260, y: 560, title: "A1: Animation Réseaux", maxPoints: 1, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique, création d'outils collaboratifs et suivi de l'engagement.", parent: "A_ROOT" },
-            { id: "A1.1", region: "A", icon: "fa-bullseye", x: 150, y: 520, title: "A1.1: Raison d'être", maxPoints: 5, desc: "Définition de la raison d'être et des objectifs fondamentaux du réseau.", details: "Analyser le contexte géographique/social et cadrer la mission.", parent: "A1" },
-            { id: "A1.2", region: "A", icon: "fa-file-signature", x: 120, y: 430, title: "A1.2: Charte & Cadre", maxPoints: 5, desc: "Formalisation de chartes de fonctionnement et de travail partagé.", details: "Établir les règles, droits, devoirs et modalités de coopération.", parent: "A1" },
-            { id: "A1.3", region: "A", icon: "fa-people-group", x: 150, y: 340, title: "A1.3: Intel. Collective", maxPoints: 5, desc: "Approches d'intelligence collective pour stimuler la coopération.", details: "Animer des ateliers participatifs et pérenniser les dynamiques.", parent: "A1" },
+        // RENDER & GEOMETRY
+        let activeNode = null;
 
-            { id: "A2", region: "A", icon: "fa-compass", x: 370, y: 530, title: "A2: Stratégie Global", maxPoints: 1, desc: "Déploiement et déclinaison opérationnelle d'une stratégie.", details: "Situer son action et représenter la vision à l'externe.", parent: "A_ROOT" },
-            { id: "A2.1", region: "A", icon: "fa-chart-pie", x: 280, y: 420, title: "A2.1: Diagnostic", maxPoints: 5, desc: "Réalisation de diagnostics stratégiques globaux.", details: "Audit interne/externe, matrices SWOT et besoin de changement.", parent: "A2" },
-            { id: "A2.2", region: "A", icon: "fa-arrow-trend-up", x: 370, y: 400, title: "A2.2: Changement", maxPoints: 5, desc: "Conception et pilotage de démarches de conduite du changement.", details: "Accompagner les équipes dans les transitions organisationnelles.", parent: "A2" },
-
-            { id: "A3", region: "A", icon: "fa-shield-halved", x: 480, y: 560, title: "A3: Conformité ACM", maxPoints: 1, desc: "Maîtrise de la réglementation et du cadre légal ACM.", details: "Respect du cadre juridique et des textes fondamentaux.", parent: "A_ROOT" },
-            { id: "A3.1", region: "A", icon: "fa-scale-balanced", x: 500, y: 440, title: "A3.1: Statuts & Lois", maxPoints: 5, desc: "Application des textes juridiques et règlements.", details: "Maîtrise des statuts et de l'organisation démocratique.", parent: "A3" },
-            { id: "A3.2", region: "A", icon: "fa-hand-holding-heart", x: 580, y: 360, title: "A3.2: Bientraitance", maxPoints: 5, desc: "Prévention des risques et politiques de bientraitance.", details: "Garantir un environnement sécurisant, émancipateur et éthique.", parent: "A3" },
-
-            // ==========================================
-            // 🔵 REGION B: FORMATION & RH (Center Spine)
-            // ==========================================
-            { id: "B_ROOT", region: "B", icon: "fa-graduation-cap", x: 740, y: 720, title: "Formation & RH", maxPoints: 1, desc: "Spécialité en ingénierie de formation pour adultes et gestion RH.", details: "Andragogie, postures de formation et accompagnement des équipes.", parent: null, isRoot: true },
-
-            { id: "B1", region: "B", icon: "fa-book-open-reader", x: 670, y: 600, title: "B1: Ingénierie Pédag.", maxPoints: 1, desc: "Conception et adaptation de modules de formation d'adultes.", details: "Compréhension de la démarche pédagogique globale et des référentiels.", parent: "B_ROOT" },
-            { id: "B1.1", region: "B", icon: "fa-bullseye", x: 590, y: 500, title: "B1.1: Alignement", maxPoints: 5, desc: "Adéquation entre Objectifs, Contenus et Méthodes d'évaluation.", details: "Formuler des attendus précis et cohérents.", parent: "B1" },
-            { id: "B1.2", region: "B", icon: "fa-cubes", x: 670, y: 480, title: "B1.2: Approche APC", maxPoints: 5, desc: "Conception par l'Approche Par Compétences (APC).", details: "Utiliser les référentiels métiers pour structurer les apprentissages.", parent: "B1" },
-
-            { id: "B2", region: "B", icon: "fa-chalkboard-user", x: 810, y: 600, title: "B2: Andragogie", maxPoints: 1, desc: "Animation et facilitation de sessions d'apprentissage pour adultes.", details: "Postures actives, bienveillance et dynamiques de groupe.", parent: "B_ROOT" },
-            { id: "B2.1", region: "B", icon: "fa-brain", x: 810, y: 480, title: "B2.1: Neurosciences", maxPoints: 5, desc: "Prise en compte des profils d'apprentissage et leviers cognitifs.", details: "Mémorisation, motivation et levée des freins d'apprentissage.", parent: "B2" },
-            { id: "B2.2", region: "B", icon: "fa-user-check", x: 890, y: 500, title: "B2.2: Auto-évaluation", maxPoints: 5, desc: "Dispositifs d'auto-évaluation et bilans réflexifs.", details: "Donner aux apprenants les moyens de mesurer leur progression.", parent: "B2" },
-
-            // ==========================================
-            // 🟢 REGION C: PÉDAGOGIE & JEUNESSE (Right Wing)
-            // ==========================================
-            { id: "C_ROOT", region: "C", icon: "fa-child-reaching", x: 1110, y: 680, title: "Pédagogie & Jeunesse", maxPoints: 1, desc: "Accompagnement éducatif, animation et gestion de projets jeunesse.", details: "Conception de projets pédagogiques et posture sécurisante.", parent: null, isRoot: true },
-
-            { id: "C1", region: "C", icon: "fa-puzzle-piece", x: 1000, y: 560, title: "C1: Animation & Activités", maxPoints: 1, desc: "Conception d'activités et encadrement de la vie quotidienne.", details: "Jeux, grands jeux, sécurité et rythme de vie.", parent: "C_ROOT" },
-            { id: "C1.1", region: "C", icon: "fa-layer-group", x: 900, y: 440, title: "C1.1: Fiches Projets", maxPoints: 5, desc: "Fiches techniques et démarches d'animation ciblées.", details: "Rédiger des objectifs pédagogiques et opérationnels limpides.", parent: "C1" },
-            { id: "C1.2", region: "C", icon: "fa-hands-holding-child", x: 980, y: 360, title: "C1.2: Participation", maxPoints: 5, desc: "Mise en place d'instances participatives et citoyennes pour jeunes.", details: "Rendre les jeunes acteurs directeurs de leurs projets.", parent: "C1" },
-
-            { id: "C2", region: "C", icon: "fa-heart-pulse", x: 1110, y: 530, title: "C2: Cadre & Protection", maxPoints: 1, desc: "Posture bientraitante et sécurité physique/affective.", details: "Gestion du groupe et application des principes de protection.", parent: "C_ROOT" },
-            { id: "C2.1", region: "C", icon: "fa-shield-cat", x: 1110, y: 400, title: "C2.1: Gestion Crise", maxPoints: 5, desc: "Gestion des régulations de comportements et situations de crise.", details: "Désamorcer les conflits avec bienveillance et fermeté.", parent: "C2" },
-
-            { id: "C3", region: "C", icon: "fa-seedling", x: 1220, y: 560, title: "C3: Émancipation", maxPoints: 1, desc: "Accompagnement du développement individuel du jeune.", details: "Autonomie, prise de responsabilité et épanouissement.", parent: "C_ROOT" },
-            { id: "C3.1", region: "C", icon: "fa-people-roof", x: 1270, y: 430, title: "C3.1: Partenariat", maxPoints: 5, desc: "Relations de confiance avec les familles et partenaires éducatifs.", details: "Coéducation et alliances territoriales.", parent: "C3" },
-            { id: "C3.2", region: "C", icon: "fa-award", x: 1330, y: 340, title: "C3.2: Parcours Éducatif", maxPoints: 5, desc: "Suivi de parcours et valorisation des compétences informelles.", details: "Badges de compétences, bilans et étapes d'émancipation.", parent: "C3" },
-
-            // ==========================================
-            // 🟣 REGION D: CAPES & LINGUISTIQUE (Top Crown)
-            // ==========================================
-            { id: "D_ROOT", region: "D", icon: "fa-language", x: 740, y: 220, title: "CAPES & Linguistique", maxPoints: 1, desc: "Expertise disciplinaire en langue anglaise, linguistique et didactique.", details: "CAPES Anglais, analyse syntaxique, phonologie et didactique 6e-BTS.", parent: null, isRoot: true },
-
-            { id: "D1", region: "D", icon: "fa-spell-check", x: 610, y: 140, title: "D1: Linguistique SVO", maxPoints: 1, desc: "Analyse syntaxique approfondie et énonciation.", details: "Relations prédicatives, grammaire universitaire et étude de corpus.", parent: "D_ROOT" },
-            { id: "D1.1", region: "D", icon: "fa-quote-left", x: 490, y: 100, title: "D1.1: Énonciation", maxPoints: 5, desc: "Mécanismes d'énonciation et repérages temporels/aspectuels.", details: "Subtilités de la linguistique de l'énonciation anglaise.", parent: "D1" },
-            { id: "D1.2", region: "D", icon: "fa-language", x: 530, y: 220, title: "D1.2: Phonologie", maxPoints: 5, desc: "Morpho-phonologie des terminaisons (-ed, s) et accentuation.", details: "Justification scientifique des règles phonologiques.", parent: "D1" },
-
-            { id: "D2", region: "D", icon: "fa-school", x: 870, y: 140, title: "D2: Didactique 6e-BTS", maxPoints: 1, desc: "Ingénierie didactique pour le secondaire et supérieur.", details: "Progression par compétences CECRL, séquences thématiques et différenciation.", parent: "D_ROOT" },
-            { id: "D2.1", region: "D", icon: "fa-sliders", x: 950, y: 220, title: "D2.1: Différenciation", maxPoints: 5, desc: "Pédagogie différenciée multi-niveaux (Collège, Lycée, BTS).", details: "Adaptation des supports et autonomie des apprenants.", parent: "D2" },
-            { id: "D2.2", region: "D", icon: "fa-briefcase", x: 990, y: 100, title: "D2.2: Anglais Spécialité", maxPoints: 5, desc: "Didactique de l'anglais professionnel et de spécialité (STMG, BTS).", details: "Conception de jeux de rôle de négociation et monde des affaires.", parent: "D2" }
-        ];
-
-        // State Store
-        let userProgress = {};
-        let activeNodeId = null;
-
-        // Load progress from localStorage
-        function loadState() {
-            const saved = localStorage.getItem('theo_skilltree_v2');
+        function loadSavedState() {
+            const saved = localStorage.getItem('theo_radial_skills');
             if (saved) {
-                try {
-                    userProgress = JSON.parse(saved);
-                } catch(e) {
-                    userProgress = {};
-                }
-            } else {
-                // Default unlocks for roots
-                userProgress = {
-                    "A_ROOT": 1, "B_ROOT": 1, "C_ROOT": 1, "D_ROOT": 1,
-                    "A1": 1, "B1": 1, "C1": 1, "D1": 1, "D2": 1,
-                    "D1.2": 5, "D2.1": 5
-                };
+                const map = JSON.parse(saved);
+                graphData.regions.forEach(r => {
+                    r.nodes.forEach(n => {
+                        if (map[n.id] !== undefined) n.currentPts = map[n.id];
+                    });
+                });
             }
         }
 
         function saveState() {
-            localStorage.setItem('theo_skilltree_v2', JSON.stringify(userProgress));
+            const map = {};
+            graphData.regions.forEach(r => {
+                r.nodes.forEach(n => { map[n.id] = n.currentPts; });
+            });
+            localStorage.setItem('theo_radial_skills', JSON.stringify(map));
         }
 
-        function getNodePoints(id) {
-            return userProgress[id] || 0;
-        }
-
-        // Render functions
-        function renderTree() {
-            const viewport = document.getElementById('treeViewport');
-            const svg = document.getElementById('connection-svg');
-            
-            // Clear existing node DOM elements (keep SVG)
-            document.querySelectorAll('.node, .region-header').forEach(el => el.remove());
+        function initGraph() {
+            const svg = document.getElementById('svg-canvas');
+            const container = document.getElementById('nodes-container');
             svg.innerHTML = '';
+            container.innerHTML = '';
 
-            // Calculate Region Total Scores
-            const regionScores = { A: 0, B: 0, C: 0, D: 0 };
-            nodesData.forEach(n => {
-                regionScores[n.region] += getNodePoints(n.id);
-            });
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
 
-            // 1. Render Region Subtitle/Score Headers
-            Object.keys(regionConfig).forEach(regKey => {
-                const cfg = regionConfig[regKey];
-                const header = document.createElement('div');
-                header.className = 'region-header';
-                header.style.left = cfg.headerPos.x + 'px';
-                header.style.top = cfg.headerPos.y + 'px';
-                header.innerHTML = `
-                    <div class="title" style="color: ${cfg.color}">${cfg.name}</div>
-                    <div class="score" style="color: ${cfg.color}">${regionScores[regKey]}</div>
-                `;
-                viewport.appendChild(header);
-            });
+            // Center Node
+            const centerEl = document.createElement('div');
+            centerEl.className = 'skill-node center-node';
+            centerEl.style.left = `${cx}px`;
+            centerEl.style.top = `${cy}px`;
+            centerEl.innerText = "THÉO\nLEGROS";
+            container.appendChild(centerEl);
 
-            // Map nodes by ID for fast position lookup
-            const nodeMap = {};
-            nodesData.forEach(n => nodeMap[n.id] = n);
+            let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
-            // 2. Render SVG Branch Connecting Lines
-            nodesData.forEach(n => {
-                if (n.parent && nodeMap[n.parent]) {
-                    const parentNode = nodeMap[n.parent];
-                    const pPts = getNodePoints(parentNode.id);
-                    const nPts = getNodePoints(n.id);
+            graphData.regions.forEach(r => {
+                const rad = (r.angle * Math.PI) / 180;
+                let regionScore = 0;
 
+                r.nodes.forEach((n, idx) => {
+                    regionScore += n.currentPts;
+                    const distance = 110 + (idx * 55);
+                    const nx = cx + Math.cos(rad) * distance;
+                    const ny = cy + Math.sin(rad) * distance;
+
+                    // Line connection
                     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line.setAttribute('x1', parentNode.x);
-                    line.setAttribute('y1', parentNode.y);
-                    line.setAttribute('x2', n.x);
-                    line.setAttribute('y2', n.y);
-                    line.classList.add('branch-line');
+                    const parentX = idx === 0 ? cx : cx + Math.cos(rad) * (110 + (idx - 1) * 55);
+                    const parentY = idx === 0 ? cy : cy + Math.sin(rad) * (110 + (idx - 1) * 55);
 
-                    const isConnectedAndUnlocked = pPts > 0 && nPts > 0;
-                    const regionColor = regionConfig[n.region].color;
-
-                    if (isConnectedAndUnlocked) {
-                        line.setAttribute('stroke', regionColor);
-                        line.setAttribute('stroke-width', '4');
-                        line.setAttribute('filter', `drop-shadow(0 0 6px ${regionConfig[n.region].glow})`);
-                    } else {
-                        line.setAttribute('stroke', '#2b3044');
-                        line.setAttribute('stroke-width', '2.5');
-                    }
-
+                    line.setAttribute('x1', parentX);
+                    line.setAttribute('y1', parentY);
+                    line.setAttribute('x2', nx);
+                    line.setAttribute('y2', ny);
+                    line.setAttribute('class', `connection-line ${n.currentPts > 0 ? 'active-' + r.key.toLowerCase() : ''}`);
                     svg.appendChild(line);
-                }
+
+                    // Node DOM
+                    const nodeEl = document.createElement('div');
+                    const isUnlocked = n.currentPts > 0;
+                    nodeEl.className = `skill-node ${isUnlocked ? 'unlocked-' + r.key.toLowerCase() : ''}`;
+                    nodeEl.style.left = `${nx}px`;
+                    nodeEl.style.top = `${ny}px`;
+
+                    nodeEl.innerHTML = `
+                        <span class="node-id">${n.id}</span>
+                        <span class="badge-counter" style="color:${r.color}">${n.currentPts}/${n.maxPts}</span>
+                    `;
+
+                    nodeEl.onclick = () => openModal(n, r);
+                    container.appendChild(nodeEl);
+                });
+
+                hudScores[r.key] = regionScore;
             });
 
-            // 3. Render Nodes
-            nodesData.forEach(n => {
-                const points = getNodePoints(n.id);
-                const isUnlocked = points > 0;
-                const isMastered = points === n.maxPoints;
-
-                const nodeEl = document.createElement('div');
-                nodeEl.className = `node ${n.isRoot ? 'root-node' : ''} ${isUnlocked ? 'unlocked' : ''} ${isMastered ? 'mastered' : ''}`;
-                nodeEl.style.left = n.x + 'px';
-                nodeEl.style.top = n.y + 'px';
-                nodeEl.setAttribute('data-region', n.region);
-
-                nodeEl.innerHTML = `
-                    <div class="node-circle">
-                        <i class="fa-solid ${n.icon}"></i>
-                        <div class="node-badge">${points}/${n.maxPoints}</div>
-                    </div>
-                    <div class="node-title-sub">${n.title}</div>
-                `;
-
-                nodeEl.onclick = () => openModal(n.id);
-                viewport.appendChild(nodeEl);
-            });
+            // Update Scores HUD
+            document.getElementById('score-a').innerText = hudScores.A;
+            document.getElementById('score-b').innerText = hudScores.B;
+            document.getElementById('score-c').innerText = hudScores.C;
+            document.getElementById('score-d').innerText = hudScores.D;
         }
 
-        // Modal Management
-        function openModal(nodeId) {
-            activeNodeId = nodeId;
-            const node = nodesData.find(n => n.id === nodeId);
-            const regCfg = regionConfig[node.region];
-            const currentPoints = getNodePoints(nodeId);
+        // MODAL
+        function openModal(node, region) {
+            activeNode = node;
+            const modal = document.getElementById('modal');
+            const card = document.getElementById('modal-card');
+            
+            card.style.borderColor = region.color;
+            document.getElementById('modal-title').innerText = `${node.id} - ${node.label}`;
+            document.getElementById('modal-desc').innerText = node.desc;
+            document.getElementById('modal-details').innerText = node.details;
 
-            const card = document.getElementById('modalCard');
-            card.style.borderColor = regCfg.color;
-
-            const tag = document.getElementById('modalTag');
-            tag.innerText = regCfg.name;
-            tag.style.background = regCfg.color;
-            tag.style.color = node.region === 'C' ? '#111' : '#fff';
-
-            document.getElementById('modalTitle').innerText = `${node.id} - ${node.title}`;
-            document.getElementById('modalDesc').innerText = node.desc;
-            document.getElementById('modalDetails').innerText = node.details;
-
-            updateModalControls(node, currentPoints, regCfg);
-
-            document.getElementById('modalOverlay').style.display = 'flex';
+            updateModalUI(region);
+            modal.style.display = 'flex';
         }
 
-        function updateModalControls(node, points, regCfg) {
-            document.getElementById('levelDisplay').innerText = `${points} / ${node.maxPoints}`;
-            document.getElementById('btnDec').disabled = (points <= 0);
-            document.getElementById('btnInc').disabled = (points >= node.maxPoints);
-
-            const maxBtn = document.getElementById('btnToggleMax');
-            if (points === node.maxPoints) {
-                maxBtn.innerText = "Réinitialiser ce nœud (0 point)";
-                maxBtn.style.background = "#2b3044";
-                maxBtn.style.color = "#fff";
+        function updateModalUI(region) {
+            const badge = document.getElementById('modal-badge');
+            const btn = document.getElementById('btn-toggle');
+            
+            if (activeNode.currentPts > 0) {
+                badge.style.background = region.color;
+                badge.style.color = "#fff";
+                badge.innerText = `DÉBLOQUÉ (${activeNode.currentPts}/${activeNode.maxPts} PTS)`;
+                btn.innerText = "Réinitialiser (0 Pts)";
+                btn.style.background = "#ef4444";
+                btn.style.color = "#fff";
             } else {
-                maxBtn.innerText = "Maximaliser (Débloquer Tout)";
-                maxBtn.style.background = regCfg.color;
-                maxBtn.style.color = node.region === 'C' ? '#111' : '#fff';
+                badge.style.background = "#334155";
+                badge.style.color = "#aaa";
+                badge.innerText = "VERROUILLÉ (0 PTS)";
+                btn.innerText = `Débloquer au Max (${activeNode.maxPts}/${activeNode.maxPts} Pts)`;
+                btn.style.background = "#10b981";
+                btn.style.color = "#fff";
             }
         }
 
-        function adjustLevel(delta) {
-            if (!activeNodeId) return;
-            const node = nodesData.find(n => n.id === activeNodeId);
-            let current = getNodePoints(activeNodeId);
-            current = Math.max(0, Math.min(node.maxPoints, current + delta));
-            
-            userProgress[activeNodeId] = current;
-            saveState();
-            renderTree();
-            updateModalControls(node, current, regionConfig[node.region]);
-        }
-
-        function toggleMaxLevel() {
-            if (!activeNodeId) return;
-            const node = nodesData.find(n => n.id === activeNodeId);
-            let current = getNodePoints(activeNodeId);
-            
-            if (current === node.maxPoints) {
-                userProgress[activeNodeId] = 0;
-            } else {
-                userProgress[activeNodeId] = node.maxPoints;
+        function toggleSkill() {
+            if (activeNode) {
+                activeNode.currentPts = activeNode.currentPts > 0 ? 0 : activeNode.maxPts;
+                saveState();
+                initGraph();
+                closeModal();
             }
-
-            saveState();
-            renderTree();
-            updateModalControls(node, userProgress[activeNodeId], regionConfig[node.region]);
         }
 
         function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-            activeNodeId = null;
+            document.getElementById('modal').style.display = 'none';
         }
 
-        function resetProgress() {
-            if (confirm("Voulez-vous réinitialiser toute la progression de l'arbre ?")) {
-                userProgress = {};
-                saveState();
-                renderTree();
-            }
-        }
-
-        // Close modal when clicking background overlay
-        document.getElementById('modalOverlay').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // Initialize on load
-        loadState();
-        renderTree();
+        window.onresize = initGraph;
+        loadSavedState();
+        initGraph();
     </script>
 </body>
 </html>
