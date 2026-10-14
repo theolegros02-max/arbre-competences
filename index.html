@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version 31 - Nœuds et Titres Agrandis)</title>
+    <title>Arbre de Compétences - Théo Legros (Version 32 - Liens Dynamiques par Maîtrise)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -65,14 +65,14 @@
 
         .connection-line {
             stroke: var(--locked-color);
-            stroke-width: 4px; stroke-dasharray: 6;
+            stroke-width: 4px;
             transition: stroke 0.3s ease;
         }
 
-        .connection-line.active-a { stroke: var(--color-a); stroke-dasharray: none; stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-a)); }
-        .connection-line.active-b { stroke: var(--color-b); stroke-dasharray: none; stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-b)); }
-        .connection-line.active-c { stroke: var(--color-c); stroke-dasharray: none; stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-c)); }
-        .connection-line.active-d { stroke: var(--color-d); stroke-dasharray: none; stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
+        .connection-line.active-a { stroke: var(--color-a); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-a)); }
+        .connection-line.active-b { stroke: var(--color-b); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-b)); }
+        .connection-line.active-c { stroke: var(--color-c); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-c)); }
+        .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
 
         #nodes-container {
             width: 100%; height: 100%;
@@ -86,7 +86,6 @@
             pointer-events: auto; cursor: pointer; gap: 8px;
         }
 
-        /* --- TAILLE DES NŒUDS AGRANDIE --- */
         .skill-node {
             width: 76px; height: 76px; border-radius: 50%;
             background: #1e293b; border: 4px solid var(--locked-color);
@@ -113,7 +112,6 @@
 
         .node-icon { font-size: 1.8em; }
 
-        /* --- TITRE AU SURVOL AGRANDI --- */
         .node-title-label {
             font-size: 1.1em; font-weight: 800;
             color: var(--text-main); text-align: center; white-space: nowrap;
@@ -516,7 +514,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v31');
+            const saved = localStorage.getItem('theo_final_app_skills_v32');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -537,7 +535,16 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v31', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v32', JSON.stringify(data));
+        }
+
+        function isNodeUnlocked(id) {
+            if (id === "CENTER") return true;
+            for (let r of graphData.regions) {
+                let found = r.nodes.find(n => n.id === id);
+                if (found) return found.unlocked;
+            }
+            return false;
         }
 
         function initGraph() {
@@ -577,7 +584,8 @@
                     const pos = nodePositions[n.id];
                     const parentPos = nodePositions[n.parent];
 
-                    if (parentPos) {
+                    // Le lien s'affiche uniquement si le parent direct est débloqué/maîtrisé
+                    if (parentPos && isNodeUnlocked(n.parent)) {
                         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                         line.setAttribute('x1', parentPos.x); line.setAttribute('y1', parentPos.y);
                         line.setAttribute('x2', pos.x); line.setAttribute('y2', pos.y);
