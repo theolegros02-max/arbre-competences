@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (CAPES Hyper-Atomisé v22)</title>
+    <title>Arbre de Compétences - Théo Legros (Centré sur le Noyau v23)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -200,7 +200,7 @@
         <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation RH):</span> <span id="score-b">0</span></div>
         <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie Youth):</span> <span id="score-c">0</span></div>
         <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES Anglais):</span> <span id="score-d">0</span></div>
-        <button class="reset-view-btn" onclick="resetView()">🎯 Vue Globale & Réinitialiser</button>
+        <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
     </div>
 
     <div id="world">
@@ -247,7 +247,7 @@
         }
 
         const graphData = {
-            center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
+            center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
             regions: [
                 {
                     key: "A", name: "🔴 PILOTAGE, STRATÉGIE & DIRECTION ACM (NORD)", color: "var(--color-a)",
@@ -338,39 +338,29 @@
                     key: "D", name: "🟣 EXPERTISE CAPES ANGLAIS (OUEST - HYPER-ATOMISÉ)", color: "var(--color-d)",
                     nodes: [
                         { id: "D1", icon: "🇬🇧", label: "Pôle Réussite CAPES Anglais", parent: "CENTER", dx: -280, dy: 0, unlocked: true, link: "", desc: "Centre de préparation intensive au CAPES externe d'anglais (Écrit & Oral).", details: "Maîtrise académique de l'admissibilité et précision didactique de l'admission." },
-                        
-                        /* --- SOUS-PÔLE 1 : ADMISSIBILITÉ (ÉCRIT - SYNTHÈSE & CORPUS) --- */
                         { id: "D1.1", icon: "📑", label: "Méthodologie Comparée Corpus", parent: "D1", dx: -480, dy: -340, unlocked: false, link: "", desc: "Analyse croisée d'un corpus documentaire tridimensionnel.", details: "Extraction des convergences, divergences et problématisation globale." },
                         { id: "D1.2", icon: "🧭", label: "Problématisation & Plan en 3 Parties", parent: "D1.1", dx: -700, dy: -440, unlocked: false, link: "", desc: "Construction logique et dialectique de la dissertation.", details: "Élaboration de la problématique centrale et articulation rigoureuse des parties." },
                         { id: "D1.3", icon: "📖", label: "Stylistique & Rhétorique Littéraire", parent: "D1.1", dx: -920, dy: -540, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires.", details: "Registres, polyphonie, tropes, métaphores et figures de style." },
                         { id: "D1.4", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -700, dy: -240, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photo, caricature, affiche).", details: "Composition, cadrage, jeux de lumière et implicite visuel." },
                         { id: "D1.5", icon: "📰", label: "Analyse Presse Anglophone", parent: "D1.4", dx: -920, dy: -240, unlocked: false, link: "", desc: "Étude des articles de fond (UK/US) et rhétorique journalistique.", details: "Biais éditoriaux, registres de langue et prise de position." },
                         { id: "D1.6", icon: "✍️", label: "Langue Académique Écrite (C1/C2)", parent: "D1.1", dx: -500, dy: -540, unlocked: false, link: "", desc: "Maîtrise de l'anglais écrit de niveau agrégatif.", details: "Lexique de spécialité, variété syntaxique et cohésion textuelle." },
-
-                        /* --- SOUS-PÔLE 2 : LINGUISTIQUE ÉNONCIATIVE (TOPE) --- */
                         { id: "D2.1", icon: "🗣️", label: "Théorie Culioli (TOPE)", parent: "D1", dx: -480, dy: -140, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives appliquée sur corpus.", details: "Repères origines, opérations de prédication et instanciation." },
                         { id: "D2.2", icon: "📍", label: "Repérage Énonciatif S0/T0", parent: "D2.1", dx: -700, dy: -80, unlocked: false, link: "", desc: "Analyse fine du ancrage temporel et subjectif.", details: "Opérations de centrage, balayage et rupture." },
                         { id: "D2.3", icon: "⚙️", label: "Système Verbal & Modalisateurs", parent: "D2.1", dx: -920, dy: 0, unlocked: false, link: "", desc: "Déconstruction du groupe verbal et auxiliaires modaux.", details: "Valeurs épistémiques/déontiques, valeur de will/would." },
                         { id: "D2.4", icon: "⏳", label: "Aspectualité (be+-ing / have+-en)", parent: "D2.3", dx: -1140, dy: 0, unlocked: false, link: "", desc: "Valeurs aspectuelles et repérages inter-locuteurs.", details: "Effets de sens de l'auxiliation et parcours." },
                         { id: "D2.5", icon: "🔗", label: "Passif, Causatives & Subordonnées", parent: "D2.1", dx: -700, dy: 60, unlocked: false, link: "", desc: "Analyse des structures complexes et enchâssements.", details: "Constructions passives, causatives (make/have/get) et hypothèses." },
                         { id: "D2.6", icon: "🏷️", label: "Détermination Nominale & Quantif.", parent: "D2.1", dx: -920, dy: 100, unlocked: false, link: "", desc: "Grammaire fine du groupe nominal et quantification.", details: "Fonctionnement des articles (a/the/\emptyset), génitifs et relatives." },
-
-                        /* --- SOUS-PÔLE 3 : PHONOLOGIE & MORPHO-PHONOLOGIE --- */
                         { id: "D3.1", icon: "🔤", label: "Transcriptions API (RP & GA)", parent: "D1", dx: -480, dy: 120, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables en RP et GA.", details: "Symboles phonétiques, voyelles, diphthongues et consonnes." },
                         { id: "D3.2", icon: "🎵", label: "Accentuation Mots Simples", parent: "D3.1", dx: -700, dy: 220, unlocked: false, link: "", desc: "Règles de placement des accents primaire et secondaire.", details: "Schémas accentuels lexicaux fondamentaux." },
                         { id: "D3.3", icon: "📌", label: "Suffixation Contrainte vs Neutre", parent: "D3.2", dx: -920, dy: 220, unlocked: false, link: "", desc: "Incidence des suffixes sur le placement de l'accent.", details: "Suffixes attirants/imposants vs suffixes transparents." },
                         { id: "D3.4", icon: "⚡", label: "Stress Shift (Déplacement)", parent: "D3.3", dx: -1140, dy: 220, unlocked: false, link: "", desc: "Dynamique intonative en contexte rythmique de phrase.", details: "Règles de déplacement de l'accent principal." },
                         { id: "D3.5", icon: "🧩", label: "Accentuation des Composés", parent: "D3.2", dx: -920, dy: 320, unlocked: false, link: "", desc: "Règles accentuelles N+N, Adj+N, Verbe+Particule.", details: "Compound stress rule vs phrasal stress." },
                         { id: "D3.6", icon: "🔊", label: "Morpho-Phonologie & Schwa", parent: "D3.1", dx: -700, dy: 340, unlocked: false, link: "", desc: "Allomorphie des désinences et réductions vocaliques.", details: "Règles des morphes -ed/-s et formes fortes/faibles." },
-
-                        /* --- SOUS-PÔLE 4 : DIDACTIQUE & LEÇON (ORAL ADMISSION) --- */
                         { id: "D4.1", icon: "🏫", label: "Transposition Didactique", parent: "D1", dx: -480, dy: 340, unlocked: true, link: "", desc: "Exploitation pédagogique de documents authentiques.", details: "Extraction des faits de langue, faits de culture et programmes." },
                         { id: "D4.2", icon: "📋", label: "Architecture de Séquence (CECRL)", parent: "D4.1", dx: -700, dy: 460, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs et articulation des 5 activités langagières." },
                         { id: "D4.3", icon: "🎯", label: "Activités Langagières & Tâches", parent: "D4.2", dx: -920, dy: 460, unlocked: false, link: "", desc: "Mise en œuvre de la réception, production et interaction.", details: "Création de tâches finales ancrées dans le réel." },
                         { id: "D4.4", icon: "⚖️", label: "Différenciation (6e-BTS)", parent: "D4.1", dx: -700, dy: 580, unlocked: false, link: "", desc: "Gestion de l'hétérogénéité des classes du collège au lycée.", details: "Adaptations pour élèves Dys/EIP/PAP/PAI et étayages." },
                         { id: "D4.5", icon: "📊", label: "Évaluation Formative & Sommative", parent: "D4.2", dx: -920, dy: 580, unlocked: false, link: "", desc: "Mesure des apprentissages et grilles d'évaluation.", details: "Critères de réussite et auto-évaluation apprenante." },
-
-                        /* --- SOUS-PÔLE 5 : ENTRETIEN, POSTURE & RÉPUBLIQUE --- */
                         { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République & Laïcité", parent: "D1", dx: -340, dy: 440, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Loi de 1905, charte de la laïcité, neutralité et égalité." },
                         { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire d'État", parent: "D5.1", dx: -520, dy: 600, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté et secret pro." },
                         { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat", parent: "D5.1", dx: -340, dy: 620, unlocked: false, link: "", desc: "Autorité bienveillante et prévention des incivilités.", details: "Cadre de travail, gestion des perturbations et partenariat CPE." },
@@ -384,9 +374,10 @@
         let activeNode = null;
         let nodePositions = {};
 
-        // Zoom initial réglé à 0.40 pour englober la vaste galaxie sans superposition
+        // Zoom initial à 0.40 et centrage strict sur le noyau central (panX = 0, panY = 0)
         let scale = 0.40; 
-        let panX = 0; let panY = 0;
+        let panX = 0; 
+        let panY = 0; 
         let isDragging = false; let startX = 0; let startY = 0;
 
         function updateTransform() {
@@ -428,7 +419,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v22');
+            const saved = localStorage.getItem('theo_final_app_skills_v23');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -449,7 +440,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v22', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v23', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -469,7 +460,11 @@
             const centerEl = document.createElement('div');
             centerEl.className = 'skill-node center-node';
             centerEl.innerHTML = `<span class="node-icon">${graphData.center.icon}</span>`;
-            centerWrap.appendChild(centerEl); container.appendChild(centerWrap);
+            centerWrap.appendChild(centerEl); 
+            
+            // Clic sur le nœud central pour afficher ses détails dans la modale
+            centerWrap.onclick = (e) => { e.stopPropagation(); openCenterModal(); };
+            container.appendChild(centerWrap);
 
             let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
@@ -525,6 +520,19 @@
             document.getElementById('score-d').innerText = hudScores.D;
         }
 
+        function openCenterModal() {
+            const modal = document.getElementById('modal');
+            const card = document.getElementById('modal-card');
+            card.style.borderColor = "#f59e0b";
+            document.getElementById('modal-title').innerText = `${graphData.center.icon} ${graphData.center.label}`;
+            document.getElementById('modal-desc').innerText = graphData.center.desc;
+            document.getElementById('modal-details').innerText = graphData.center.details;
+            document.getElementById('node-link-input').parentElement.style.display = 'none';
+            document.getElementById('modal-doc-link').style.display = 'none';
+            document.getElementById('btn-toggle').style.display = 'none';
+            modal.style.display = 'flex';
+        }
+
         function openModal(node, region) {
             activeNode = node;
             const modal = document.getElementById('modal');
@@ -534,6 +542,9 @@
             document.getElementById('modal-title').innerText = `${node.icon} ${node.id} - ${node.label}`;
             document.getElementById('modal-desc').innerText = node.desc;
             document.getElementById('modal-details').innerText = node.details;
+
+            document.getElementById('node-link-input').parentElement.style.display = 'block';
+            document.getElementById('btn-toggle').style.display = 'block';
 
             const linkInput = document.getElementById('node-link-input');
             linkInput.value = node.link || "";
