@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (CAPES Ultra-Atomisé v18)</title>
+    <title>Arbre de Compétences - Théo Legros (Constellations Atomisées v19)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -12,7 +12,7 @@
             --text-muted: #94a3b8;
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM */
             --color-b: #3b82f6; /* Est / Bleu - Formation RH */
-            --color-c: #10b981; /* Sud / Vert - Pédagogie Youth */
+            --color-c: #10b981; /* Sud / Vert - Pédagogie Youth Expert */
             --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert */
             --locked-color: #2a344a;
         }
@@ -301,57 +301,60 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
+                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD - ULTRA-ATOMISÉ)", color: "var(--color-c)",
                     nodes: [
-                        { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 220, unlocked: true, link: "", desc: "Maîtrise des postures éducatives, de la sécurité affective et de la démocratie participative.", details: "Gestion des dynamiques de groupes de mineurs et animation d'activités à fort impact." },
-                        { id: "C1.1", icon: "🛡️", label: "Repérage des Signaux Faibles", parent: "C1", dx: -200, dy: 360, unlocked: false, link: "", desc: "Détection précoce du mal-être et changement de comportement.", details: "Observation fine, écoute bienveillante et traçabilité des incidents éducatifs." },
-                        { id: "C1.2", icon: "⚠️", label: "Prévention Harcèlement & Violences", parent: "C1.1", dx: -360, dy: 480, unlocked: false, link: "", desc: "Lutte contre le bouc émissaire, cyberharcèlement et violences physiques/verbales.", details: "Mise en place de protocoles de régulation et séances de sensibilisation." },
-                        { id: "C1.3", icon: "🔥", label: "Gestion de Crise Comportementale", parent: "C1.1", dx: -200, dy: 480, unlocked: false, link: "", desc: "Désamorçage des conflits aigus et crises d'agressivité.", details: "Techniques d'apaisement, tiers de confiance et mise en sécurité collective." },
-                        { id: "C1.4", icon: "💬", label: "Entretiens Individuels de Soutien", parent: "C1.1", dx: -360, dy: 360, unlocked: false, link: "", desc: "Accompagnement personnalisé des jeunes vulnérables.", details: "Postures d'écoute active, formulation d'objectifs de progrès et alliance éducative." },
-                        { id: "C2.1", icon: "🎨", label: "Expression Libre & Art", parent: "C1", dx: 0, dy: 380, unlocked: false, link: "", desc: "Libération de la parole par la création artistique.", details: "Ateliers théâtre, arts plastiques, écriture créative et improvisation." },
-                        { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes & Règles", parent: "C2.1", dx: -140, dy: 520, unlocked: false, link: "", desc: "Co-construction des règles de vie et civisme au quotidien.", details: "Animation d'instances participatives, votes démocratiques et responsabilisation." },
-                        { id: "C2.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.1", dx: 0, dy: 520, unlocked: false, link: "", desc: "Esprit critique, vérification des sources et fake news.", details: "Décryptage de l'information, algorithmes et création de médias ludo-éducatifs." },
-                        { id: "C2.4", icon: "📱", label: "Sobriété Numérique & Écrans", parent: "C2.1", dx: 140, dy: 520, unlocked: false, link: "", desc: "Sensibilisation aux dérives des réseaux sociaux.", details: "Ateliers de déconnexion, charte d'utilisation des smartphones et alternative ludique." },
-                        { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux (GN)", parent: "C1", dx: 200, dy: 360, unlocked: false, link: "", desc: "Création d'univers immersifs de grande envergure.", details: "Écriture de trames narratives complexes, personnages (PNJ) et mécanique de règles." },
-                        { id: "C3.2", icon: "🗺️", label: "Logistique des Espaces de Jeu", parent: "C3.1", dx: 360, dy: 480, unlocked: false, link: "", desc: "Aménagement sécurisé et balisage des terrains de jeu.", details: "Gestion des flux de participants, sécurité matériel et régulation des rôles." },
-                        { id: "C3.3", icon: "🧩", label: "PAI/PAP & Intégration Handicap", parent: "C3.1", dx: 200, dy: 480, unlocked: false, link: "", desc: "Accueil universel des enfants à besoins particuliers.", details: "Adaptation des consignes, intégration des auxiliaires (AESH) et liens spécialisés." },
-                        { id: "C3.4", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: 360, dy: 600, unlocked: false, link: "", desc: "Accessibilité de toutes les activités sans stigmatisation.", details: "Variabilité des supports, rythmes d'apprentissage personnalisés et valorisation." },
-                        { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste (EEDD)", parent: "C1", dx: -100, dy: 260, unlocked: false, link: "", desc: "Immersion nature et éco-citoyenneté.", details: "Ateliers de découverte de la biodiversité, sensibilisation à la faune/flore et zéro déchet." },
-                        { id: "C4.2", icon: "⛺", label: "Bivouacs & Vie sous Tente", parent: "C4.1", dx: -260, dy: 260, unlocked: false, link: "", desc: "Organisation de séjours et camps en pleine autonomie.", details: "Montage des campements, cuisine au feu de bois, hygiène et vie collective outdoor." },
-                        { id: "C4.3", icon: "🧭", label: "Risques & Sécurité en Milieu Naturel", parent: "C4.1", dx: -260, dy: 180, unlocked: false, link: "", desc: "Gestion des aléas météo et itinéraires isolés.", details: "Lecture de carte IGN, pharmacie de secours, ravitaillement eau/nourriture et communication d'urgence." }
+                        { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 240, unlocked: true, link: "", desc: "Maîtrise absolue de la sécurité affective, de la bientraitance et de la démocratie participative.", details: "Encadrement expert de groupes de mineurs et animation d'activités à fort impact éducatif." },
+                        
+                        /* --- AXE SUD 1 : SÉCURITÉ AFFECTIVE & BIENTRAITANCE --- */
+                        { id: "C1.1", icon: "🛡️", label: "Repérage Signaux Faibles", parent: "C1", dx: -240, dy: 380, unlocked: false, link: "", desc: "Détection précoce du mal-être et changements de comportements.", details: "Observation fine, écoute bienveillante et traçabilité des incidents éducatifs." },
+                        { id: "C1.2", icon: "⚠️", label: "Prévention Harcèlement & Violences", parent: "C1.1", dx: -420, dy: 500, unlocked: false, link: "", desc: "Lutte contre les dynamiques de bouc émissaire et violences entre pairs.", details: "Mise en place de protocoles de régulation et séances de sensibilisation." },
+                        { id: "C1.3", icon: "🔥", label: "Gestion de Crise Aiguë", parent: "C1.1", dx: -240, dy: 520, unlocked: false, link: "", desc: "Protocoles d'apaisement en cas de conflits violents.", details: "Techniques d'apaisement, tiers de confiance et mise en sécurité collective." },
+                        { id: "C1.4", icon: "💬", label: "Entretiens Individuels de Soutien", parent: "C1.1", dx: -420, dy: 380, unlocked: false, link: "", desc: "Accompagnement personnalisé des jeunes vulnérables.", details: "Postures d'écoute active, formulation d'objectifs de progrès et alliance éducative." },
+                        { id: "C1.5", icon: "⚖️", label: "Intégrité Morale & Physique", parent: "C1.1", dx: -330, dy: 640, unlocked: false, link: "", desc: "Garantir un cadre bienveillant et sécurisant pour chaque mineur.", details: "Prévention des risques de maltraitance et application des chartes de bientraitance." },
+
+                        /* --- AXE SUD 2 : DÉMOCRATIE PARTICIPATIVE & EMI --- */
+                        { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression & Théâtre", parent: "C1", dx: -80, dy: 400, unlocked: false, link: "", desc: "Libération de la parole par la création artistique.", details: "Ateliers théâtre, arts plastiques, écriture créative et improvisation." },
+                        { id: "C2.2", icon: "🤝", label: "Animation Conseils de Jeunes", parent: "C2.1", dx: -140, dy: 560, unlocked: false, link: "", desc: "Instances participatives et co-élaboration des règles.", details: "Animation d'instances participatives, votes démocratiques et responsabilisation." },
+                        { id: "C2.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.1", dx: -80, dy: 680, unlocked: false, link: "", desc: "Esprit critique, vérification des sources et fake news.", details: "Décryptage de l'information, algorithmes et création de médias ludo-éducatifs." },
+                        { id: "C2.4", icon: "📱", label: "Sobriété Numérique & Écrans", parent: "C2.1", dx: 60, dy: 680, unlocked: false, link: "", desc: "Sensibilisation aux dérives des réseaux sociaux.", details: "Ateliers de déconnexion, charte d'utilisation des smartphones et alternative ludique." },
+                        { id: "C2.5", icon: "🏛️", label: "Citoyenneté & Engagement Collectif", parent: "C2.2", dx: -140, dy: 720, unlocked: false, link: "", desc: "Implication des jeunes dans les projets d'intérêt général.", details: "Projets solidaires, chantiers jeunes et responsabilités partagées au sein du centre." },
+
+                        /* --- AXE SUD 3 : INGÉNIERIE LUDIQUE & INCLUSION --- */
+                        { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux (GN)", parent: "C1", dx: 120, dy: 400, unlocked: false, link: "", desc: "Création d'univers immersifs de grande envergure.", details: "Écriture de trames narratives complexes, personnages (PNJ) et mécanique de règles." },
+                        { id: "C3.2", icon: "🗺️", label: "Logistique des Terrains de Jeu", parent: "C3.1", dx: 220, dy: 560, unlocked: false, link: "", desc: "Aménagement des espaces et sécurité matérielle.", details: "Gestion des flux de participants, sécurité matériel et régulation des rôles." },
+                        { id: "C3.3", icon: "🧩", label: "Accueil Universel & Handicap", parent: "C3.1", dx: 120, dy: 680, unlocked: false, link: "", desc: "Adaptation des activités et intégration des publics spécifiques.", details: "Intégration des auxiliaires (AESH) et liens avec les structures spécialisées." },
+                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 220, dy: 720, unlocked: false, link: "", desc: "Application rigoureuse des Projets d'Accueil Individualisé.", details: "Gestion des régimes alimentaires, traitements et protocoles d'urgence médicale." },
+                        { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: -20, dy: 720, unlocked: false, link: "", desc: "Accessibilité de toutes les activités sans stigmatisation.", details: "Variabilité des supports, rythmes d'apprentissage personnalisés et valorisation." },
+
+                        /* --- AXE SUD 4 : OUTDOOR EDUCATION & NATURE --- */
+                        { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste (EEDD)", parent: "C1", dx: 280, dy: 380, unlocked: false, link: "", desc: "Immersion nature et éco-citoyenneté.", details: "Ateliers de découverte de la biodiversité, sensibilisation à la faune/flore et zéro déchet." },
+                        { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps", parent: "C4.1", dx: 420, dy: 500, unlocked: false, link: "", desc: "Organisation de séjours et camps en pleine autonomie.", details: "Montage des campements, cuisine au feu de bois, hygiène et vie collective outdoor." },
+                        { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène", parent: "C4.2", dx: 520, dy: 600, unlocked: false, link: "", desc: "Respect des normes d'hygiène et techniques en milieu naturel.", details: "Maîtrise de la chaîne du froid nomade et gestion des denrées en autonomie." },
+                        { id: "C4.4", icon: "🧭", label: "Risques & Météo en Plein Air", parent: "C4.1", dx: 280, dy: 520, unlocked: false, link: "", desc: "Lecture de cartes IGN et anticipation des aléas climatiques.", details: "Orientation, gestion des itinéraires isolés et communication d'urgence." },
+                        { id: "C4.5", icon: "🩺", label: "Secours en Milieu Isolé (SMI)", parent: "C4.4", dx: 420, dy: 640, unlocked: false, link: "", desc: "Protocoles d'alerte d'urgence et gestion des trousses de secours.", details: "Réactions face aux accidents isolés, bilans et procédures de hélitreuillage/secours." }
                     ]
                 },
                 {
-                    key: "D", name: "🟣 EXPERTISE CAPES ANGLAIS (OUEST - ULTRA-ATOMISÉ)", color: "var(--color-d)",
+                    key: "D", name: "🟣 EXPERTISE CAPES ANGLAIS (OUEST)", color: "var(--color-d)",
                     nodes: [
                         { id: "D1", icon: "🇬🇧", label: "Pôle Réussite CAPES Anglais", parent: "CENTER", dx: -220, dy: 0, unlocked: true, link: "", desc: "Centre de préparation intensive au CAPES externe d'anglais (Écrit & Oral).", details: "Maîtrise académique de l'admissibilité et précision didactique de l'admission." },
-                        
-                        /* --- AXE OUEST 1 : ÉCRIT ADMISSIBILITÉ (SYNTHÈSE & CORPUS) --- */
                         { id: "D1.1", icon: "📑", label: "Méthodologie de la Synthèse", parent: "D1", dx: -380, dy: -280, unlocked: false, link: "", desc: "Analyse croisée d'un corpus documentaire tridimensionnel.", details: "Extraction des convergences/divergences, problématisation et plan analytique en 3 parties." },
                         { id: "D1.2", icon: "📖", label: "Analyse Stylistique & Littéraire", parent: "D1.1", dx: -560, dy: -360, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires.", details: "Registres (épique, tragique, comique), polyphonie, tropes, métaphores et figures de style." },
                         { id: "D1.3", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -560, dy: -280, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photo, caricature, affiche).", details: "Composition, cadrage, jeux de lumière, implicite visuel et mise en résonance avec le corpus." },
                         { id: "D1.4", icon: "📰", label: "Analyse de la Presse Anglophone", parent: "D1.1", dx: -560, dy: -200, unlocked: false, link: "", desc: "Étude des articles de fond (UK/US) et rhétorique journalistique.", details: "Biais éditoriaux, registres de langue, procédés d'argumentation et prise de position." },
                         { id: "D1.5", icon: "✍️", label: "Aisance Rédactionnelle (C1+)", parent: "D1.1", dx: -560, dy: -120, unlocked: false, link: "", desc: "Qualité académique de la langue anglaise écrite.", details: "Lexique de spécialité, variété des structures syntaxiques, connecteurs et cohésion textuelle." },
-
-                        /* --- AXE OUEST 2 : LINGUISTIQUE & ÉNONCIATION (TOPE) --- */
                         { id: "D2.1", icon: "🗣️", label: "Repérage Énonciatif (S0/T0)", parent: "D1", dx: -380, dy: -100, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives de Culioli sur corpus.", details: "Repères origines, opérations de prédication, instanciation et centrage/balayage." },
                         { id: "D2.2", icon: "⚙️", label: "Système Verbal & Modalisateurs", parent: "D2.1", dx: -560, dy: -40, unlocked: false, link: "", desc: "Déconstruction fine du groupe verbal anglais.", details: "Auxiliaires modaux (valeurs épistémiques/déontiques), valeur de *will/would*, aspect *be+-ing* et *have+-en*." },
                         { id: "D2.3", icon: "🔗", label: "Passif, Causatives & Subordonnées", parent: "D2.1", dx: -560, dy: 40, unlocked: false, link: "", desc: "Analyse des structures complexes et enchâssements.", details: "Constructions passives, causatives (*make/have/get*), hypothèses et conditionnelles." },
                         { id: "D2.4", icon: "🏷️", label: "Système de Détermination Nominal", parent: "D2.1", dx: -560, dy: 120, unlocked: false, link: "", desc: "Grammaire fine du groupe nominal et quantification.", details: "Fonctionnement des articles ($a/the/\emptyset$), génitifs, quantificateurs et relatives." },
-
-                        /* --- AXE OUEST 3 : PHONOLOGIE & MORPHO-PHONOLOGIE --- */
                         { id: "D3.1", icon: "🔤", label: "Transcriptions Phonétiques (API)", parent: "D1", dx: -380, dy: 80, unlocked: true, link: "", desc: "Transcriptions API irréprochables en RP et GA.", details: "Symboles phonétiques, voyelles, diphthongues, consonnes et variantes régionales." },
                         { id: "D3.2", icon: "🎵", label: "Accentuation & Suffixation", parent: "D3.1", dx: -560, dy: 180, unlocked: false, link: "", desc: "Règles de placement des accents primaire et secondaire.", details: "Incidence des suffixes contraints (imposants/attirants) et neutres sur le schéma accentuel." },
                         { id: "D3.3", icon: "⚡", label: "Stress Shift & Composés", parent: "D3.2", dx: -740, dy: 180, unlocked: false, link: "", desc: "Dynamique intonative et accentuation des mots composés.", details: "Déplacement d'accent (*stress shift*) en contexte et règles accentuelles N+N, Adj+N, V+Prep." },
                         { id: "D3.4", icon: "🔊", label: "Morpho-Phonologie des Désinences", parent: "D3.1", dx: -560, dy: 260, unlocked: false, link: "", desc: "Processus d'allomorphie et réductions vocaliques.", details: "Règles des morphes {-ed} (/t/, /d/, /ɪd/) et {-s} (/s/, /z/, /ɪz/), formes fortes/faibles et schwa (/ə/)." },
-
-                        /* --- AXE OUEST 4 : DIDACTIQUE & LEÇON (ADMISSION) --- */
                         { id: "D4.1", icon: "🏫", label: "Transposition Didactique", parent: "D1", dx: -380, dy: 220, unlocked: true, link: "", desc: "Exploitation pédagogique de documents authentiques.", details: "Extraction des faits de langue, faits de culture et adéquation avec les axes du programme." },
                         { id: "D4.2", icon: "📋", label: "Architecture de Séquence (CECRL)", parent: "D4.1", dx: -560, dy: 340, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs linguistiques/culturels/pragmatiques et articulation des 5 activités langagières." },
                         { id: "D4.3", icon: "⚖️", label: "Stratégies de Différenciation (6e-BTS)", parent: "D4.1", dx: -560, dy: 420, unlocked: false, link: "", desc: "Gestion de l'hétérogénéité des classes du collège au lycée.", details: "Adaptations pour élèves Dys/EIP/PAP/PAI, variabilité des étayages et pédagogie différenciée." },
                         { id: "D4.4", icon: "🎯", label: "Évaluation & Tâches Finales", parent: "D4.2", dx: -740, dy: 340, unlocked: false, link: "", desc: "Mesure des apprentissages et création de grilles d'évaluation.", details: "Évaluations formatives/sommatives, auto-évaluation et création de tâches finales ancrées dans le réel." },
-
-                        /* --- AXE OUEST 5 : ENTRETIEN, POSTURE & VALEURS --- */
                         { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République & Laïcité", parent: "D1", dx: -260, dy: 320, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Application de la loi de 1905, charte de la laïcité à l'école, neutralité et égalité filles-garçons." },
                         { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire d'État", parent: "D1", dx: -420, dy: 380, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté, secret professionnel et travail en équipe éducative." },
                         { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat Scolaire", parent: "D5.2", dx: -600, dy: 480, unlocked: false, link: "", desc: "Autorité bienveillante et prévention des incivilités.", details: "Mise en place du cadre de travail, gestion des perturbations et partenariat avec la Vie Scolaire (CPE)." }
@@ -400,7 +403,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v18');
+            const saved = localStorage.getItem('theo_final_app_skills_v19');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -421,7 +424,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v18', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v19', JSON.stringify(data));
         }
 
         function initGraph() {
