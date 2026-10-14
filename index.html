@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Complet)</title>
+    <title>Arbre de Compétences - Théo Legros (CAPES Approfondi)</title>
     <style>
         :root {
             --bg-color: #0b0d14;
@@ -124,7 +124,7 @@
             padding: 1px 5px;
             border-radius: 4px;
             border: 1px solid rgba(255,255,255,0.1);
-            max-width: 105px;
+            max-width: 110px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -287,14 +287,24 @@
                 {
                     key: "D", name: "🟣 EXPERTISE CAPES & ANGLAIS (OUEST)", color: "var(--color-d)",
                     nodes: [
-                        { id: "D1.A", icon: "🗣️", label: "Syntaxe SVO", parent: "CENTER", dx: -90, dy: -25, unlocked: true, desc: "Analyse syntaxique et énonciative.", details: "Théorie des opérations énonciatives et structures de phrase." },
-                        { id: "D2.A", icon: "🏫", label: "Différenciation", parent: "CENTER", dx: -90, dy: 45, unlocked: true, desc: "Polyvalence 6e-BTS et adaptation des publics.", details: "Gestion de l'hétérogénéité et personnalisation des parcours." },
-                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed", parent: "D1.A", dx: -170, dy: -90, unlocked: true, desc: "Morpho-phonologie et phonétique anglaise.", details: "Justification rigoureuse des variantes (/t/, /d/, /id/)." },
-                        { id: "D1.6", icon: "📑", label: "Analyse de Dossier", parent: "D1.A", dx: -170, dy: -15, unlocked: false, desc: "Critique de corpus documentaires (CAPES).", details: "Présentation, confrontation et mise en perspective culturelle." },
-                        { id: "D2.6", icon: "📝", label: "Objectifs Langagiers", parent: "D2.A", dx: -170, dy: 60, unlocked: false, desc: "Transposition didactique d'un fait de langue.", details: "Extraction d'attendus grammaticaux adaptés au niveau." },
-                        { id: "D2.7", icon: "📋", label: "Conception Séquence", parent: "D2.A", dx: -170, dy: 135, unlocked: false, desc: "Architecture de séquence et rétroplanning.", details: "Objectifs culturels/linguistiques et évaluation sommative." },
-                        { id: "D3.1", icon: "⚡", label: "IA & Didactique", parent: "D2.6", dx: -260, dy: 60, unlocked: false, desc: "Outils génératifs pour l'enseignement de l'anglais.", details: "Création d'exercices différenciés et d'évaluations sur mesure." },
-                        { id: "D3.2", icon: "🌍", label: "Parcours Citoyen", parent: "D2.7", dx: -260, dy: 135, unlocked: false, desc: "Articulation cours d'anglais et éducation globale.", details: "Parcours EAC, Citoyen et transversalité disciplinaire." }
+                        // Nœuds d'ancrage central
+                        { id: "D1.A", icon: "🗣️", label: "Syntaxe & Énonciation", parent: "CENTER", dx: -90, dy: -35, unlocked: true, desc: "Analyse syntaxique SVO et théorie des opérations énonciatives.", details: "Déconstruction rigoureuse des structures de phrase en contexte." },
+                        { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", parent: "CENTER", dx: -90, dy: 35, unlocked: true, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, BTS)." },
+
+                        // Branche Linguistique & Phonologie (Haut-Ouest)
+                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed", parent: "D1.A", dx: -170, dy: -100, unlocked: true, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification phonétique rigoureuse (/t/, /d/, /id/)." },
+                        { id: "D1.C", icon: "🎵", label: "Accentuation & Rythme", parent: "D1.B", dx: -250, dy: -140, unlocked: false, desc: "Maîtrise des schémas intonatifs et accentuels.", details: "Analyse phonologique avancée (stress shift, intonation contour)." },
+                        { id: "D1.D", icon: "📖", label: "Opérations Énonciatives", parent: "D1.B", dx: -250, dy: -70, unlocked: false, desc: "Application de la TOPE (Culioli) sur corpus.", details: "Étude des marqueurs modaux, aspectuels et temporels." },
+
+                        // Branche Analyse de Dossier & Culturel (Milieu-Ouest)
+                        { id: "D2.B", icon: "📑", label: "Analyse de Dossier", parent: "D1.A", dx: -170, dy: -25, unlocked: false, desc: "Critique de corpus documentaires (Épreuve Disciplinaire).", details: "Présentation, confrontation et mise en perspective sur un axe culturel." },
+                        { id: "D2.C", icon: "🏛️", label: "Civilisation & Contextes", parent: "D2.B", dx: -250, dy: -10, unlocked: false, desc: "Maîtrise des repères historiques et politiques du monde anglophone.", details: "Analyse des enjeux civilisationnels (ex: Territoire et mémoire, arts, sociétés)." },
+
+                        // Branche Pédagogie & Didactique du Secondaire (Bas-Ouest)
+                        { id: "D3.A", icon: "📝", label: "Objectifs Langagiers", parent: "D2.A", dx: -170, dy: 50, unlocked: false, desc: "Transposition didactique d'un fait de langue.", details: "Extraction d'attendus grammaticaux et lexicaux adaptés à la classe." },
+                        { id: "D3.B", icon: "📋", label: "Conception de Séquence", parent: "D3.A", dx: -250, dy: 55, unlocked: false, desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents et rétroplanning." },
+                        { id: "D3.C", icon: "🎯", label: "Évaluation & Tâches", parent: "D3.B", dx: -330, dy: 20, unlocked: false, desc: "Création de grilles critériées et tâches finales.", details: "Évaluation sommative et formative alignée sur le CECRL." },
+                        { id: "D3.D", icon: "⚡", label: "IA & Différenciation", parent: "D3.B", dx: -330, dy: 90, unlocked: false, desc: "Intégration de l'IA pour l'anglais.", details: "Génération d'exercices adaptatifs sur-mesure pour élèves à Besoins Particuliers." }
                     ]
                 }
             ]
@@ -304,7 +314,7 @@
         let nodePositions = {};
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_full_tree_skills');
+            const saved = localStorage.getItem('theo_capes_deep_skills');
             if (saved) {
                 const map = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -320,7 +330,7 @@
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => { map[n.id] = n.unlocked; });
             });
-            localStorage.setItem('theo_full_tree_skills', JSON.stringify(map));
+            localStorage.setItem('theo_capes_deep_skills', JSON.stringify(map));
         }
 
         function initGraph() {
