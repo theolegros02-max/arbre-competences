@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Organique & Binaire</title>
+    <title>Arbre de Compétences - Théo Legros & CAPES</title>
     <style>
         :root {
             --bg-color: #0b0d14;
@@ -115,7 +115,7 @@
 
         .node-title-label {
             margin-top: 3px;
-            font-size: 0.65em;
+            font-size: 0.62em;
             font-weight: 700;
             color: var(--text-main);
             text-align: center;
@@ -124,7 +124,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             border: 1px solid rgba(255,255,255,0.1);
-            max-width: 110px;
+            max-width: 120px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -219,7 +219,7 @@
         <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (Pilotage):</span> <span id="score-a">0</span></div>
         <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation):</span> <span id="score-b">0</span></div>
         <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie):</span> <span id="score-c">0</span></div>
-        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
+        <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES & Anglais):</span> <span id="score-d">0</span></div>
     </div>
 
     <svg id="svg-canvas"></svg>
@@ -242,7 +242,7 @@
 
     <script>
         const graphData = {
-            center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences universelles." },
+            center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
             regions: [
                 {
                     key: "A", name: "🔴 PILOTAGE & RÉSEAUX (NORD)", color: "var(--color-a)",
@@ -263,7 +263,7 @@
                         { id: "B3.6", icon: "⚖️", label: "RPS & QVT", parent: "B1", dx: 210, dy: 50, unlocked: false, desc: "Prévention des RPS et gestion de la QVT.", details: "Suivi du bien-être et de la charge mentale des équipes." },
                         { id: "B1.6", icon: "📱", label: "Blended Learning", parent: "B1.1", dx: 320, dy: -140, unlocked: false, desc: "Conception de formations Blended et Micro-learning.", details: "Modules e-learning, classes virtuelles et présentiel." },
                         { id: "B1.7", icon: "🤖", label: "IA en Formation", parent: "B1.1", dx: 320, dy: -50, unlocked: false, desc: "Intégration raisonnée des IA génératives.", details: "Création assistée de scénarios et supports d'évaluation." },
-                        { id: "B3.7", icon: "🤝", label: "Inclusion & Neurodiversity", parent: "B3.6", dx: 320, dy: 60, unlocked: false, desc: "Management de la diversité et neurodiversité.", details: "Accompagnement des profils atypiques et intergénérationnels." }
+                        { id: "B3.7", icon: "🤝", label: "Inclusion & Diversité", parent: "B3.6", dx: 320, dy: 60, unlocked: false, desc: "Management de la diversité et neurodiversité.", details: "Accompagnement des profils atypiques et intergénérationnels." }
                     ]
                 },
                 {
@@ -278,12 +278,12 @@
                 {
                     key: "D", name: "🟣 EXPERTISE CAPES & ANGLAIS (OUEST)", color: "var(--color-d)",
                     nodes: [
-                        { id: "D1.A", icon: "🗣️", label: "Syntaxe SVO", parent: "CENTER", dx: -110, dy: -30, unlocked: true, desc: "Syntaxe anglaise et relations prédicatives.", details: "Théorie des opérations énonciatives." },
-                        { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", parent: "CENTER", dx: -110, dy: 50, unlocked: true, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine aux contextes et niveaux." },
-                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed", parent: "D1.A", dx: -220, dy: -100, unlocked: true, desc: "Morpho-phonologie des verbes réguliers.", details: "Justification des variantes phonétiques." },
-                        { id: "D1.6", icon: "💬", label: "Discours Numériques", parent: "D1.A", dx: -220, dy: -20, unlocked: false, desc: "Analyse de corpus de discours numériques.", details: "Linguistique des médias et réseaux anglophones." },
-                        { id: "D2.6", icon: "⚡", label: "IA & Anglais", parent: "D2.A", dx: -220, dy: 60, unlocked: false, desc: "Intégration de l'IA pour la différenciation.", details: "Exercices génératifs sur-mesure pour les élèves." },
-                        { id: "D2.7", icon: "🌍", label: "Parcours Transversaux", parent: "D2.A", dx: -220, dy: 140, unlocked: false, desc: "Didactique des parcours Citoyen, EAC et Santé.", details: "Articuler cours d'anglais et citoyenneté globale." }
+                        { id: "D1.A", icon: "🗣️", label: "Syntaxe & Énonciation", parent: "CENTER", dx: -110, dy: -40, unlocked: true, desc: "Analyse syntaxique SVO et théorie des opérations énonciatives.", details: "Attendu CAPES : Déconstruction rigoureuse des structures de phrase en contexte." },
+                        { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", parent: "CENTER", dx: -110, dy: 40, unlocked: true, desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, pro, BTS)." },
+                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed & Intonation", parent: "D1.A", dx: -220, dy: -120, unlocked: true, desc: "Transcription phonétique et justification des terminaisons de verbes.", details: "Attendu CAPES (Épreuve Appliquée) : Maîtrise des règles de prononciation (/t/, /d/, /id/) et schémas intonatifs." },
+                        { id: "D1.6", icon: "📑", label: "Analyse Critique de Dossier", parent: "D1.A", dx: -220, dy: -40, unlocked: false, desc: "Analyse critique et mise en relation de corpus documentaires.", details: "Attendu CAPES (Épreuve Disciplinaire Appliquée) : Présentation, confrontation et mise en perspective de documents sur un axe culturel (ex: Territoire et mémoire)." },
+                        { id: "D2.6", icon: "📝", label: "Objectif Langagier & Transposition", parent: "D2.A", dx: -220, dy: 40, unlocked: false, desc: "Identification d'objectifs langagiers à partir d'un fait de langue.", details: "Attendu CAPES : Capacité à extraire d'un segment littéraire ou journalistique un objectif grammatical/lexical adapté au niveau de classe." },
+                        { id: "D2.7", icon: "📋", label: "Conception de Séquence Didactique", parent: "D2.A", dx: -220, dy: 120, unlocked: false, desc: "Architecture complète d'une séquence pédagogique et évaluation.", details: "Attendu CAPES : Définition des objectifs (culturels, linguistiques, communicationnels), choix de l'ordre des documents, et rétroplanning des séances." }
                     ]
                 }
             ]
@@ -293,7 +293,7 @@
         let nodePositions = {};
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_binary_skills');
+            const saved = localStorage.getItem('theo_capes_skills');
             if (saved) {
                 const map = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -309,7 +309,7 @@
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => { map[n.id] = n.unlocked; });
             });
-            localStorage.setItem('theo_binary_skills', JSON.stringify(map));
+            localStorage.setItem('theo_capes_skills', JSON.stringify(map));
         }
 
         function initGraph() {
