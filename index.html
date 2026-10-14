@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbre de Compétences - Théo Legros</title>
+    <style>
+        :root {
+            --bg-color: #0f111a;
+            --card-bg: #1a1d2d;
+            --text-color: #e0e6ed;
+            --accent-red: #e74c3c;
+            --accent-blue: #3498db;
+            --accent-green: #2ecc71;
+            --accent-purple: #9b59b6;
+            --locked-color: #4a4e69;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tree-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .region-column {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .region-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+            width: 100%;
+        }
+
+        .region-a { border-color: var(--accent-red); color: var(--accent-red); }
+        .region-b { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .region-c { border-color: var(--accent-green); color: var(--accent-green); }
+        .region-d { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+        .nodes-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .node {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: bold;
+            font-size: 0.8em;
+            border: 3px solid;
+            background: #11131e;
+        }
+
+        .node:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Statuts */
+        .node.unlocked {
+            background: currentColor;
+            color: #111;
+        }
+        .node.unlocked span {
+            color: #fff;
+            text-shadow: 0 0 4px #000;
+        }
+
+        .node.locked {
+            border-color: var(--locked-color) !important;
+            color: var(--locked-color);
+        }
+
+        /* Modal (Fenêtre Popup) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid #fff;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .close-btn:hover { color: #fff; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .badge-unlocked { background: var(--accent-green); color: #000; }
+        .badge-locked { background: var(--locked-color); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <h1>⭐ Arbre de Compétences - Théo Legros ⭐</h1>
+
+    <div class="tree-container" id="treeContainer"></div>
+
+    <!-- Popup / Modal -->
+    <div class="modal" id="nodeModal">
+        <div class="modal-content" id="modalContent">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modalBadge"></div>
+            <h2 id="modalTitle" style="margin-top:0;"></h2>
+            <p id="modalDesc"></p>
+            <hr style="border-color: #333;">
+            <h4>Objectifs & Actions :</h4>
+            <p id="modalDetails"></p>
+        </div>
+    </div>
+
+    <script>
+        // DONNÉES DE L'ARBRE DE COMPÉTENCES
+        const data = [
+            {
+                region: "🔴 RÉGION A : PILOTAGE & RÉSEAUX",
+                class: "region-a",
+                color: "#e74c3c",
+                nodes: [
+                    { id: "A1", title: "Animation de Réseau", score: "1/1", status: "unlocked", desc: "Capacité à animer et maintenir la dynamique de réseaux locaux et territoriaux.", details: "Orientation stratégique, création d'outils collaboratifs et suivi de l'engagement." },
+                    { id: "A1.1", title: "Raison d'être d'un réseau", score: "0/5", status: "locked", desc: "Définition de la raison d'être et des objectifs fondamentaux du réseau selon les besoins.", details: "Analyser le contexte géographique/social et cadrer la mission du réseau." },
+                    { id: "A2.1", title: "Diagnostic Stratégique", score: "0/5", status: "locked", desc: "Réalisation d'un diagnostic organisationnel global pour éclairer la prise de décision.", details: "Audit interne/externe et analyse SWOT." },
+                    { id: "A4.1", title: "Cycle de Vie d'un Projet", score: "0/5", status: "locked", desc: "Gestion rigoureuse du projet (Cadrage, Triangle QCD, Rétroplanning).", details: "Définition de la commande, suivi des livrables et gestion des budgets." }
+                ]
+            },
+            {
+                region: "🔵 RÉGION B : FORMATION & RH",
+                class: "region-b",
+                color: "#3498db",
+                nodes: [
+                    { id: "B1", title: "Ingénierie de Formation", score: "1/1", status: "unlocked", desc: "Conception et animation d'actions de formation destinées aux adultes.", details: "Utilisation des méthodes actives et maîtrise des principes d'andragogie." },
+                    { id: "B1.1", title: "Alignement Pédagogique", score: "0/5", status: "locked", desc: "Garantie de l'adéquation exacte entre Objectifs, Contenus et Évaluations.", details: "Formuler des attendus précis et choisir la méthode active adaptée." },
+                    { id: "B3.3", title: "Résolution de Conflits (CNV)", score: "0/5", status: "locked", desc: "Régulation des tensions d'équipe via la Communication Non Violente.", details: "Désamorcer les situations de crise et maintenir un climat de confiance." }
+                ]
+            },
+            {
+                region: "🟢 RÉGION C : PÉDAGOGIE & JEUNESSE",
+                class: "region-c",
+                color: "#2ecc71",
+                nodes: [
+                    { id: "C1", title: "Animation d'Activités", score: "1/1", status: "unlocked", desc: "Conception et animation de séances d'animation adaptées aux publics.", details: "Gestion des temps collectifs, sécurité affective et physique." },
+                    { id: "C3.1", title: "Protection & Bientraitance", score: "0/5", status: "locked", desc: "Mise en œuvre rigoureuse des cadres de protection des mineurs.", details: "Garantir un environnement sécurisant et émancipateur." }
+                ]
+            },
+            {
+                region: "🟣 RÉGION D : CAPES & LINGUISTIQUE",
+                class: "region-d",
+                color: "#9b59b6",
+                nodes: [
+                    { id: "D1.A", title: "Analyse Syntaxique SVO", score: "1/1", status: "unlocked", desc: "Maîtrise de la syntaxe anglaise et des relations prédicatives S/P.", details: "Déconstruction des phrases simples/complexes et principes d'assertion." },
+                    { id: "D1.B", title: "Phonologie (-ed)", score: "1/1", status: "unlocked", desc: "Analyse morpho-phonologique et transcription des terminaisons verbales.", details: "Justification scientifique des réalisations /t/, /d/, /id/." },
+                    { id: "D2.A", title: "Différenciation 6e-BTS", score: "1/1", status: "unlocked", desc: "Adaptation de la posture et des supports à la diversité des élèves.", details: "Pédagogie de projet en voie pro, rituels en collège, autonomie au lycée." }
+                ]
+            }
+        ];
+
+        // GÉNÉRATION DYNAMIQUE DE L'ARBRE
+        const container = document.getElementById('treeContainer');
+
+        data.forEach(reg => {
+            const col = document.createElement('div');
+            col.className = `region-column ${reg.class}`;
+            
+            const title = document.createElement('div');
+            title.className = 'region-title';
+            title.innerText = reg.region;
+            col.appendChild(title);
+
+            const nodesContainer = document.createElement('div');
+            nodesContainer.className = 'nodes-container';
+
+            reg.nodes.forEach(n => {
+                const nodeEl = document.createElement('div');
+                nodeEl.className = `node ${n.status}`;
+                nodeEl.style.borderColor = reg.color;
+                if(n.status === 'unlocked') nodeEl.style.color = reg.color;
+                
+                nodeEl.innerHTML = `<span>${n.id}</span>`;
+                nodeEl.onclick = () => openModal(n, reg.color);
+
+                nodesContainer.appendChild(nodeEl);
+            });
+
+            col.appendChild(nodesContainer);
+            container.appendChild(col);
+        });
+
+        // GESTION DU MODAL (POPUP)
+        function openModal(node, color) {
+            const modal = document.getElementById('nodeModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.style.borderColor = color;
+            document.getElementById('modalTitle').innerText = `${node.id} - ${node.title}`;
+            document.getElementById('modalDesc').innerText = node.desc;
+            document.getElementById('modalDetails').innerText = node.details;
+            
+            const badge = document.getElementById('modalBadge');
+            if(node.status === 'unlocked') {
+                badge.className = "status-badge badge-unlocked";
+                badge.innerText = `DÉBLOQUÉ (${node.score})`;
+            } else {
+                badge.className = "status-badge badge-locked";
+                badge.innerText = `À DÉBLOQUER (${node.score})`;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('nodeModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('nodeModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
