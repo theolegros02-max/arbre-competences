@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version 28 - Fond Corrigé & Visibilité)</title>
+    <title>Arbre de Compétences - Théo Legros (Version 29 - Liaisons Dynamiques)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -412,7 +412,7 @@
                         { id: "D4.2", icon: "📋", label: "Architecture de Séquence", parent: "D4.1", dx: -1550, dy: 1050, unlocked: false, link: "", desc: "Conception complète d'un projet pédagogique secondaire.", details: "Rétroplanning, objectifs et articulation des 5 activités langagières." },
                         { id: "D4.3", icon: "🎯", label: "Activités Langagières & Tâches", parent: "D4.2", dx: -2050, dy: 1050, unlocked: false, link: "", desc: "Mise en œuvre de la réception, production et interaction.", details: "Création de tâches finales ancrées dans le réel." },
                         { id: "D4.4", icon: "⚖️", label: "Différenciation (6e-BTS)", parent: "D4.1", dx: -1550, dy: 1350, unlocked: false, link: "", desc: "Gestion de l'hétérogénéité des classes du collège au lycée.", details: "Adaptations pour élèves Dys/EIP/PAP/PAI et étayages." },
-                        { id: "D4.5", icon: "📊", label: "Évaluation Formative/Somm.", parent: "D4.2", dx: -2050, dy: 1350, unlocked: false, link: "", desc: "Mesure des apprentissages et grilles d'évaluation.", details: "Critères de réussite et auto-évaluation apprenante." },
+                        { id: "D4.5", icon: "📊", label: "Évaluation Formative/Somm.", parent: "D4.2", dx: -2050, dy: 1350, unlocked: false, link: "", desc: "Mesure des apprentissages et grilles d'évaluation.", details: "Critères de réussite et auto-evaluation apprenante." },
                         { id: "D5.1", icon: "🇫🇷", label: "Valeurs de la République", parent: "D1", dx: -750, dy: 1000, unlocked: false, link: "", desc: "Maîtrise institutionnelle pour l'épreuve d'entretien.", details: "Loi de 1905, charte de la laïcité, neutralité et égalité." },
                         { id: "D5.2", icon: "⚖️", label: "Éthique du Fonctionnaire", parent: "D5.1", dx: -1150, dy: 1350, unlocked: false, link: "", desc: "Droits, devoirs et posture professionnelle de l'enseignant.", details: "Obligation de réserve, neutralité, loyauté et secret pro." },
                         { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat", parent: "D5.1", dx: -750, dy: 1400, unlocked: false, link: "", desc: "Autorité bienveillante et prévention des incivilités.", details: "Cadre de travail, gestion des perturbations et partenariat CPE." },
@@ -504,7 +504,7 @@
                 const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 let prevScale = scale;
                 if (e.deltaY < 0) { scale *= (1 + zoomIntensity); } else { scale /= (1 + zoomIntensity); }
-                scale = Math.max(0.1, Math.min(3, scale));
+                scale = Math.max(0.05, Math.min(3, scale)); // Limite de zoom élargie pour voir toute la carte
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
                 panY = mouseY - (mouseY - panY) * (scale / prevScale);
                 updateTransform();
@@ -512,7 +512,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v28');
+            const saved = localStorage.getItem('theo_final_app_skills_v29');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -533,7 +533,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v28', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v29', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -686,28 +686,28 @@
             }
         }
 
-    function toggleSkill() {
-        if (activeNode) {
-            activeNode.unlocked = !activeNode.unlocked;
-            saveState();
-            initGraph();
-            closeModal();
+        function toggleSkill() {
+            if (activeNode) {
+                activeNode.unlocked = !activeNode.unlocked;
+                saveState();
+                initGraph();
+                closeModal();
+            }
         }
-    }
 
-    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-    loadSavedState();
-    initGalaxy();
-    initGraph();
-    buildSidebarMenu();
-    
-    scale = 0.30;
-    panX = window.innerWidth / 2;
-    panY = window.innerHeight / 2;
-    updateTransform();
+        loadSavedState();
+        initGalaxy();
+        initGraph();
+        buildSidebarMenu();
+        
+        scale = 0.20; // Zoom initial élargi pour voir l'ensemble des 4 quadrants et leurs liaisons dès le chargement
+        panX = window.innerWidth / 2;
+        panY = window.innerHeight / 2;
+        updateTransform();
 
-    setupPanAndZoom();
-</script>
+        setupPanAndZoom();
+    </script>
 </body>
 </html>
