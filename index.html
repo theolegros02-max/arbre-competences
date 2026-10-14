@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Constellations Atomisées v19)</title>
+    <title>Arbre de Compétences - Théo Legros (Vue Globale v20)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -200,7 +200,7 @@
         <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formation RH):</span> <span id="score-b">0</span></div>
         <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie Youth):</span> <span id="score-c">0</span></div>
         <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES Anglais):</span> <span id="score-d">0</span></div>
-        <button class="reset-view-btn" onclick="resetView()">🎯 Centrer & Réinitialiser la vue</button>
+        <button class="reset-view-btn" onclick="resetView()">🎯 Vue Globale & Réinitialiser</button>
     </div>
 
     <div id="world">
@@ -301,32 +301,24 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD - ULTRA-ATOMISÉ)", color: "var(--color-c)",
+                    key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 240, unlocked: true, link: "", desc: "Maîtrise absolue de la sécurité affective, de la bientraitance et de la démocratie participative.", details: "Encadrement expert de groupes de mineurs et animation d'activités à fort impact éducatif." },
-                        
-                        /* --- AXE SUD 1 : SÉCURITÉ AFFECTIVE & BIENTRAITANCE --- */
                         { id: "C1.1", icon: "🛡️", label: "Repérage Signaux Faibles", parent: "C1", dx: -240, dy: 380, unlocked: false, link: "", desc: "Détection précoce du mal-être et changements de comportements.", details: "Observation fine, écoute bienveillante et traçabilité des incidents éducatifs." },
                         { id: "C1.2", icon: "⚠️", label: "Prévention Harcèlement & Violences", parent: "C1.1", dx: -420, dy: 500, unlocked: false, link: "", desc: "Lutte contre les dynamiques de bouc émissaire et violences entre pairs.", details: "Mise en place de protocoles de régulation et séances de sensibilisation." },
                         { id: "C1.3", icon: "🔥", label: "Gestion de Crise Aiguë", parent: "C1.1", dx: -240, dy: 520, unlocked: false, link: "", desc: "Protocoles d'apaisement en cas de conflits violents.", details: "Techniques d'apaisement, tiers de confiance et mise en sécurité collective." },
                         { id: "C1.4", icon: "💬", label: "Entretiens Individuels de Soutien", parent: "C1.1", dx: -420, dy: 380, unlocked: false, link: "", desc: "Accompagnement personnalisé des jeunes vulnérables.", details: "Postures d'écoute active, formulation d'objectifs de progrès et alliance éducative." },
                         { id: "C1.5", icon: "⚖️", label: "Intégrité Morale & Physique", parent: "C1.1", dx: -330, dy: 640, unlocked: false, link: "", desc: "Garantir un cadre bienveillant et sécurisant pour chaque mineur.", details: "Prévention des risques de maltraitance et application des chartes de bientraitance." },
-
-                        /* --- AXE SUD 2 : DÉMOCRATIE PARTICIPATIVE & EMI --- */
                         { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression & Théâtre", parent: "C1", dx: -80, dy: 400, unlocked: false, link: "", desc: "Libération de la parole par la création artistique.", details: "Ateliers théâtre, arts plastiques, écriture créative et improvisation." },
                         { id: "C2.2", icon: "🤝", label: "Animation Conseils de Jeunes", parent: "C2.1", dx: -140, dy: 560, unlocked: false, link: "", desc: "Instances participatives et co-élaboration des règles.", details: "Animation d'instances participatives, votes démocratiques et responsabilisation." },
                         { id: "C2.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.1", dx: -80, dy: 680, unlocked: false, link: "", desc: "Esprit critique, vérification des sources et fake news.", details: "Décryptage de l'information, algorithmes et création de médias ludo-éducatifs." },
                         { id: "C2.4", icon: "📱", label: "Sobriété Numérique & Écrans", parent: "C2.1", dx: 60, dy: 680, unlocked: false, link: "", desc: "Sensibilisation aux dérives des réseaux sociaux.", details: "Ateliers de déconnexion, charte d'utilisation des smartphones et alternative ludique." },
                         { id: "C2.5", icon: "🏛️", label: "Citoyenneté & Engagement Collectif", parent: "C2.2", dx: -140, dy: 720, unlocked: false, link: "", desc: "Implication des jeunes dans les projets d'intérêt général.", details: "Projets solidaires, chantiers jeunes et responsabilités partagées au sein du centre." },
-
-                        /* --- AXE SUD 3 : INGÉNIERIE LUDIQUE & INCLUSION --- */
                         { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux (GN)", parent: "C1", dx: 120, dy: 400, unlocked: false, link: "", desc: "Création d'univers immersifs de grande envergure.", details: "Écriture de trames narratives complexes, personnages (PNJ) et mécanique de règles." },
                         { id: "C3.2", icon: "🗺️", label: "Logistique des Terrains de Jeu", parent: "C3.1", dx: 220, dy: 560, unlocked: false, link: "", desc: "Aménagement des espaces et sécurité matérielle.", details: "Gestion des flux de participants, sécurité matériel et régulation des rôles." },
                         { id: "C3.3", icon: "🧩", label: "Accueil Universel & Handicap", parent: "C3.1", dx: 120, dy: 680, unlocked: false, link: "", desc: "Adaptation des activités et intégration des publics spécifiques.", details: "Intégration des auxiliaires (AESH) et liens avec les structures spécialisées." },
                         { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 220, dy: 720, unlocked: false, link: "", desc: "Application rigoureuse des Projets d'Accueil Individualisé.", details: "Gestion des régimes alimentaires, traitements et protocoles d'urgence médicale." },
                         { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: -20, dy: 720, unlocked: false, link: "", desc: "Accessibilité de toutes les activités sans stigmatisation.", details: "Variabilité des supports, rythmes d'apprentissage personnalisés et valorisation." },
-
-                        /* --- AXE SUD 4 : OUTDOOR EDUCATION & NATURE --- */
                         { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste (EEDD)", parent: "C1", dx: 280, dy: 380, unlocked: false, link: "", desc: "Immersion nature et éco-citoyenneté.", details: "Ateliers de découverte de la biodiversité, sensibilisation à la faune/flore et zéro déchet." },
                         { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps", parent: "C4.1", dx: 420, dy: 500, unlocked: false, link: "", desc: "Organisation de séjours et camps en pleine autonomie.", details: "Montage des campements, cuisine au feu de bois, hygiène et vie collective outdoor." },
                         { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène", parent: "C4.2", dx: 520, dy: 600, unlocked: false, link: "", desc: "Respect des normes d'hygiène et techniques en milieu naturel.", details: "Maîtrise de la chaîne du froid nomade et gestion des denrées en autonomie." },
@@ -366,7 +358,9 @@
         let activeNode = null;
         let nodePositions = {};
 
-        let scale = 1; let panX = 0; let panY = 0;
+        // Zoom initial ajusté à 0.55 pour voir TOUTES les constellations d'un coup à l'ouverture
+        let scale = 0.55; 
+        let panX = 0; let panY = 0;
         let isDragging = false; let startX = 0; let startY = 0;
 
         function updateTransform() {
@@ -374,7 +368,12 @@
             world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
         }
 
-        function resetView() { scale = 1; panX = 0; panY = 0; updateTransform(); }
+        function resetView() { 
+            scale = 0.55; 
+            panX = 0; 
+            panY = 0; 
+            updateTransform(); 
+        }
 
         function setupPanAndZoom() {
             const world = document.getElementById('world');
@@ -403,7 +402,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v19');
+            const saved = localStorage.getItem('theo_final_app_skills_v20');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -424,7 +423,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v19', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v20', JSON.stringify(data));
         }
 
         function initGraph() {
@@ -555,7 +554,7 @@
                 badge.innerText = "STATUT : À DÉBLOQUER";
                 btn.innerText = "Marquer comme maîtrisé (Débloquer)";
                 btn.style.background = "#10b981";
-                btn.style.color = "#fff";
+                btn.style.color #fff;
             }
         }
 
@@ -573,6 +572,7 @@
         loadSavedState();
         initGalaxy();
         initGraph();
+        updateTransform();
         setupPanAndZoom();
     </script>
 </body>
