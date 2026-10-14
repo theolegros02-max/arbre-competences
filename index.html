@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Expertise Nord & Sud Ultime)</title>
+    <title>Arbre de Compétences - Théo Legros (Focus Admissibilité CAPES)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -37,10 +37,7 @@
         /* Arrière-plan Galaxie & Étoiles */
         #galaxy-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
             background: radial-gradient(circle at 50% 50%, #0d1224 0%, #05070f 70%);
             pointer-events: none;
@@ -61,26 +58,18 @@
         /* Conteneur global sujet au Pan & Zoom */
         #world {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             transform-origin: 0 0;
             cursor: grab;
             z-index: 1;
         }
 
-        #world:active {
-            cursor: grabbing;
-        }
+        #world:active { cursor: grabbing; }
 
         /* Canvas SVG pour les lignes */
         #svg-canvas {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
 
@@ -98,37 +87,28 @@
 
         /* Couche des Nœuds DOM */
         #nodes-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
 
         .skill-node-wrapper {
             position: absolute;
             transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            pointer-events: auto;
-            cursor: pointer;
+            display: flex; align-items: center;
+            pointer-events: auto; cursor: pointer;
             gap: 8px;
         }
 
         .skill-node {
-            width: 46px;
-            height: 46px;
+            width: 46px; height: 46px;
             border-radius: 50%;
             background: #0f172a;
             border: 2px solid var(--locked-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s, border-color 0.3s;
             box-shadow: 0 4px 18px rgba(0,0,0,0.8);
-            position: relative;
-            flex-shrink: 0;
+            position: relative; flex-shrink: 0;
         }
 
         .skill-node-wrapper:hover .skill-node {
@@ -137,8 +117,7 @@
         }
 
         .skill-node.center-node {
-            width: 68px;
-            height: 68px;
+            width: 68px; height: 68px;
             background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
             border: 3px solid #fef3c7;
             box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
@@ -150,161 +129,89 @@
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 18px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 18px var(--color-d); }
 
-        .node-icon {
-            font-size: 1.1em;
-        }
+        .node-icon { font-size: 1.1em; }
 
         /* Titre au survol */
         .node-title-label {
-            font-size: 0.7em;
-            font-weight: 700;
-            color: var(--text-main);
-            text-align: center;
+            font-size: 0.7em; font-weight: 700;
+            color: var(--text-main); text-align: center;
             white-space: nowrap;
             background: rgba(14, 20, 36, 0.95);
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 5px 10px; border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            opacity: 0;
-            visibility: hidden;
+            opacity: 0; visibility: hidden;
             transition: opacity 0.25s ease, transform 0.25s ease;
-            position: absolute;
-            bottom: 56px;
-            left: 50%;
+            position: absolute; bottom: 56px; left: 50%;
             transform: translateX(-50%) translateY(4px);
-            z-index: 20;
-            pointer-events: none;
+            z-index: 20; pointer-events: none;
         }
 
         .skill-node-wrapper:hover .node-title-label {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1; visibility: visible;
             transform: translateX(-50%) translateY(0);
         }
 
         .check-badge {
-            position: absolute;
-            bottom: -3px;
-            right: -3px;
-            background: #000;
-            border: 1px solid currentColor;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6em;
-            font-weight: 900;
+            position: absolute; bottom: -3px; right: -3px;
+            background: #000; border: 1px solid currentColor;
+            border-radius: 50%; width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.6em; font-weight: 900;
         }
 
-        /* Tableau des scores HUD & Contrôles */
+        /* HUD & Contrôles */
         #hud-scores {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 10;
+            position: fixed; top: 20px; left: 20px; z-index: 10;
             background: rgba(16, 20, 32, 0.85);
             backdrop-filter: blur(8px);
-            border: 1px solid #334155;
-            padding: 14px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #334155; padding: 14px;
+            border-radius: 12px; display: flex; flex-direction: column; gap: 6px;
+            min-width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             pointer-events: auto;
         }
 
-        .hud-row {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 0.8em;
-        }
+        .hud-row { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.8em; }
 
         .reset-view-btn {
-            margin-top: 6px;
-            padding: 6px;
-            background: #1e293b;
-            border: 1px solid #475569;
-            color: #cbd5e1;
-            font-size: 0.75em;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
+            margin-top: 6px; padding: 6px;
+            background: #1e293b; border: 1px solid #475569;
+            color: #cbd5e1; font-size: 0.75em; font-weight: 700;
+            border-radius: 6px; cursor: pointer; transition: background 0.2s;
         }
-
-        .reset-view-btn:hover {
-            background: #334155;
-            color: #fff;
-        }
+        .reset-view-btn:hover { background: #334155; color: #fff; }
 
         /* Modal Overlay */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(6px);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(6px);
+            z-index: 100; display: none; align-items: center; justify-content: center;
             pointer-events: auto;
         }
 
         .modal-card {
-            background: var(--panel-bg);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 480px;
-            padding: 25px;
+            background: var(--panel-bg); border-radius: 16px;
+            width: 90%; max-width: 480px; padding: 25px;
             border: 2px solid var(--text-muted);
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             position: relative;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; color: var(--text-muted); }
 
         .modal-btn {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9em;
+            width: 100%; padding: 10px; margin-top: 8px;
+            border-radius: 8px; border: none; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; text-align: center;
+            text-decoration: none; display: inline-block; font-size: 0.9em;
         }
 
         .link-input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #090d16;
-            border: 1px solid #334155;
-            color: var(--text-main);
-            border-radius: 6px;
-            font-size: 0.85em;
-            margin-bottom: 8px;
-            outline: none;
+            width: 100%; padding: 8px 12px; background: #090d16;
+            border: 1px solid #334155; color: var(--text-main);
+            border-radius: 6px; font-size: 0.85em; margin-bottom: 8px; outline: none;
         }
-
-        .link-input:focus {
-            border-color: #3b82f6;
-        }
+        .link-input:focus { border-color: #3b82f6; }
 
         .doc-btn { background: #3b82f6; color: #fff; }
         .doc-btn:hover { background: #2563eb; }
@@ -314,7 +221,6 @@
 </head>
 <body>
 
-    <!-- Arrière-plan Galaxie -->
     <div id="galaxy-bg"></div>
 
     <div id="hud-scores">
@@ -326,13 +232,11 @@
         <button class="reset-view-btn" onclick="resetView()">🎯 Centrer & Réinitialiser la vue</button>
     </div>
 
-    <!-- Conteneur global Pan & Zoom -->
     <div id="world">
         <svg id="svg-canvas"></svg>
         <div id="nodes-container"></div>
     </div>
 
-    <!-- Modal Popup -->
     <div class="modal-overlay" id="modal">
         <div class="modal-card" id="modal-card">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -344,14 +248,12 @@
                 <p id="modal-details" style="font-size: 0.85em; margin-top: 5px;"></p>
             </div>
 
-            <!-- Champ de saisie dynamique du lien GDoc -->
             <div style="margin-bottom: 15px;">
                 <label style="font-size: 0.75em; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">LIEN DU DOCUMENT (GDOC) :</label>
                 <input type="text" id="node-link-input" class="link-input" placeholder="Collez votre lien Google Doc ici...">
                 <button class="modal-btn save-btn" onclick="saveNodeLink()" style="margin-top: 4px;">💾 Enregistrer le lien</button>
             </div>
 
-            <!-- Bouton pour ouvrir le document s'il existe -->
             <a id="modal-doc-link" href="#" target="_blank" class="modal-btn doc-btn" style="display: none; margin-bottom: 8px;">📄 Ouvrir le document (GDoc)</a>
             <button class="modal-btn" id="btn-toggle" onclick="toggleSkill()"></button>
         </div>
@@ -365,10 +267,8 @@
                 const star = document.createElement('div');
                 star.className = 'star';
                 const size = Math.random() * 2.5 + 1;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.left = `${Math.random() * 100}%`;
+                star.style.width = `${size}px`; star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`; star.style.left = `${Math.random() * 100}%`;
                 star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`;
                 bg.appendChild(star);
@@ -424,23 +324,15 @@
                     key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Animation & ACM", parent: "CENTER", dx: 0, dy: 140, unlocked: true, link: "", desc: "Encadrement global et animation de groupes de jeunes (BAFA/BAFD).", details: "Garantie du cadre de vie, sécurité physique et animation du quotidien." },
-
-                        /* Sous-branche Sud-Ouest (Sécurité Affective & Inclusion) */
                         { id: "C1.1", icon: "🛡️", label: "Sécurité Affective & Bientraitance", parent: "C1", dx: -150, dy: 260, unlocked: false, link: "", desc: "Bienveillance active et repérage des signaux faibles.", details: "Offrir un espace de parole sécurisant, bientraitance physique et morale." },
                         { id: "C1.3", icon: "⚠️", label: "Gestion de Crise & Violences", parent: "C1.1", dx: -260, dy: 360, unlocked: false, link: "", desc: "Régulation des conflits aigus, repérage du harcèlement et posture protectrice.", details: "Protocoles d'écoute, signalements internes et protection immédiate des mineurs." },
                         { id: "C1.4", icon: "💬", label: "Soutien Individualisé", parent: "C1.3", dx: -260, dy: 460, unlocked: false, link: "", desc: "Entretiens de médiation et accompagnement des profils sensibles.", details: "Suivi personnalisé, écoute active et adaptation relationnelle." },
-
-                        /* Sous-branche Sud Centre-Gauche (Expression & Démocratie) */
                         { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression", parent: "C1", dx: -50, dy: 260, unlocked: false, link: "", desc: "Création artistique, manuelle et théâtrale pour libérer l'expression.", details: "Projets de création libre, bricolage, expression corporelle et mise en scène." },
                         { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes", parent: "C2.1", dx: -90, dy: 380, unlocked: false, link: "", desc: "Animation d'instances participatives et co-élaboration des règles.", details: "Gestion démocratique du séjour, responsabilisation et civisme au quotidien." },
                         { id: "C3.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.2", dx: -90, dy: 500, unlocked: false, link: "", desc: "Esprit critique, décryptage de l'information et fake news.", details: "Ateliers ludo-éducatifs sur les écrans, les réseaux sociaux et la vérification des sources." },
-
-                        /* Sous-branche Sud Centre-Droite (Grands Jeux & Immersion) */
                         { id: "C1.2", icon: "🎲", label: "Grands Jeux & Veillées", parent: "C1", dx: 50, dy: 260, unlocked: false, link: "", desc: "Scénarisation et animation d'univers immersifs collectifs.", details: "Création de grands jeux de rôle, chasses au trésor et gestion des veillées." },
                         { id: "C2.3", icon: "🗺️", label: "Ingénierie de Grands Jeux", parent: "C1.2", dx: 90, dy: 380, unlocked: false, link: "", desc: "Conception architecturale de jeux complexes et grande envergure.", details: "Écriture de scénarios immersifs (GN), gestion de vastes espaces et logistique des règles." },
                         { id: "C3.1", icon: "🧩", label: "Inclusion & Handicap", parent: "C2.3", dx: 90, dy: 500, unlocked: false, link: "", desc: "Accueil universel des publics et adaptation des activités.", details: "Mise en place de PAI/PAP, accompagnement individualisé et accessibilité pour tous." },
-
-                        /* Sous-branche Sud-Est (Outdoor Education & Nature) */
                         { id: "C3.2", icon: "🌿", label: "Pédagogie Nature (Outdoor)", parent: "C1", dx: 150, dy: 260, unlocked: false, link: "", desc: "Immersion en plein air et éducation à l'environnement (EEDD).", details: "Exploration naturaliste, sensibilisation écologique et activités outdoor." },
                         { id: "C4.1", icon: "⛺", label: "Camps & Bivouacs", parent: "C3.2", dx: 260, dy: 360, unlocked: false, link: "", desc: "Organisation de séjours sous tentes et vie en autonomie.", details: "Apprentissage de la vie de camp, cuisine au feu de bois et gestion du risque en plein air." }
                     ]
@@ -448,16 +340,27 @@
                 {
                     key: "D", name: "🟣 EXPERTISE CAPES & ANGLAIS (OUEST)", color: "var(--color-d)",
                     nodes: [
-                        { id: "D1.A", icon: "🗣️", label: "Syntaxe & Énonciation", parent: "CENTER", dx: -160, dy: -60, unlocked: true, link: "", desc: "Analyse syntaxique SVO et théorie des opérations énonciatives.", details: "Déconstruction rigoureuse des structures de phrase en contexte." },
-                        { id: "D2.A", icon: "🏫", label: "Différenciation 6e-BTS", parent: "CENTER", dx: -160, dy: 60, unlocked: true, link: "", desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, BTS)." },
-                        { id: "D1.B", icon: "🔤", label: "Phonologie -ed", parent: "D1.A", dx: -350, dy: -180, unlocked: true, link: "", desc: "Morpho-phonologie des verbes réguliers.", details: "Justification phonétique rigoureuse (/t/, /d/, /id/)." },
-                        { id: "D1.C", icon: "🎵", label: "Accentuation & Rythme", parent: "D1.B", dx: -540, dy: -260, unlocked: false, link: "", desc: "Maîtrise des schémas intonatifs et accentuels.", details: "Analyse phonologique avancée (stress shift, intonation contour)." },
-                        { id: "D1.D", icon: "📖", label: "Opérations Énonciatives", parent: "D1.B", dx: -540, dy: -140, unlocked: false, link: "", desc: "Application de la TOPE (Culioli) sur corpus.", details: "Étude des marqueurs modaux, aspectuels et temporels." },
-                        { id: "D2.B", icon: "📑", label: "Analyse de Dossier", parent: "D1.A", dx: -350, dy: -50, unlocked: false, link: "", desc: "Critique de corpus documentaires (Épreuve Disciplinaire).", details: "Présentation, confrontation et mise en perspective sur un axe culturel." },
-                        { id: "D2.C", icon: "🏛️", label: "Civilisation & Contextes", parent: "D2.B", dx: -540, dy: -30, unlocked: false, link: "", desc: "Maîtrise des repères historiques et politiques du monde anglophone.", details: "Analyse des enjeux civilisationnels (ex: Territoire et mémoire, arts, sociétés)." },
-                        { id: "D3.A", icon: "📝", label: "Objectifs Langagiers", parent: "D2.A", dx: -350, dy: 110, unlocked: false, link: "", desc: "Transposition didactique d'un fait de langue.", details: "Extraction d'attendus grammaticaux et lexicaux adaptés à la classe." },
-                        { id: "D3.B", icon: "📋", label: "Conception Séquence", parent: "D3.A", dx: -540, dy: 120, unlocked: false, link: "", desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents et rétroplanning." },
-                        { id: "D3.C", icon: "🎯", label: "Évaluation & Tâches", parent: "D3.B", dx: -720, dy: 40, unlocked: false, link: "", desc: "Création de grilles critériées et tâches finales.", details: "Évaluation sommative et formative alignée sur le CECRL." }
+                        { id: "D1", icon: "✏️", label: "Pôle Admissibilité (Écrit CAPES)", parent: "CENTER", dx: -180, dy: -20, unlocked: true, link: "", desc: "Expertise méthodologique, linguistique et disciplinaire dédiée à l'épreuve écrite.", details: "Consolidations académiques rigoureuses exigées par le jury du concours." },
+                        
+                        /* --- SOUS-AXE 1 : Épreuve Disciplinaire (Synthèse & Corpus) --- */
+                        { id: "D1.1", icon: "📑", label: "Synthèse & Problématisation", parent: "D1", dx: -340, dy: -180, unlocked: false, link: "", desc: "Méthodologie de la note de synthèse et confrontation de corpus.", details: "Extraction des axes de convergence/divergence, problématique centrale et plan structuré." },
+                        { id: "D1.2", icon: "📖", label: "Analyse Stylistique & Registres", parent: "D1.1", dx: -520, dy: -260, unlocked: false, link: "", desc: "Analyse littéraire et journalistique des documents du corpus.", details: "Étude des registres, métaphores, polyphonie, ironie et posture énonciative des auteurs." },
+                        { id: "D1.3", icon: "🖼️", label: "Analyse Document Iconographique", parent: "D1.1", dx: -520, dy: -180, unlocked: false, link: "", desc: "Confrontation critique de l'image (caricature, peinture, affiche).", details: "Composition, cadrage, implicite visuel et mise en résonance avec les textes du corpus." },
+                        { id: "D1.4", icon: "✍️", label: "Aisance Rédactionnelle (C1+)", parent: "D1.1", dx: -520, dy: -100, unlocked: false, link: "", desc: "Rigueur d'expression écrite en langue étrangère à niveau agrégatif/C1+.", details: "Lexique académique, variété des structures syntaxiques, cohérence et cohésion textuelle." },
+
+                        /* --- SOUS-AXE 2 : Linguistique & Grammaire Énonciative (TOPE) --- */
+                        { id: "D2.1", icon: "🗣️", label: "Linguistique Énonciative (TOPE)", parent: "D1", dx: -360, dy: -60, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli) appliquée à l'écrit.", details: "Analyse du repérage énonciatif (S0/T0), opérations d'instanciation et prédication." },
+                        { id: "D2.2", icon: "⚙️", label: "Groupe Verbal & Modalisateurs", parent: "D2.1", dx: -540, dy: -60, unlocked: false, link: "", desc: "Déconstruction du système verbal anglais sur corpus épreuves.", details: "Auxiliaires modaux (valeurs épistémiques/déontiques), aspect be+-ing, have+-en, passif et causatives." },
+                        { id: "D2.3", icon: "🏷️", label: "Groupe Nominal & Détermination", parent: "D2.1", dx: -540, dy: 20, unlocked: false, link: "", desc: "Analyse fine du système de détermination et quantification.", details: "Fonctionnement des articles (a/the/Ø), génitifs, quantificateurs et relatives déterminatives/appositives." },
+
+                        /* --- SOUS-AXE 3 : Phonologie & Morpho-Phonologie à l'Écrit --- */
+                        { id: "D3.1", icon: "🔤", label: "Transcription API & Variétés", parent: "D1", dx: -340, dy: 80, unlocked: true, link: "", desc: "Transcription phonétique rigoureuse en RP (Received Pronunciation) et GA.", details: "Maîtrise complète de l'Alphabet Phonétique International, voyelles, diphthongues et consonnes." },
+                        { id: "D3.2", icon: "🎵", label: "Règles Accentuelles & Suffixes", parent: "D3.1", dx: -520, dy: 100, unlocked: false, link: "", desc: "Justification théorique du placement de l'accent primaire/secondaire.", details: "Incidence des suffixes contraints/neutres, stress shift, règles de dérivation et composé verbal/nominal." },
+                        { id: "D3.3", icon: "🔊", label: "Morpho-Phonologie & Réductions", parent: "D3.1", dx: -520, dy: 180, unlocked: false, link: "", desc: "Analyse de la réduction vocalique (schwa) et désinences morphologiques.", details: "Règles d'allomorphie des morphes {-ed} et {-s}, formes fortes/faibles et assimilations." },
+
+                        /* --- SOUS-AXE 4 : Pédagogie CAPES & Oral (Admission) --- */
+                        { id: "D4.1", icon: "🏫", label: "Différenciation 6e-BTS", parent: "D1", dx: -240, dy: 180, unlocked: true, link: "", desc: "Polyvalence d'enseignement du second degré.", details: "Adaptation fine des méthodes aux publics hétérogènes (collège, lycée, BTS)." },
+                        { id: "D4.2", icon: "📋", label: "Conception Séquence (CECRL)", parent: "D4.1", dx: -380, dy: 260, unlocked: false, link: "", desc: "Architecture complète d'une séquence pédagogique.", details: "Objectifs culturels/linguistiques, choix des documents déclencheurs et rétroplanning." }
                     ]
                 }
             ]
@@ -466,73 +369,44 @@
         let activeNode = null;
         let nodePositions = {};
 
-        let scale = 1;
-        let panX = 0;
-        let panY = 0;
-        let isDragging = false;
-        let startX = 0;
-        let startY = 0;
+        let scale = 1; let panX = 0; let panY = 0;
+        let isDragging = false; let startX = 0; let startY = 0;
 
         function updateTransform() {
             const world = document.getElementById('world');
             world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
         }
 
-        function resetView() {
-            scale = 1;
-            panX = 0;
-            panY = 0;
-            updateTransform();
-        }
+        function resetView() { scale = 1; panX = 0; panY = 0; updateTransform(); }
 
         function setupPanAndZoom() {
             const world = document.getElementById('world');
-
             window.addEventListener('mousedown', (e) => {
                 if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay')) return;
-                isDragging = true;
-                startX = e.clientX - panX;
-                startY = e.clientY - panY;
+                isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
             });
-
             window.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
-                panX = e.clientX - startX;
-                panY = e.clientY - startY;
-                updateTransform();
+                panX = e.clientX - startX; panY = e.clientY - startY; updateTransform();
             });
-
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-
+            window.addEventListener('mouseup', () => { isDragging = false; });
             window.addEventListener('wheel', (e) => {
                 if (e.target.closest('#hud-scores') || e.target.closest('.modal-overlay')) return;
                 e.preventDefault();
-
                 const zoomIntensity = 0.1;
                 const rect = world.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-
+                const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 let prevScale = scale;
-                if (e.deltaY < 0) {
-                    scale *= (1 + zoomIntensity);
-                } else {
-                    scale /= (1 + zoomIntensity);
-                }
-
+                if (e.deltaY < 0) { scale *= (1 + zoomIntensity); } else { scale /= (1 + zoomIntensity); }
                 scale = Math.max(0.3, Math.min(3, scale));
-
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
                 panY = mouseY - (mouseY - panY) * (scale / prevScale);
-
                 updateTransform();
             }, { passive: false });
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v11');
+            const saved = localStorage.getItem('theo_final_app_skills_v13');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -553,14 +427,13 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v11', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v13', JSON.stringify(data));
         }
 
         function initGraph() {
             const svg = document.getElementById('svg-canvas');
             const container = document.getElementById('nodes-container');
-            svg.innerHTML = '';
-            container.innerHTML = '';
+            svg.innerHTML = ''; container.innerHTML = '';
 
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
@@ -569,14 +442,12 @@
 
             const centerWrap = document.createElement('div');
             centerWrap.className = 'skill-node-wrapper';
-            centerWrap.style.left = `${cx}px`;
-            centerWrap.style.top = `${cy}px`;
+            centerWrap.style.left = `${cx}px`; centerWrap.style.top = `${cy}px`;
 
             const centerEl = document.createElement('div');
             centerEl.className = 'skill-node center-node';
             centerEl.innerHTML = `<span class="node-icon">${graphData.center.icon}</span>`;
-            centerWrap.appendChild(centerEl);
-            container.appendChild(centerWrap);
+            centerWrap.appendChild(centerEl); container.appendChild(centerWrap);
 
             let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
@@ -595,21 +466,17 @@
                     const parentPos = nodePositions[n.parent];
 
                     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line.setAttribute('x1', parentPos.x);
-                    line.setAttribute('y1', parentPos.y);
-                    line.setAttribute('x2', pos.x);
-                    line.setAttribute('y2', pos.y);
+                    line.setAttribute('x1', parentPos.x); line.setAttribute('y1', parentPos.y);
+                    line.setAttribute('x2', pos.x); line.setAttribute('y2', pos.y);
                     line.setAttribute('class', `connection-line ${n.unlocked ? 'active-' + r.key.toLowerCase() : ''}`);
                     svg.appendChild(line);
 
                     const nodeWrap = document.createElement('div');
                     nodeWrap.className = 'skill-node-wrapper';
-                    nodeWrap.style.left = `${pos.x}px`;
-                    nodeWrap.style.top = `${pos.y}px`;
+                    nodeWrap.style.left = `${pos.x}px`; nodeWrap.style.top = `${pos.y}px`;
 
                     const nodeEl = document.createElement('div');
                     nodeEl.className = `skill-node ${n.unlocked ? 'unlocked-' + r.key.toLowerCase() : ''}`;
-
                     nodeEl.innerHTML = `
                         <span class="node-icon">${n.icon}</span>
                         ${n.unlocked ? `<span class="check-badge" style="color:${r.color}">✓</span>` : ''}
@@ -619,12 +486,8 @@
                     labelEl.className = 'node-title-label';
                     labelEl.innerText = n.label;
 
-                    nodeWrap.appendChild(nodeEl);
-                    nodeWrap.appendChild(labelEl);
-                    nodeWrap.onclick = (e) => {
-                        e.stopPropagation();
-                        openModal(n, r);
-                    };
+                    nodeWrap.appendChild(nodeEl); nodeWrap.appendChild(labelEl);
+                    nodeWrap.onclick = (e) => { e.stopPropagation(); openModal(n, r); };
 
                     container.appendChild(nodeWrap);
                 });
@@ -706,9 +569,7 @@
             }
         }
 
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
         loadSavedState();
         initGalaxy();
