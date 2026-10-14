@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Formation & Direction BAFA)</title>
+    <title>Arbre de Compétences - Théo Legros (Expertise Nord Ultra-Développée)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -339,40 +339,52 @@
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques." },
             regions: [
                 {
-                    key: "A", name: "🔴 PILOTAGE & DIRECTION ACM (NORD)", color: "var(--color-a)",
+                    key: "A", name: "🔴 PILOTAGE, STRATÉGIE & DIRECTION ACM (NORD)", color: "var(--color-a)",
                     nodes: [
-                        { id: "A1", icon: "🏕️", label: "Direction d'ACM", parent: "CENTER", dx: 0, dy: -90, unlocked: true, link: "", desc: "Pilotage global d'un Accueil Collectif de Mineurs.", details: "Coordination générale administrative, humaine et pédagogique d'un centre." },
-                        { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -90, dy: -170, unlocked: false, link: "", desc: "Rédaction et animation de la vision éducative du séjour.", details: "Formalisation des objectifs et déclinaison opérationnelle pour l'équipe." },
-                        { id: "A2.1", icon: "📋", label: "Conformité DDCS", parent: "A1", dx: 90, dy: -170, unlocked: false, link: "", desc: "Respect strict de la réglementation Jeunesse & Sports.", details: "Vérification des taux d'encadrement, diplômes, normes sanitaires et d'hygiène." },
-                        { id: "A3.1", icon: "👥", label: "Management Équipe", parent: "A1.1", dx: -160, dy: -250, unlocked: false, link: "", desc: "Recrutement, animation des réunions et suivi des animateurs.", details: "Accompagnement des stagiaires BAFA, débriefings et régulation du collectif." },
-                        { id: "A2.2", icon: "💰", label: "Budget & Logistique", parent: "A1.1", dx: -60, dy: -250, unlocked: false, link: "", desc: "Gestion de la régie, des achats et de l'intendance du séjour.", details: "Suivi budgétaire prévisionnel et gestion des prestataires/partenaires." },
-                        { id: "A4.1", icon: "🚨", label: "Sécurité & PPMS", parent: "A2.1", dx: 60, dy: -250, unlocked: false, link: "", desc: "Gestion des risques, urgences médicales et plans de sûreté.", details: "Application des protocoles d'évacuation, soins et liaisons familles." },
-                        { id: "A4.2", icon: "🌱", label: "Éco-ACM & Sobriété", parent: "A2.1", dx: 160, dy: -250, unlocked: false, link: "", desc: "Intégration de la sobriété et de l'écologie en centre de loisirs.", details: "Gestion des déchets, circuits courts et sensibilisation environnementale." },
-                        { id: "A3.2", icon: "📈", label: "Bilan & Évaluation", parent: "A3.1", dx: -160, dy: -330, unlocked: false, link: "", desc: "Évaluation globale de l'accueil et rédaction du bilan qualitatif.", details: "Rapports pour l'organisateur, bilans financiers et enquêtes de satisfaction." }
+                        { id: "A1", icon: "🏕️", label: "Direction Générale ACM", parent: "CENTER", dx: 0, dy: -80, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un Accueil Collectif de Mineurs.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
+
+                        /* --- Sub-Branch A1 : Projet Éducatif & Vision Stratégique --- */
+                        { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -120, dy: -150, unlocked: false, link: "", desc: "Rédaction, opérationnalisation et évaluation de la vision éducative.", details: "Déclinaison des valeurs citoyennes et des objectifs en actions concrètes pour l'équipe." },
+                        { id: "A1.2", icon: "🏛️", label: "Ancrage PEDT & Territoire", parent: "A1.1", dx: -220, dy: -200, unlocked: false, link: "", desc: "Articulation du projet avec le Projet Éducatif de Territoire (PEDT) et collectivités.", details: "Négociation partenariale avec les SDJES, CAF, mairies et intercommunalités." },
+                        { id: "A1.3", icon: "👪", label: "Gouvernance & Familles", parent: "A1.1", dx: -180, dy: -270, unlocked: false, link: "", desc: "Co-construction éducative, conseils de jeunes et alliance avec les parents.", details: "Mise en place de temps d'échange réguliers, accueil individualisé des familles et médiation." },
+
+                        /* --- Sub-Branch A2 : Juridique, Droit du Travail & Crises --- */
+                        { id: "A2.1", icon: "📋", label: "Conformité & Réglementation", parent: "A1", dx: 0, dy: -160, unlocked: false, link: "", desc: "Maîtrise du Code de l'Action Sociale et des Familles (CASF).", details: "Contrôle des taux d'encadrement, qualifications, locaux et déclarations SDJES." },
+                        { id: "A2.2", icon: "⚖️", label: "Droit du Travail & CEE", parent: "A2.1", dx: -60, dy: -240, unlocked: false, link: "", desc: "Gestion des contrats (CEE, Convention Éclat), repos et temps de travail.", details: "Application stricte de la législation du travail adaptée à l'animation volontaire et professionnelle." },
+                        { id: "A2.3", icon: "🚨", label: "PPMS & Plan de Sûreté", parent: "A2.1", dx: 0, dy: -250, unlocked: false, link: "", desc: "Conception et entraînement au Plan Particulier de Mise en Sûreté.", details: "Gestion des risques majeurs (intrusion, risque naturel, attentat) et exercices réguliers." },
+                        { id: "A2.4", icon: "🔥", label: "Gestion de Crise & EIG", parent: "A2.1", dx: 60, dy: -240, unlocked: false, link: "", desc: "Gestion des Événements Indésirables Graves et communication d'urgence.", details: "Déclaration SDJES en moins de 24h, cellule de crise, accompagnement psychologique et média-training." },
+                        { id: "A2.5", icon: "🛡️", label: "Signalements & CRIP", parent: "A2.2", dx: -100, dy: -320, unlocked: false, link: "", desc: "Protocole de protection de l'enfance, prévention des violences et signalement.", details: "Repérage des signaux d'alerte, saisie de la CRIP et coordination avec les services sociaux." },
+
+                        /* --- Sub-Branch A3 : Finance, Marchés Publics & Logistique --- */
+                        { id: "A3.1", icon: "💰", label: "Budget & Gestion Financière", parent: "A1", dx: 120, dy: -150, unlocked: false, link: "", desc: "Gestion de la régie, compta prévisionnelle et analyse des coûts.", details: "Équilibre budgétaire, maîtrise des coûts/jour/enfant et clôture des bilans financiers." },
+                        { id: "A3.2", icon: "📄", label: "Subventions & Marchés", parent: "A3.1", dx: 180, dy: -230, unlocked: false, link: "", desc: "Montage de dossiers de subvention (CAF - Prestation de Service, FDVA, ANS).", details: "Réponse aux appels d'offres publics et dossiers de justification d'emplois d'aide." },
+                        { id: "A3.3", icon: "🍳", label: "HACCP & Restauration", parent: "A3.1", dx: 240, dy: -180, unlocked: false, link: "", desc: "Sécurité sanitaire des aliments et maîtrise des procédures HACCP.", details: "Contrôle de la chaîne du froid, traçabilité des repas, PAI alimentaires et hygiène." },
+                        { id: "A3.4", icon: "🚌", label: "Logistique & Mobilités", parent: "A3.2", dx: 260, dy: -300, unlocked: false, link: "", desc: "Organisation des transports, séjours itinérants et à l'étranger.", details: "Conformité des véhicules, autorisations de sortie de territoire, assurances et rapatriments." },
+
+                        /* --- Sub-Branch A4 : Management RH & Climat de Travail --- */
+                        { id: "A4.1", icon: "👥", label: "Management RH & Recrutement", parent: "A1.1", dx: -70, dy: -170, unlocked: false, link: "", desc: "Attraction des talents, entretiens de sélection et fidélisation.", details: "Constitution d'équipes pluridisciplinaires équilibrées et profils complémentaires." },
+                        { id: "A4.2", icon: "⚖️", label: "RPS, QVT & Burn-out", parent: "A4.1", dx: -150, dy: -330, unlocked: false, link: "", desc: "Prévention de la charge mentale et bien-être au travail en ACM.", details: "Régulation du stress saisonnier, suivi des plannings de repos et climat bienveillant." },
+                        { id: "A4.3", icon: "🎓", label: "Accompagnement Pro (BAFD/BPJEPS)", parent: "A4.1", dx: -50, dy: -330, unlocked: false, link: "", desc: "Tutorat, formation continue et accompagnement des stagiaires.", details: "Évaluations formatives quotidiennes, livret de suivi BAFD/BPJEPS et transmission de compétences." },
+
+                        /* --- Sub-Branch A5 : Éco-Responsabilité & Évaluation --- */
+                        { id: "A5.1", icon: "🌱", label: "Éco-Responsabilité & Bilan Carbone", parent: "A3.3", dx: 310, dy: -240, unlocked: false, link: "", desc: "Transition écologique globale du centre de loisirs.", details: "Réduction des déchets, approvisionnement bio/local, sobriété énergétique et achats responsables." },
+                        { id: "A5.2", icon: "📈", label: "Bilan Qualitatif & Audit", parent: "A1", dx: 60, dy: -110, unlocked: false, link: "", desc: "Évaluation d'impact éducatif et rédaction des bilans d'activité.", details: "Mise en place d'indicateurs d'évaluation, auto-évaluation d'équipe et rapport moral." }
                     ]
                 },
                 {
                     key: "B", name: "🔵 FORMATION, INGÉNIERIE & RH (EST)", color: "var(--color-b)",
                     nodes: [
                         { id: "B1", icon: "🎓", label: "Pôle Formation & RH", parent: "CENTER", dx: 90, dy: -20, unlocked: true, link: "", desc: "Carrefour des expertises en ingénierie pédagogique, andragogie et RH.", details: "Pilotage global des dispositifs d'apprentissage pour adultes et professionnels." },
-                        
-                        /* --- Sous-Branche 1 : Ingénierie Pédagogique & ADDIE --- */
                         { id: "B1.1", icon: "📐", label: "Modèle ADDIE", parent: "B1", dx: 170, dy: -130, unlocked: false, link: "", desc: "Méthodologie globale d'ingénierie (Analyse, Design, Développement, Implémentation, Évaluation).", details: "Maîtrise de chaque phase du cycle de vie d'un projet de formation." },
                         { id: "B1.2", icon: "📊", label: "Analyse des Besoins", parent: "B1.1", dx: 260, dy: -200, unlocked: false, link: "", desc: "Cadrage amont et audits de compétences.", details: "Entretiens de positionnement, questionnaires d'écart et analyse de la demande." },
                         { id: "B1.3", icon: "📱", label: "Scénarisation & Blended", parent: "B1.1", dx: 260, dy: -120, unlocked: false, link: "", desc: "Ingénierie multimodale et hybridation des parcours.", details: "Articulation optimale entre classes virtuelles, présentiel et micro-learning." },
                         { id: "B1.4", icon: "🎯", label: "Taxonomie de Bloom", parent: "B1.3", dx: 360, dy: -160, unlocked: false, link: "", desc: "Alignement pédagogique et formulation d'objectifs mesurables.", details: "Hiérarchisation des apprentissages (du savoir mémorisé à la création complexe)." },
-
-                        /* --- Sous-Branche 2 : Andragogie & Accompagnement --- */
                         { id: "B2.1", icon: "🤝", label: "Andragogie & Posture", parent: "B1", dx: 190, dy: -25, unlocked: false, link: "", desc: "Principes d'apprentissage des adultes (Knowles) et posture de formateur.", details: "Valorisation de l'expérience apprenante, autonomie et horizontalité pédagogique." },
                         { id: "B2.2", icon: "🔍", label: "Analyse de Pratiques", parent: "B2.1", dx: 290, dy: -45, unlocked: false, link: "", desc: "Animation de groupes d'analyse de pratiques professionnelles (APP).", details: "Guidage réflexif, écoute active et régulation des situations complexes de terrain." },
                         { id: "B2.3", icon: "🌱", label: "Posture Réflexive", parent: "B2.1", dx: 290, dy: 15, unlocked: false, link: "", desc: "Accompagnement au développement professionnel continu (DPC).", details: "Aide à la métacognition et formalisation des acquis de l'expérience." },
-
-                        /* --- Sous-Branche 3 : Management & Conformité --- */
                         { id: "B3.1", icon: "📑", label: "Conformité Qualiopi", parent: "B1", dx: 170, dy: 80, unlocked: false, link: "", desc: "Maîtrise du Référentiel National Qualité (RNQ).", details: "Respect des indicateurs de certification, traçabilité et amélioration continue." },
                         { id: "B3.2", icon: "💰", label: "Financements & OPCO", parent: "B3.1", dx: 260, dy: 70, unlocked: false, link: "", desc: "Ingénierie financière des dispositifs de formation.", details: "Mobilisation des fonds (OPCO, CPF, plan de développement des compétences)." },
                         { id: "B3.3", icon: "📈", label: "Modèle Kirkpatrick", parent: "B3.1", dx: 260, dy: 150, unlocked: false, link: "", desc: "Évaluation d'impact de la formation (Niveaux 1 à 4).", details: "Mesure de la satisfaction à chaud, des acquis, des changements de pratiques et du ROI." },
-
-                        /* --- Sous-Branche 4 : Direction de Session BAFA (Approfondissement) --- */
                         { id: "B4.1", icon: "🏕️", label: "Direction Session BAFA", parent: "B1", dx: 170, dy: 190, unlocked: false, link: "", desc: "Direction de session de formation BAFA (Approfondissement et Qualification).", details: "Pilotage pédagogique, administratif et réglementaire d'un stage de formation de formateurs/animateurs." },
                         { id: "B4.2", icon: "📋", label: "Cadrage DDCS & Textes", parent: "B4.1", dx: 260, dy: 220, unlocked: false, link: "", desc: "Application stricte de l'arrêté du 15 juillet 2015 relatif au BAFA.", details: "Vérification des conditions d'agrément, des horaires obligatoires et des objectifs de qualification." },
                         { id: "B4.3", icon: "👥", label: "Management Formateurs", parent: "B4.1", dx: 260, dy: 300, unlocked: false, link: "", desc: "Coordination et accompagnement de l'équipe de formateurs permanents/stagiaires.", details: "Répartition des tâches, animation des débriefings pédagogiques quotidiens et soutien technique." },
@@ -415,7 +427,7 @@
         let nodePositions = {};
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v4');
+            const saved = localStorage.getItem('theo_final_app_skills_v5');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -436,7 +448,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v4', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v5', JSON.stringify(data));
         }
 
         function initGraph() {
