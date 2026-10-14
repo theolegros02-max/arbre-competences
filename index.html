@@ -4,554 +4,742 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arbre de Compétences - Théo Legros</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f111a;
-            --card-bg: #1a1d2d;
-            --text-color: #e0e6ed;
-            --accent-red: #e74c3c;
-            --accent-blue: #3498db;
-            --accent-green: #2ecc71;
-            --accent-purple: #9b59b6;
-            --locked-color: #4a4e69;
+            --bg-color: #12141d;
+            --card-bg: #1a1d29;
+            --text-main: #f0f3f8;
+            --text-muted: #7e859b;
+            --locked-node: #252836;
+            --locked-border: #3d4257;
+            --locked-line: #2d3245;
+            
+            /* Color schemes per region */
+            --red-main: #ff334b;
+            --red-glow: rgba(255, 51, 75, 0.4);
+            --blue-main: #2bb0ff;
+            --blue-glow: rgba(43, 176, 255, 0.4);
+            --green-main: #2ecc71;
+            --green-glow: rgba(46, 204, 113, 0.4);
+            --purple-main: #a55eea;
+            --purple-glow: rgba(165, 94, 234, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
         }
 
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            font-family: 'Rajdhani', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            overflow-x: auto;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 30%, #1e2235 0%, #12141d 70%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
         }
 
-        h1 {
+        header {
             text-align: center;
-            margin-bottom: 5px;
-            color: #fff;
+            padding: 25px 20px 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        p.subtitle {
-            text-align: center;
-            color: #8f9bb3;
-            margin-bottom: 30px;
-            font-size: 0.95em;
-        }
-
-        .tree-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1500px;
-            margin: 0 auto;
-        }
-
-        .region-column {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .region-title {
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 2px solid;
-            width: 100%;
-        }
-
-        .region-a { border-color: var(--accent-red); color: var(--accent-red); }
-        .region-b { border-color: var(--accent-blue); color: var(--accent-blue); }
-        .region-c { border-color: var(--accent-green); color: var(--accent-green); }
-        .region-d { border-color: var(--accent-purple); color: var(--accent-purple); }
-
-        .constellation-group {
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .constellation-name {
-            font-size: 0.9em;
-            font-weight: bold;
-            margin-bottom: 10px;
             color: #fff;
-            border-left: 3px solid currentColor;
-            padding-left: 8px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            font-weight: 800;
         }
 
-        .nodes-grid {
+        header p {
+            margin: 6px 0 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        /* Skill Tree Container & Canvas SVG */
+        .tree-viewport {
+            position: relative;
+            width: 1480px;
+            height: 900px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        svg#connection-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .branch-line {
+            fill: none;
+            stroke-linecap: round;
+            transition: stroke 0.4s ease, stroke-width 0.4s ease, filter 0.4s ease;
+        }
+
+        /* Region Summaries / Subtitles */
+        .region-header {
+            position: absolute;
+            text-align: center;
+            z-index: 5;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .region-header .title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .region-header .score {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-top: -2px;
+            line-height: 1;
+        }
+
+        /* Nodes Visual Style */
+        .node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 5;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-        }
-
-        .node-item {
-            display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 10px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.03);
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .node-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(3px);
+        .node:hover {
+            transform: translate(-50%, -50%) scale(1.18);
+            z-index: 20;
         }
 
         .node-circle {
-            width: 32px;
-            height: 32px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
+            background: var(--locked-node);
+            border: 3px solid var(--locked-border);
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-weight: bold;
-            font-size: 0.75em;
-            flex-shrink: 0;
-            border: 2px solid;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+            font-size: 1.2rem;
         }
 
-        .node-item.unlocked .node-circle {
-            background: currentColor;
-            color: #111;
-            border-color: currentColor;
+        .node.root-node .node-circle {
+            width: 72px;
+            height: 72px;
+            font-size: 1.6rem;
         }
-        .node-item.unlocked .node-text {
+
+        /* Node Counters (e.g. 5/5, 0/5) */
+        .node-badge {
+            position: absolute;
+            bottom: -8px;
+            background: #10121a;
+            border: 1.5px solid var(--locked-border);
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+        }
+
+        .node-title-sub {
+            position: absolute;
+            top: 100%;
+            margin-top: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-align: center;
+            width: 110px;
+            pointer-events: none;
+            line-height: 1.1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        }
+
+        /* Unlocked Node Glow Effects by Region */
+        .node[data-region="A"].unlocked .node-circle {
+            border-color: var(--red-main);
+            color: var(--red-main);
+            box-shadow: 0 0 18px var(--red-glow), inset 0 0 10px var(--red-glow);
+            background: radial-gradient(circle, #3d1017 0%, #1a1d29 100%);
+        }
+        .node[data-region="A"].unlocked .node-badge {
+            border-color: var(--red-main);
             color: #fff;
+            background: var(--red-main);
         }
 
-        .node-item.locked .node-circle {
-            background: #111;
-            border-color: var(--locked-color);
-            color: var(--locked-color);
+        .node[data-region="B"].unlocked .node-circle {
+            border-color: var(--blue-main);
+            color: var(--blue-main);
+            box-shadow: 0 0 18px var(--blue-glow), inset 0 0 10px var(--blue-glow);
+            background: radial-gradient(circle, #0e2b40 0%, #1a1d29 100%);
         }
-        .node-item.locked .node-text {
-            color: #8a8d9b;
-        }
-
-        .node-text {
-            font-size: 0.85em;
-            line-height: 1.2;
-            flex-grow: 1;
+        .node[data-region="B"].unlocked .node-badge {
+            border-color: var(--blue-main);
+            color: #fff;
+            background: var(--blue-main);
         }
 
-        /* Modal (Popup) */
-        .modal {
+        .node[data-region="C"].unlocked .node-circle {
+            border-color: var(--green-main);
+            color: var(--green-main);
+            box-shadow: 0 0 18px var(--green-glow), inset 0 0 10px var(--green-glow);
+            background: radial-gradient(circle, #0e3d20 0%, #1a1d29 100%);
+        }
+        .node[data-region="C"].unlocked .node-badge {
+            border-color: var(--green-main);
+            color: #111;
+            background: var(--green-main);
+        }
+
+        .node[data-region="D"].unlocked .node-circle {
+            border-color: var(--purple-main);
+            color: var(--purple-main);
+            box-shadow: 0 0 18px var(--purple-glow), inset 0 0 10px var(--purple-glow);
+            background: radial-gradient(circle, #2f1245 0%, #1a1d29 100%);
+        }
+        .node[data-region="D"].unlocked .node-badge {
+            border-color: var(--purple-main);
+            color: #fff;
+            background: var(--purple-main);
+        }
+
+        /* Fully Mastered Nodes (Max points) */
+        .node.mastered .node-circle {
+            animation: pulse-glow 2.5s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.35); }
+        }
+
+        /* Popup / Modal */
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(8, 10, 15, 0.85);
+            backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeIn 0.25s ease-out;
         }
 
-        .modal-content {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 500px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-card {
+            background: #161925;
+            border: 2px solid var(--locked-border);
+            border-radius: 16px;
             width: 90%;
-            border: 2px solid #fff;
+            max-width: 520px;
+            padding: 28px;
             position: relative;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            transform: translateY(0);
+            transition: border-color 0.3s ease;
         }
 
-        .close-btn {
+        .modal-close {
             position: absolute;
-            top: 10px; right: 15px;
-            font-size: 24px;
+            top: 18px;
+            right: 20px;
+            font-size: 1.4rem;
+            color: var(--text-muted);
             cursor: pointer;
-            color: #aaa;
+            transition: color 0.2s;
         }
-        .close-btn:hover { color: #fff; }
 
-        .status-badge {
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-tag {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .badge-unlocked { background: var(--accent-green); color: #000; }
-        .badge-locked { background: var(--locked-color); color: #fff; }
-
-        .action-btn {
-            margin-top: 15px;
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 15px;
+            padding: 3px 10px;
             border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            transition: background 0.2s;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
-        .action-btn:hover { background: #2980b9; }
+
+        .modal-title {
+            margin: 0 0 10px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.25;
+        }
+
+        .modal-desc {
+            color: #b0b8ce;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-details {
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid var(--locked-border);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.88rem;
+            color: #d1d7e6;
+            margin-bottom: 25px;
+            line-height: 1.45;
+        }
+
+        /* Controls inside modal */
+        .level-control-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.03);
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 20px;
+        }
+
+        .level-btn {
+            background: var(--locked-node);
+            border: 1px solid var(--locked-border);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .level-btn:hover:not(:disabled) {
+            background: var(--locked-border);
+            transform: scale(1.05);
+        }
+
+        .level-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .level-display {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .btn-toggle-max {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Floating Controls bottom */
+        .reset-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .btn-reset {
+            background: rgba(26, 29, 41, 0.9);
+            border: 1px solid var(--locked-border);
+            color: var(--text-muted);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            color: #fff;
+            border-color: var(--red-main);
+            background: rgba(231, 76, 60, 0.2);
+        }
     </style>
 </head>
 <body>
 
-    <h1>⭐ Arbre de Compétences - Théo Legros ⭐</h1>
-    <p class="subtitle">Cliquez sur un élément pour voir sa description détaillée ou changer son statut (Débloqué / Verrouillé).</p>
+    <header>
+        <h1><i class="fa-solid fa-gem" style="color: #2bb0ff; font-size: 1.8rem; margin-right: 10px;"></i>Arbre de Compétences</h1>
+        <p>Théo Legros • Profil d'Expertise & Progression Médio-Territoriale</p>
+    </header>
 
-    <div class="tree-container" id="treeContainer"></div>
+    <div class="tree-viewport" id="treeViewport">
+        <!-- SVG Canvas layer for visual branch lines -->
+        <svg id="connection-svg"></svg>
 
-    <!-- Popup / Modal -->
-    <div class="modal" id="nodeModal">
-        <div class="modal-content" id="modalContent">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalBadge"></div>
-            <h2 id="modalTitle" style="margin-top:0;"></h2>
-            <p id="modalDesc"></p>
-            <hr style="border-color: #333;">
-            <h4>Détails & Actions :</h4>
-            <p id="modalDetails"></p>
-            <button class="action-btn" id="toggleStatusBtn" onclick="toggleCurrentNodeStatus()">Changer le statut (Débloquer / Verrouiller)</button>
+        <!-- Dynamic Headers and Nodes will be rendered here -->
+    </div>
+
+    <!-- Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card" id="modalCard">
+            <span class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+            <div class="modal-tag" id="modalTag">REGION</div>
+            <h2 class="modal-title" id="modalTitle">Node Title</h2>
+            <div class="modal-desc" id="modalDesc">Short description...</div>
+            
+            <div class="modal-details" id="modalDetails">
+                Extended details and specific objectives...
+            </div>
+
+            <div class="level-control-box">
+                <span style="font-size: 0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Niveau d'Expertise :</span>
+                <div style="display:flex; align-items:center; gap: 12px;">
+                    <button class="level-btn" id="btnDec" onclick="adjustLevel(-1)">-</button>
+                    <span class="level-display" id="levelDisplay">0 / 5</span>
+                    <button class="level-btn" id="btnInc" onclick="adjustLevel(1)">+</button>
+                </div>
+            </div>
+
+            <button class="btn-toggle-max" id="btnToggleMax" onclick="toggleMaxLevel()">
+                Maximaliser (Débloquer Tout)
+            </button>
         </div>
     </div>
 
+    <!-- Bottom Reset Bar -->
+    <div class="reset-bar">
+        <button class="btn-reset" onclick="resetProgress()"><i class="fa-solid fa-rotate-left" style="margin-right:6px;"></i>Réinitialiser la progression</button>
+    </div>
+
     <script>
-        // DONNÉES GLOBALES COMPLÈTES DE L'ARBRE
-        const treeData = [
-            {
-                regionTitle: "🔴 RÉGION A : PILOTAGE, STRATÉGIE & RÉSEAUX",
-                regionClass: "region-a",
-                regionColor: "#e74c3c",
-                constellations: [
-                    {
-                        name: "A1 : Animation & Gestion de Réseau",
-                        nodes: [
-                            { id: "A1", label: "Animation de réseaux locaux", unlocked: true, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique, création d'outils collaboratifs et suivi de l'engagement." },
-                            { id: "A1.1", label: "Définition de la raison d'être", unlocked: false, desc: "Définition de la raison d'être et des objectifs fondamentaux du réseau selon les besoins.", details: "Analyser le contexte géographique/social et cadrer la mission." },
-                            { id: "A1.2", label: "Structuration & Charte", unlocked: false, desc: "Structuration et formalisation de chartes de fonctionnement et de travail.", details: "Établir les règles et modalités de communication et de décision." },
-                            { id: "A1.3", label: "Intelligence collective durable", unlocked: false, desc: "Déploiement d'approches d'intelligence collective pour stimuler la coopération.", details: "Animer des ateliers participatifs et pérenniser les dynamiques." },
-                            { id: "A1.4", label: "Évaluation & Réadaptation", unlocked: false, desc: "Évaluation régulière et réadaptation de l'organisation du réseau.", details: "Lancer des groupes de travail, réorganiser ou clôturer selon les besoins." },
-                            { id: "A1.5", label: "Capitalisation & Veille", unlocked: false, desc: "Capitalisation des travaux et mise en place d'outils de veille partagés.", details: "Partager les ressources et communiquer sur le fonctionnement." }
-                        ]
-                    },
-                    {
-                        name: "A2 : Définition & Déploiement Stratégique",
-                        nodes: [
-                            { id: "A2", label: "Déploiement d'une stratégie", unlocked: true, desc: "Intégration et déclinaison opérationnelle d'une stratégie en cours.", details: "Situer son action et représenter la stratégie à l'extérieur." },
-                            { id: "A2.1", label: "Diagnostic stratégique global", unlocked: false, desc: "Réalisation de diagnostics stratégiques globaux.", details: "Audit interne/externe et analyse des besoins de changement." },
-                            { id: "A2.2", label: "Conduite du changement", unlocked: false, desc: "Conception et pilotage de démarches de conduite du changement.", details: "Accompagner les équipes dans les transitions organisationnelles." },
-                            { id: "A2.3", label: "Fédérer autour d'une vision", unlocked: false, desc: "Fédérer les équipes autour d'une vision et d'objectifs partagés.", details: "Aligner les visions et mobiliser les collectifs." },
-                            { id: "A2.4", label: "Alignement inter-équipes", unlocked: false, desc: "Alignement des visions entre différentes entités ou départements.", details: "Assurer la transversalité et l'enrichissement mutuel." },
-                            { id: "A2.5", label: "Pilotage de transitions", unlocked: false, desc: "Pilotage de transitions suite à des décisions de gouvernance globale.", details: "Mettre en mouvement les équipes sur de nouvelles résolutions." }
-                        ]
-                    },
-                    {
-                        name: "A3 : Cadre Réglementaire & Sécurité",
-                        nodes: [
-                            { id: "A3", label: "Cadre ACM & Réglementation", unlocked: true, desc: "Maîtrise de la réglementation des Accueils Collectifs de Mineurs.", details: "Respect du cadre juridique et des textes fondamentaux." },
-                            { id: "A3.1", label: "Statuts & Règlements intérieurs", unlocked: false, desc: "Lecture et application de textes juridiques, statuts et règlements.", details: "Maîtrise des statuts canoniques et de l'organisation démocratique." },
-                            { id: "A3.2", label: "Politique bientraitance", unlocked: false, desc: "Mise en œuvre de politiques de prévention des risques et de bientraitance.", details: "Garantir des espaces libres, émancipateurs et sécurisants." },
-                            { id: "A3.3", label: "Visites de contrôle objectives", unlocked: false, desc: "Préparation et conduite de missions de contrôle ou d'audit.", details: "Mener des visites basées sur des éléments objectifs et rendre compte." },
-                            { id: "A3.4", label: "Traitement des dysfonctionnements", unlocked: false, desc: "Application de procédures de traitement en cas de dysfonctionnement.", details: "Connaître et appliquer les dispositifs de remédiation." },
-                            { id: "A3.5", label: "Délivrance de qualifications", unlocked: false, desc: "Habilitation et délivrance de certifications au regard d'un référentiel.", details: "Valider la mise en œuvre de projets après contrôle de conformité." }
-                        ]
-                    },
-                    {
-                        name: "A4 : Conduite & Gestion de Projet",
-                        nodes: [
-                            { id: "A4", label: "Pilotage & Rétroplanning", unlocked: true, desc: "Pilotage de projets et élaboration de rétroplannings.", details: "Mobilisation des ressources (temps, compétences, finances)." },
-                            { id: "A4.1", label: "Cycle de vie d'un projet", unlocked: false, desc: "Maîtrise complète du cycle de vie d'un projet (boucle du projet).", details: "Suivi rigoureux des étapes de conception à l'évaluation." },
-                            { id: "A4.2", label: "Gestion administrative & QCD", unlocked: false, desc: "Gestion administrative, financière et respect du triangle Coût/Délai/Qualité.", details: "Budgétisation et priorisation des livrables." },
-                            { id: "A4.3", label: "Commande initiale & Cadrage", unlocked: false, desc: "Établissement d'une commande initiale et cadrage des livrables.", details: "Définition des attentes et adéquation avec la stratégie." },
-                            { id: "A4.4", label: "Gestion des risques & Agile", unlocked: false, desc: "Gestion des risques, flexibilité et méthodes agiles.", details: "Anticipation des aléas et amélioration continue." },
-                            { id: "A4.5", label: "Mesure d'impact & REX", unlocked: false, desc: "Mesure d'impact, capitalisation (REX) et amélioration continue.", details: "Évaluation finale et partage des apprentissages tirés du projet." }
-                        ]
-                    }
-                ]
-            },
-            {
-                regionTitle: "🔵 RÉGION B : INGÉNIERIE, FORMATION & RH",
-                regionClass: "region-b",
-                regionColor: "#3498db",
-                constellations: [
-                    {
-                        name: "B1 : Ingénierie Pédagogique (Adultes)",
-                        nodes: [
-                            { id: "B1", label: "Appropriation de séances", unlocked: true, desc: "Adaptation et animation de séquences de formation (Formateur initié).", details: "Compréhension de la démarche pédagogique globale." },
-                            { id: "B1.1", label: "Alignement pédagogique", unlocked: false, desc: "Garantie de l'adéquation entre Objectifs, Contenus et Méthodes.", details: "Formuler des attendus précis de fin de formation." },
-                            { id: "B1.2", label: "Cahier des charges & Grille", unlocked: false, desc: "Traduction d'un cahier des charges en programme de formation.", details: "Concevoir une grille de session adaptée au public." },
-                            { id: "B1.3", label: "Approche Par Compétences (APC)", unlocked: false, desc: "Conception par l'Approche Par Compétences.", details: "Utiliser les référentiels existants pour structurer les apprentissages." },
-                            { id: "B1.4", label: "Grilles d'évaluation", unlocked: false, desc: "Construction de grilles d'évaluation et de positionnement.", details: "Permettre à l'apprenant de se situer dans le référentiel." },
-                            { id: "B1.5", label: "Dispositifs complexes & Jeux", unlocked: false, desc: "Conception de dispositifs complexes et de jeux de formation.", details: "Bâtir des outils ludiques de formation et de créativité." }
-                        ]
-                    },
-                    {
-                        name: "B2 : Animation de Formations & Andragogie",
-                        nodes: [
-                            { id: "B2", label: "Animation de séquences", unlocked: true, desc: "Animation d'ateliers et de sessions en méthodes actives.", details: "Maîtrise de la posture d'animateur et gestion de groupe d'adultes." },
-                            { id: "B2.1", label: "Cohérence de parcours", unlocked: false, desc: "Garantie de la cohérence globale d'un parcours pluridisciplinaire.", details: "Pertinence de la succession des contenus et maintien de la finalité." },
-                            { id: "B2.2", label: "Levée des freins d'apprentissage", unlocked: false, desc: "Identification et levée des freins à l'apprentissage en situation.", details: "Proposer des alternatives adaptées aux apprenants en difficulté." },
-                            { id: "B2.3", label: "Andragogie & Neurosciences", unlocked: false, desc: "Intégration des profils d'apprentissage des adultes et neurosciences.", details: "Utiliser les apports scientifiques sur la mémorisation et l'engagement." },
-                            { id: "B2.4", label: "Éthique de l'évaluation", unlocked: false, desc: "Application d'une éthique d'évaluation axée sur l'auto-évaluation.", details: "Confidentialité, bienveillance et qualité d'écriture des avis." },
-                            { id: "B2.5", label: "Direction de projets experts", unlocked: false, desc: "Direction et coordination globale de projets de formation (Expert).", details: "Articuler vie quotidienne, rythme et apprentissages." }
-                        ]
-                    },
-                    {
-                        name: "B3 : Management d'Équipe & RH",
-                        nodes: [
-                            { id: "B3", label: "Animation de collectifs", unlocked: true, desc: "Animation de collectifs, distribution des rôles et management.", details: "Équilibrer cohésion et production au sein du groupe." },
-                            { id: "B3.1", label: "Leviers de motivation", unlocked: false, desc: "Utilisation des leviers de motivation, de valorisation et d'engagement.", details: "Reconnaissance du travail et dynamisation de l'équipe." },
-                            { id: "B3.2", label: "Recrutement & Skills Mapping", unlocked: false, desc: "Recrutement ciblé, Skills Mapping et équilibre des profils.", details: "Identifier les compétences requises et composer l'équipe." },
-                            { id: "B3.3", label: "Gestion de conflits & CNV", unlocked: false, desc: "Gestion et résolution de conflits par la Communication Non Violente.", details: "Désamorcer les tensions et installer un climat constructif." },
-                            { id: "B3.4", label: "Collectif apprenant & Relève", unlocked: false, desc: "Développement d'un collectif apprenant et anticipation de la relève.", details: "Impliquer l'équipe dans sa propre pérennité et planification." },
-                            { id: "B3.5", label: "Suivi de charge de travail", unlocked: false, desc: "Suivi de la charge de travail et ajustement managérial.", details: "Être attentif à l'équilibre personnel et professionnel de chacun." }
-                        ]
-                    },
-                    {
-                        name: "B4 : Accompagnement & Mentorat",
-                        nodes: [
-                            { id: "B4", label: "Cycle d'engagement & Écoute", unlocked: true, desc: "Mise en place de cycles d'accompagnement et écoute active.", details: "Conduite d'entretiens et posture favorisant l'autonomie." },
-                            { id: "B4.1", label: "Parcours personnalisés", unlocked: false, desc: "Conception de parcours d'accompagnement sur-mesure.", details: "Adapter la démarche aux besoins spécifiques de l'accompagné." },
-                            { id: "B4.2", label: "Posture & Passations", unlocked: false, desc: "Gestion de la posture professionnelle, de la distance et des passations.", details: "Gérer son investissement affectif et préparer la fin de mission." },
-                            { id: "B4.3", label: "Processus d'apprentissage", unlocked: false, desc: "Utilisation des étapes d'un processus d'apprentissage individuel.", details: "S'appuyer sur des repères méthodologiques d'évolution." },
-                            { id: "B4.4", label: "Réajustement du suivi", unlocked: false, desc: "Évaluation et réajustement des plans d'accompagnement.", details: "Mesurer l'efficacité de l'accompagnement et adapter l'aide." },
-                            { id: "B4.5", label: "Mentorat croisé & Supervision", unlocked: false, desc: "Mentorat croisé et supervision de pairs (former des accompagnateurs).", details: "Accompagner des formateurs et des directeurs de projets." }
-                        ]
-                    },
-                    {
-                        name: "B5 : Soutien Opérationnel & Conseil",
-                        nodes: [
-                            { id: "B5", label: "Réponse aux sollicitations", unlocked: true, desc: "Réponse à des sollicitations d'expertise ponctuelles.", details: "Apport de ressources et présence d'appui auprès des équipes." },
-                            { id: "B5.1", label: "Suivi régulier & Regard critique", unlocked: false, desc: "Suivi régulier de projets d'équipe avec regard critique et constructif.", details: "S'assurer de la mise en œuvre des méthodologies adaptées." },
-                            { id: "B5.2", label: "Intervention externe proactive", unlocked: false, desc: "Intervention externe auprès d'équipes en difficulté ou non demandeuses.", details: "Soutenir une équipe pour garantir la qualité de son action." },
-                            { id: "B5.3", label: "Outils favorisant l'autonomie", unlocked: false, desc: "Utilisation d'outils favorisant l'autonomie et la prise de recul.", details: "Permettre à l'équipe de trouver ses propres solutions." },
-                            { id: "B5.4", label: "Bilans & Célébrations", unlocked: false, desc: "Animation de bilans d'étape, de relectures et de célébrations.", details: "Prendre du recul sur l'action et valoriser les réussites." },
-                            { id: "B5.5", label: "Dépassement d'équipe", unlocked: false, desc: "Accompagnement d'une équipe à se dépasser (sublimation de projets).", details: "Challerger positivement les collectifs pour aller plus loin." }
-                        ]
-                    }
-                ]
-            },
-            {
-                regionTitle: "🟢 RÉGION C : PÉDAGOGIE, JEUNESSE & PROJET",
-                regionClass: "region-c",
-                regionColor: "#2ecc71",
-                constellations: [
-                    {
-                        name: "C1 : Conception & Animation d'Activités",
-                        nodes: [
-                            { id: "C1", label: "Animation d'activités de base", unlocked: true, desc: "Animation d'activités et gestion de la vie quotidienne de groupes.", details: "Transmission de techniques d'animation et de vie dans la nature." },
-                            { id: "C1.1", label: "Fiches techniques & Pédagogie", unlocked: false, desc: "Conception et évaluation de séquences d'animation avec fiches techniques.", details: "Rédiger des fiches d'activités claires et structurées." },
-                            { id: "C1.2", label: "Instances participatives", unlocked: false, desc: "Mise en place de règles de vie collectives et instances démocratiques.", details: "Mettre en place des temps de régulation et de vie participative." },
-                            { id: "C1.3", label: "Réflexion éthique & Sens", unlocked: false, desc: "Animation de temps de réflexion philosophique/éthique et de sens.", details: "Proposer des espaces spirituels ou d'ouverture respectueux de chacun." },
-                            { id: "C1.4", label: "Projets d'animation stimulants", unlocked: false, desc: "Conception de projets d'animation stimulants et accessibles à tous.", details: "Rendre les projets attractifs et associés aux jeunes (Méthode CLAP)." },
-                            { id: "C1.5", label: "Coordination d'événements", unlocked: false, desc: "Coordination et pilotage global de séjours ou d'événements collectifs.", details: "Assurer la cohérence globale de la vie quotidienne et des projets." }
-                        ]
-                    },
-                    {
-                        name: "C2 : Ingénierie Éducative & Accompagnement",
-                        nodes: [
-                            { id: "C2", label: "Appropriation de la méthode", unlocked: true, desc: "Mise en œuvre de démarches éducatives adaptées aux publics.", details: "Comprendre le sens éducatif des activités proposées." },
-                            { id: "C2.1", label: "Analyse des besoins des publics", unlocked: false, desc: "Analyse des besoins, des profils et des capacités des publics accueillis.", details: "Ajuster les propositions éducatives aux tranches d'âge." },
-                            { id: "C2.2", label: "Projets pédagogiques globaux", unlocked: false, desc: "Conception et évaluation de projets pédagogiques par tranches d'âge.", details: "Articuler les objectifs éducatifs et les activités proposées." },
-                            { id: "C2.3", label: "Suivi de l'émancipation", unlocked: false, desc: "Suivi des progressions personnelles et des objectifs d'émancipation.", details: "Accompagner l'autonomie et l'engagement des jeunes dans la durée." },
-                            { id: "C2.4", label: "Formation & Appui de pairs", unlocked: false, desc: "Appui et formation de pairs dans la mise en œuvre de pratiques éducatives.", details: "Soutenir d'autres adultes dans la compréhension de la démarche." },
-                            { id: "C2.5", label: "Évaluation critique des actions", unlocked: false, desc: "Évaluation critique des actions menées et réajustement des pratiques.", details: "Faire évoluer les projets au regard du vécu des participants." }
-                        ]
-                    },
-                    {
-                        name: "C3 : Posture Éducative & Sécurité",
-                        nodes: [
-                            { id: "C3", label: "Posture sécurisante & Bienveillante", unlocked: true, desc: "Maintien d'une posture bienveillante, sécurisante et bientraitante.", details: "Garantir la sécurité physique, morale et affective des publics." },
-                            { id: "C3.1", label: "Cadres de protection des mineurs", unlocked: false, desc: "Application rigoureuse des cadres de protection des personnes.", details: "Mettre en œuvre les politiques de prévention et de bientraitance." },
-                            { id: "C3.2", label: "Sanctions éducatives", unlocked: false, desc: "Régulation des comportements par des cadres structurants.", details: "Sanctionner sans punir en préservant la relation de confiance." },
-                            { id: "C3.3", label: "Partenariats avec les familles", unlocked: false, desc: "Développement de partenariats constructifs avec les familles et l'entourage.", details: "Prendre en compte la complémentarité des contextes de vie." },
-                            { id: "C3.4", label: "Gestion de crises & Urgences", unlocked: false, desc: "Gestion de situations d'urgence, de crise ou de conduites à risque.", details: "Réagir de manière adaptée et sécurisée face aux situations complexes." },
-                            { id: "C3.5", label: "Impact sur le développement", unlocked: false, desc: "Mesure d'impact des actions éducatives sur le développement individuel.", details: "Évaluer les effets à long terme de l'accompagnement éducatif." }
-                        ]
-                    }
-                ]
-            },
-            {
-                regionTitle: "🟣 RÉGION D : EXPERTISE DISCIPLINAIRE & CAPES",
-                regionClass: "region-d",
-                regionColor: "#9b59b6",
-                constellations: [
-                    {
-                        name: "D1 : Grammaire, Linguistique & Phonologie",
-                        nodes: [
-                            { id: "D1.A", label: "Analyse syntaxique SVO", unlocked: true, desc: "Maîtrise de la syntaxe anglaise et des relations prédicatives S/P.", details: "Déconstruction des phrases simples/complexes et principes d'assertion." },
-                            { id: "D1.B", label: "Phonologie des terminaisons -ed", unlocked: true, desc: "Analyse morpho-phonologique et transcription des terminaisons verbales.", details: "Justification scientifique des réalisations /t/, /d/, /id/." },
-                            { id: "D1.1", label: "Subtilités d'énonciation", unlocked: false, desc: "Maîtrise des mécanismes d'énonciation et de co-énonciation.", details: "Analyser l'impact du contexte énonciatif sur l'énoncé." },
-                            { id: "D1.2", label: "Traduction spécialisée", unlocked: false, desc: "Pratique experte de la traduction littéraire et spécialisée (thème/version).", details: "Restitution fidèle des nuances stylistiques et grammaticales." },
-                            { id: "D1.3", label: "Intégration des faits de langue", unlocked: false, desc: "Intégration rigoureuse des faits de langue dans la conception de séquences.", details: "Articuler grammaire et sens dans l'enseignement des langues." },
-                            { id: "D1.4", label: "Analyse de corpus littéraire", unlocked: false, desc: "Analyse critique de corpus textuels et culturels (épreuve écrite CAPES).", details: "Méthodologie universitaire de composition et comparaison de textes." },
-                            { id: "D1.5", label: "Grammaire universitaire avancée", unlocked: false, desc: "Maîtrise des concepts d'analyse grammaticale universitaire approfondie.", details: "Étude des syntagmes, des groupes nominaux et des subordonnées." }
-                        ]
-                    },
-                    {
-                        name: "D2 : Didactique & Polyvalence Pédagogique",
-                        nodes: [
-                            { id: "D2.A", label: "Différenciation multi-niveaux", unlocked: true, desc: "Adaptation de la posture et des supports à la diversité des élèves.", details: "Expérience du collège au BTS (6e, 3e, Seconde, Terminale, BTS)." },
-                            { id: "D2.B", label: "Anglais professionnel & Spécialité", unlocked: true, desc: "Conception de parcours en langues de spécialité.", details: "Enseignement en STMG, CAP et BTS Banque axé sur la négociation." },
-                            { id: "D2.1", label: "Parcours de suivi à long terme", unlocked: false, desc: "Élaboration de plans de suivi de progression des apprenants.", details: "Assurer la continuité pédagogique et l'accompagnement personnalisé." },
-                            { id: "D2.2", label: "Séquences sur les axes culturels", unlocked: false, desc: "Structuration de séquences adossées aux axes culturels institutionnels.", details: "Conception de dossiers thématiques conformes aux programmes du lycée." },
-                            { id: "D2.3", label: "Création de ressources sur-mesure", unlocked: false, desc: "Création de ressources pédagogiques sur-mesure pour classes hétérogènes.", details: "Dédramatiser l'erreur et libérer la prise de parole par le jeu." },
-                            { id: "D2.4", label: "Évaluations alignées CECRL", unlocked: false, desc: "Conception d'évaluations par compétences alignées sur le CECRL.", details: "Mesurer l'acquisition des compétences langagières et communicationnelles." },
-                            { id: "D2.5", label: "Soutenance de leçon (Oral CAPES)", unlocked: false, desc: "Argumentation et démonstration orale de séquences didactiques.", details: "Présentation de séquences, choix méthodologiques et entretien avec le jury." }
-                        ]
-                    }
-                ]
-            }
+        // DATA STRUCTURE: 4 REGIONS WITH GAMIFIED FAN-OUT GRAPH POSITIONS
+        const regionConfig = {
+            A: { name: "PILOTAGE & RÉSEAUX", color: "#ff334b", glow: "rgba(255, 51, 75, 0.4)", headerPos: { x: 370, y: 780 } },
+            B: { name: "FORMATION & RH", color: "#2bb0ff", glow: "rgba(43, 176, 255, 0.4)", headerPos: { x: 740, y: 830 } },
+            C: { name: "PÉDAGOGIE & JEUNESSE", color: "#2ecc71", glow: "rgba(46, 204, 113, 0.4)", headerPos: { x: 1110, y: 780 } },
+            D: { name: "CAPES & LINGUISTIQUE", color: "#a55eea", glow: "rgba(165, 94, 234, 0.4)", headerPos: { x: 740, y: 320 } }
+        };
+
+        const nodesData = [
+            // ==========================================
+            // 🔴 REGION A: PILOTAGE & RÉSEAUX (Left Wing)
+            // ==========================================
+            { id: "A_ROOT", region: "A", icon: "fa-sitemap", x: 370, y: 680, title: "Pilotage & Réseaux", maxPoints: 1, desc: "Cœur de compétences en animation territoriale et ingénierie de réseaux.", details: "Pilotage global de réseaux, gouvernance et démarches stratégiques.", parent: null, isRoot: true },
+            
+            { id: "A1", region: "A", icon: "fa-diagram-project", x: 260, y: 560, title: "A1: Animation Réseaux", maxPoints: 1, desc: "Animation de réseaux locaux et territoriaux.", details: "Orientation stratégique, création d'outils collaboratifs et suivi de l'engagement.", parent: "A_ROOT" },
+            { id: "A1.1", region: "A", icon: "fa-bullseye", x: 150, y: 520, title: "A1.1: Raison d'être", maxPoints: 5, desc: "Définition de la raison d'être et des objectifs fondamentaux du réseau.", details: "Analyser le contexte géographique/social et cadrer la mission.", parent: "A1" },
+            { id: "A1.2", region: "A", icon: "fa-file-signature", x: 120, y: 430, title: "A1.2: Charte & Cadre", maxPoints: 5, desc: "Formalisation de chartes de fonctionnement et de travail partagé.", details: "Établir les règles, droits, devoirs et modalités de coopération.", parent: "A1" },
+            { id: "A1.3", region: "A", icon: "fa-people-group", x: 150, y: 340, title: "A1.3: Intel. Collective", maxPoints: 5, desc: "Approches d'intelligence collective pour stimuler la coopération.", details: "Animer des ateliers participatifs et pérenniser les dynamiques.", parent: "A1" },
+
+            { id: "A2", region: "A", icon: "fa-compass", x: 370, y: 530, title: "A2: Stratégie Global", maxPoints: 1, desc: "Déploiement et déclinaison opérationnelle d'une stratégie.", details: "Situer son action et représenter la vision à l'externe.", parent: "A_ROOT" },
+            { id: "A2.1", region: "A", icon: "fa-chart-pie", x: 280, y: 420, title: "A2.1: Diagnostic", maxPoints: 5, desc: "Réalisation de diagnostics stratégiques globaux.", details: "Audit interne/externe, matrices SWOT et besoin de changement.", parent: "A2" },
+            { id: "A2.2", region: "A", icon: "fa-arrow-trend-up", x: 370, y: 400, title: "A2.2: Changement", maxPoints: 5, desc: "Conception et pilotage de démarches de conduite du changement.", details: "Accompagner les équipes dans les transitions organisationnelles.", parent: "A2" },
+
+            { id: "A3", region: "A", icon: "fa-shield-halved", x: 480, y: 560, title: "A3: Conformité ACM", maxPoints: 1, desc: "Maîtrise de la réglementation et du cadre légal ACM.", details: "Respect du cadre juridique et des textes fondamentaux.", parent: "A_ROOT" },
+            { id: "A3.1", region: "A", icon: "fa-scale-balanced", x: 500, y: 440, title: "A3.1: Statuts & Lois", maxPoints: 5, desc: "Application des textes juridiques et règlements.", details: "Maîtrise des statuts et de l'organisation démocratique.", parent: "A3" },
+            { id: "A3.2", region: "A", icon: "fa-hand-holding-heart", x: 580, y: 360, title: "A3.2: Bientraitance", maxPoints: 5, desc: "Prévention des risques et politiques de bientraitance.", details: "Garantir un environnement sécurisant, émancipateur et éthique.", parent: "A3" },
+
+            // ==========================================
+            // 🔵 REGION B: FORMATION & RH (Center Spine)
+            // ==========================================
+            { id: "B_ROOT", region: "B", icon: "fa-graduation-cap", x: 740, y: 720, title: "Formation & RH", maxPoints: 1, desc: "Spécialité en ingénierie de formation pour adultes et gestion RH.", details: "Andragogie, postures de formation et accompagnement des équipes.", parent: null, isRoot: true },
+
+            { id: "B1", region: "B", icon: "fa-book-open-reader", x: 670, y: 600, title: "B1: Ingénierie Pédag.", maxPoints: 1, desc: "Conception et adaptation de modules de formation d'adultes.", details: "Compréhension de la démarche pédagogique globale et des référentiels.", parent: "B_ROOT" },
+            { id: "B1.1", region: "B", icon: "fa-bullseye", x: 590, y: 500, title: "B1.1: Alignement", maxPoints: 5, desc: "Adéquation entre Objectifs, Contenus et Méthodes d'évaluation.", details: "Formuler des attendus précis et cohérents.", parent: "B1" },
+            { id: "B1.2", region: "B", icon: "fa-cubes", x: 670, y: 480, title: "B1.2: Approche APC", maxPoints: 5, desc: "Conception par l'Approche Par Compétences (APC).", details: "Utiliser les référentiels métiers pour structurer les apprentissages.", parent: "B1" },
+
+            { id: "B2", region: "B", icon: "fa-chalkboard-user", x: 810, y: 600, title: "B2: Andragogie", maxPoints: 1, desc: "Animation et facilitation de sessions d'apprentissage pour adultes.", details: "Postures actives, bienveillance et dynamiques de groupe.", parent: "B_ROOT" },
+            { id: "B2.1", region: "B", icon: "fa-brain", x: 810, y: 480, title: "B2.1: Neurosciences", maxPoints: 5, desc: "Prise en compte des profils d'apprentissage et leviers cognitifs.", details: "Mémorisation, motivation et levée des freins d'apprentissage.", parent: "B2" },
+            { id: "B2.2", region: "B", icon: "fa-user-check", x: 890, y: 500, title: "B2.2: Auto-évaluation", maxPoints: 5, desc: "Dispositifs d'auto-évaluation et bilans réflexifs.", details: "Donner aux apprenants les moyens de mesurer leur progression.", parent: "B2" },
+
+            // ==========================================
+            // 🟢 REGION C: PÉDAGOGIE & JEUNESSE (Right Wing)
+            // ==========================================
+            { id: "C_ROOT", region: "C", icon: "fa-child-reaching", x: 1110, y: 680, title: "Pédagogie & Jeunesse", maxPoints: 1, desc: "Accompagnement éducatif, animation et gestion de projets jeunesse.", details: "Conception de projets pédagogiques et posture sécurisante.", parent: null, isRoot: true },
+
+            { id: "C1", region: "C", icon: "fa-puzzle-piece", x: 1000, y: 560, title: "C1: Animation & Activités", maxPoints: 1, desc: "Conception d'activités et encadrement de la vie quotidienne.", details: "Jeux, grands jeux, sécurité et rythme de vie.", parent: "C_ROOT" },
+            { id: "C1.1", region: "C", icon: "fa-layer-group", x: 900, y: 440, title: "C1.1: Fiches Projets", maxPoints: 5, desc: "Fiches techniques et démarches d'animation ciblées.", details: "Rédiger des objectifs pédagogiques et opérationnels limpides.", parent: "C1" },
+            { id: "C1.2", region: "C", icon: "fa-hands-holding-child", x: 980, y: 360, title: "C1.2: Participation", maxPoints: 5, desc: "Mise en place d'instances participatives et citoyennes pour jeunes.", details: "Rendre les jeunes acteurs directeurs de leurs projets.", parent: "C1" },
+
+            { id: "C2", region: "C", icon: "fa-heart-pulse", x: 1110, y: 530, title: "C2: Cadre & Protection", maxPoints: 1, desc: "Posture bientraitante et sécurité physique/affective.", details: "Gestion du groupe et application des principes de protection.", parent: "C_ROOT" },
+            { id: "C2.1", region: "C", icon: "fa-shield-cat", x: 1110, y: 400, title: "C2.1: Gestion Crise", maxPoints: 5, desc: "Gestion des régulations de comportements et situations de crise.", details: "Désamorcer les conflits avec bienveillance et fermeté.", parent: "C2" },
+
+            { id: "C3", region: "C", icon: "fa-seedling", x: 1220, y: 560, title: "C3: Émancipation", maxPoints: 1, desc: "Accompagnement du développement individuel du jeune.", details: "Autonomie, prise de responsabilité et épanouissement.", parent: "C_ROOT" },
+            { id: "C3.1", region: "C", icon: "fa-people-roof", x: 1270, y: 430, title: "C3.1: Partenariat", maxPoints: 5, desc: "Relations de confiance avec les familles et partenaires éducatifs.", details: "Coéducation et alliances territoriales.", parent: "C3" },
+            { id: "C3.2", region: "C", icon: "fa-award", x: 1330, y: 340, title: "C3.2: Parcours Éducatif", maxPoints: 5, desc: "Suivi de parcours et valorisation des compétences informelles.", details: "Badges de compétences, bilans et étapes d'émancipation.", parent: "C3" },
+
+            // ==========================================
+            // 🟣 REGION D: CAPES & LINGUISTIQUE (Top Crown)
+            // ==========================================
+            { id: "D_ROOT", region: "D", icon: "fa-language", x: 740, y: 220, title: "CAPES & Linguistique", maxPoints: 1, desc: "Expertise disciplinaire en langue anglaise, linguistique et didactique.", details: "CAPES Anglais, analyse syntaxique, phonologie et didactique 6e-BTS.", parent: null, isRoot: true },
+
+            { id: "D1", region: "D", icon: "fa-spell-check", x: 610, y: 140, title: "D1: Linguistique SVO", maxPoints: 1, desc: "Analyse syntaxique approfondie et énonciation.", details: "Relations prédicatives, grammaire universitaire et étude de corpus.", parent: "D_ROOT" },
+            { id: "D1.1", region: "D", icon: "fa-quote-left", x: 490, y: 100, title: "D1.1: Énonciation", maxPoints: 5, desc: "Mécanismes d'énonciation et repérages temporels/aspectuels.", details: "Subtilités de la linguistique de l'énonciation anglaise.", parent: "D1" },
+            { id: "D1.2", region: "D", icon: "fa-language", x: 530, y: 220, title: "D1.2: Phonologie", maxPoints: 5, desc: "Morpho-phonologie des terminaisons (-ed, s) et accentuation.", details: "Justification scientifique des règles phonologiques.", parent: "D1" },
+
+            { id: "D2", region: "D", icon: "fa-school", x: 870, y: 140, title: "D2: Didactique 6e-BTS", maxPoints: 1, desc: "Ingénierie didactique pour le secondaire et supérieur.", details: "Progression par compétences CECRL, séquences thématiques et différenciation.", parent: "D_ROOT" },
+            { id: "D2.1", region: "D", icon: "fa-sliders", x: 950, y: 220, title: "D2.1: Différenciation", maxPoints: 5, desc: "Pédagogie différenciée multi-niveaux (Collège, Lycée, BTS).", details: "Adaptation des supports et autonomie des apprenants.", parent: "D2" },
+            { id: "D2.2", region: "D", icon: "fa-briefcase", x: 990, y: 100, title: "D2.2: Anglais Spécialité", maxPoints: 5, desc: "Didactique de l'anglais professionnel et de spécialité (STMG, BTS).", details: "Conception de jeux de rôle de négociation et monde des affaires.", parent: "D2" }
         ];
 
-        // CHARGEMENT DE L'ÉTAT SAUVEGARDÉ (localStorage)
-        function loadSavedState() {
-            const saved = localStorage.getItem('theo_skills_state');
+        // State Store
+        let userProgress = {};
+        let activeNodeId = null;
+
+        // Load progress from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('theo_skilltree_v2');
             if (saved) {
-                const stateMap = JSON.parse(saved);
-                treeData.forEach(reg => {
-                    reg.constellations.forEach(c => {
-                        c.nodes.forEach(n => {
-                            if (stateMap[n.id] !== undefined) {
-                                n.unlocked = stateMap[n.id];
-                            }
-                        });
-                    });
-                });
+                try {
+                    userProgress = JSON.parse(saved);
+                } catch(e) {
+                    userProgress = {};
+                }
+            } else {
+                // Default unlocks for roots
+                userProgress = {
+                    "A_ROOT": 1, "B_ROOT": 1, "C_ROOT": 1, "D_ROOT": 1,
+                    "A1": 1, "B1": 1, "C1": 1, "D1": 1, "D2": 1,
+                    "D1.2": 5, "D2.1": 5
+                };
             }
         }
 
-        // SAUVEGARDE DE L'ÉTAT
         function saveState() {
-            const stateMap = {};
-            treeData.forEach(reg => {
-                reg.constellations.forEach(c => {
-                    c.nodes.forEach(n => {
-                        stateMap[n.id] = n.unlocked;
-                    });
-                });
-            });
-            localStorage.setItem('theo_skills_state', JSON.stringify(stateMap));
+            localStorage.setItem('theo_skilltree_v2', JSON.stringify(userProgress));
         }
 
-        // RENDU VISUEL DE L'ARBRE
+        function getNodePoints(id) {
+            return userProgress[id] || 0;
+        }
+
+        // Render functions
         function renderTree() {
-            const container = document.getElementById('treeContainer');
-            container.innerHTML = '';
+            const viewport = document.getElementById('treeViewport');
+            const svg = document.getElementById('connection-svg');
+            
+            // Clear existing node DOM elements (keep SVG)
+            document.querySelectorAll('.node, .region-header').forEach(el => el.remove());
+            svg.innerHTML = '';
 
-            treeData.forEach(reg => {
-                const col = document.createElement('div');
-                col.className = `region-column ${reg.regionClass}`;
-                
-                const title = document.createElement('div');
-                title.className = 'region-title';
-                title.innerText = reg.regionTitle;
-                col.appendChild(title);
+            // Calculate Region Total Scores
+            const regionScores = { A: 0, B: 0, C: 0, D: 0 };
+            nodesData.forEach(n => {
+                regionScores[n.region] += getNodePoints(n.id);
+            });
 
-                reg.constellations.forEach(c => {
-                    const constGroup = document.createElement('div');
-                    constGroup.className = 'constellation-group';
+            // 1. Render Region Subtitle/Score Headers
+            Object.keys(regionConfig).forEach(regKey => {
+                const cfg = regionConfig[regKey];
+                const header = document.createElement('div');
+                header.className = 'region-header';
+                header.style.left = cfg.headerPos.x + 'px';
+                header.style.top = cfg.headerPos.y + 'px';
+                header.innerHTML = `
+                    <div class="title" style="color: ${cfg.color}">${cfg.name}</div>
+                    <div class="score" style="color: ${cfg.color}">${regionScores[regKey]}</div>
+                `;
+                viewport.appendChild(header);
+            });
 
-                    const constName = document.createElement('div');
-                    constName.className = 'constellation-name';
-                    constName.style.color = reg.regionColor;
-                    constName.innerText = c.name;
-                    constGroup.appendChild(constName);
+            // Map nodes by ID for fast position lookup
+            const nodeMap = {};
+            nodesData.forEach(n => nodeMap[n.id] = n);
 
-                    const nodesGrid = document.createElement('div');
-                    nodesGrid.className = 'nodes-grid';
+            // 2. Render SVG Branch Connecting Lines
+            nodesData.forEach(n => {
+                if (n.parent && nodeMap[n.parent]) {
+                    const parentNode = nodeMap[n.parent];
+                    const pPts = getNodePoints(parentNode.id);
+                    const nPts = getNodePoints(n.id);
 
-                    c.nodes.forEach(n => {
-                        const nodeItem = document.createElement('div');
-                        nodeItem.className = `node-item ${n.unlocked ? 'unlocked' : 'locked'}`;
-                        if(n.unlocked) nodeItem.style.color = reg.regionColor;
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', parentNode.x);
+                    line.setAttribute('y1', parentNode.y);
+                    line.setAttribute('x2', n.x);
+                    line.setAttribute('y2', n.y);
+                    line.classList.add('branch-line');
 
-                        nodeItem.innerHTML = `
-                            <div class="node-circle" style="border-color: ${reg.regionColor}">${n.id}</div>
-                            <div class="node-text">${n.label}</div>
-                        `;
+                    const isConnectedAndUnlocked = pPts > 0 && nPts > 0;
+                    const regionColor = regionConfig[n.region].color;
 
-                        // Clic sur l'item pour ouvrir la modale détaillée
-                        nodeItem.onclick = () => openModal(n, reg.regionColor);
+                    if (isConnectedAndUnlocked) {
+                        line.setAttribute('stroke', regionColor);
+                        line.setAttribute('stroke-width', '4');
+                        line.setAttribute('filter', `drop-shadow(0 0 6px ${regionConfig[n.region].glow})`);
+                    } else {
+                        line.setAttribute('stroke', '#2b3044');
+                        line.setAttribute('stroke-width', '2.5');
+                    }
 
-                        nodesGrid.appendChild(nodeItem);
-                    });
+                    svg.appendChild(line);
+                }
+            });
 
-                    constGroup.appendChild(nodesGrid);
-                    col.appendChild(constGroup);
-                });
+            // 3. Render Nodes
+            nodesData.forEach(n => {
+                const points = getNodePoints(n.id);
+                const isUnlocked = points > 0;
+                const isMastered = points === n.maxPoints;
 
-                container.appendChild(col);
+                const nodeEl = document.createElement('div');
+                nodeEl.className = `node ${n.isRoot ? 'root-node' : ''} ${isUnlocked ? 'unlocked' : ''} ${isMastered ? 'mastered' : ''}`;
+                nodeEl.style.left = n.x + 'px';
+                nodeEl.style.top = n.y + 'px';
+                nodeEl.setAttribute('data-region', n.region);
+
+                nodeEl.innerHTML = `
+                    <div class="node-circle">
+                        <i class="fa-solid ${n.icon}"></i>
+                        <div class="node-badge">${points}/${n.maxPoints}</div>
+                    </div>
+                    <div class="node-title-sub">${n.title}</div>
+                `;
+
+                nodeEl.onclick = () => openModal(n.id);
+                viewport.appendChild(nodeEl);
             });
         }
 
-        let currentNode = null;
-        let currentColor = "";
+        // Modal Management
+        function openModal(nodeId) {
+            activeNodeId = nodeId;
+            const node = nodesData.find(n => n.id === nodeId);
+            const regCfg = regionConfig[node.region];
+            const currentPoints = getNodePoints(nodeId);
 
-        // GESTION DU MODAL (POPUP)
-        function openModal(node, color) {
-            currentNode = node;
-            currentColor = color;
-            const modal = document.getElementById('nodeModal');
-            const modalContent = document.getElementById('modalContent');
-            
-            modalContent.style.borderColor = color;
-            document.getElementById('modalTitle').innerText = `${node.id} - ${node.label}`;
+            const card = document.getElementById('modalCard');
+            card.style.borderColor = regCfg.color;
+
+            const tag = document.getElementById('modalTag');
+            tag.innerText = regCfg.name;
+            tag.style.background = regCfg.color;
+            tag.style.color = node.region === 'C' ? '#111' : '#fff';
+
+            document.getElementById('modalTitle').innerText = `${node.id} - ${node.title}`;
             document.getElementById('modalDesc').innerText = node.desc;
             document.getElementById('modalDetails').innerText = node.details;
-            
-            updateModalBadge();
-            modal.style.display = 'flex';
+
+            updateModalControls(node, currentPoints, regCfg);
+
+            document.getElementById('modalOverlay').style.display = 'flex';
         }
 
-        function updateModalBadge() {
-            const badge = document.getElementById('modalBadge');
-            const btn = document.getElementById('toggleStatusBtn');
-            if(currentNode.unlocked) {
-                badge.className = "status-badge badge-unlocked";
-                badge.innerText = "STATUT : MAÎTRISÉ / DÉBLOQUÉ";
-                btn.innerText = "Verrouiller à nouveau";
-                btn.style.background = "#e74c3c";
+        function updateModalControls(node, points, regCfg) {
+            document.getElementById('levelDisplay').innerText = `${points} / ${node.maxPoints}`;
+            document.getElementById('btnDec').disabled = (points <= 0);
+            document.getElementById('btnInc').disabled = (points >= node.maxPoints);
+
+            const maxBtn = document.getElementById('btnToggleMax');
+            if (points === node.maxPoints) {
+                maxBtn.innerText = "Réinitialiser ce nœud (0 point)";
+                maxBtn.style.background = "#2b3044";
+                maxBtn.style.color = "#fff";
             } else {
-                badge.className = "status-badge badge-locked";
-                badge.innerText = "STATUT : À DÉBLOQUER";
-                btn.innerText = "Marquer comme maîtrisé (Débloquer)";
-                btn.style.background = "#2ecc71";
+                maxBtn.innerText = "Maximaliser (Débloquer Tout)";
+                maxBtn.style.background = regCfg.color;
+                maxBtn.style.color = node.region === 'C' ? '#111' : '#fff';
             }
         }
 
-        function toggleCurrentNodeStatus() {
-            if (currentNode) {
-                currentNode.unlocked = !currentNode.unlocked;
-                saveState();
-                renderTree();
-                updateModalBadge();
+        function adjustLevel(delta) {
+            if (!activeNodeId) return;
+            const node = nodesData.find(n => n.id === activeNodeId);
+            let current = getNodePoints(activeNodeId);
+            current = Math.max(0, Math.min(node.maxPoints, current + delta));
+            
+            userProgress[activeNodeId] = current;
+            saveState();
+            renderTree();
+            updateModalControls(node, current, regionConfig[node.region]);
+        }
+
+        function toggleMaxLevel() {
+            if (!activeNodeId) return;
+            const node = nodesData.find(n => n.id === activeNodeId);
+            let current = getNodePoints(activeNodeId);
+            
+            if (current === node.maxPoints) {
+                userProgress[activeNodeId] = 0;
+            } else {
+                userProgress[activeNodeId] = node.maxPoints;
             }
+
+            saveState();
+            renderTree();
+            updateModalControls(node, userProgress[activeNodeId], regionConfig[node.region]);
         }
 
         function closeModal() {
-            document.getElementById('nodeModal').style.display = 'none';
+            document.getElementById('modalOverlay').style.display = 'none';
+            activeNodeId = null;
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('nodeModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
+        function resetProgress() {
+            if (confirm("Voulez-vous réinitialiser toute la progression de l'arbre ?")) {
+                userProgress = {};
+                saveState();
+                renderTree();
             }
         }
 
-        // Initialisation au chargement de la page
-        loadSavedState();
+        // Close modal when clicking background overlay
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize on load
+        loadState();
         renderTree();
     </script>
 </body>
