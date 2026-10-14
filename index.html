@@ -258,12 +258,14 @@
                 {
                     key: "B", name: "🔵 FORMATION & RH (EST)", color: "var(--color-b)",
                     nodes: [
-                        { id: "B1", icon: "🎓", label: "Ingénierie Formation", parent: "CENTER", dx: 110, dy: -20, unlocked: true, desc: "Conception de dispositifs de formation d'adultes.", details: "Méthodes actives et ingénierie andragogique." },
-                        { id: "B1.1", icon: "📐", label: "Alignement Pédago", parent: "B1", dx: 210, dy: -90, unlocked: false, desc: "Garantie de cohérence Objectifs/Méthodes/Évaluations.", details: "Formuler des attendus explicites." },
-                        { id: "B3.6", icon: "⚖️", label: "RPS & QVT", parent: "B1", dx: 210, dy: 50, unlocked: false, desc: "Prévention des RPS et gestion de la QVT.", details: "Suivi du bien-être et de la charge mentale des équipes." },
-                        { id: "B1.6", icon: "📱", label: "Blended Learning", parent: "B1.1", dx: 320, dy: -140, unlocked: false, desc: "Conception de formations Blended et Micro-learning.", details: "Modules e-learning, classes virtuelles et présentiel." },
-                        { id: "B1.7", icon: "🤖", label: "IA en Formation", parent: "B1.1", dx: 320, dy: -50, unlocked: false, desc: "Intégration raisonnée des IA génératives.", details: "Création assistée de scénarios et supports d'évaluation." },
-                        { id: "B3.7", icon: "🤝", label: "Inclusion & Diversité", parent: "B3.6", dx: 320, dy: 60, unlocked: false, desc: "Management de la diversité et neurodiversité.", details: "Accompagnement des profils atypiques et intergénérationnels." }
+                        { id: "B1", icon: "🎓", label: "Ingénierie Formation", parent: "CENTER", dx: 110, dy: -20, unlocked: true, desc: "Conception macro et micro de dispositifs de formation d'adultes.", details: "Pilotage global du cahier des charges au plan de formation." },
+                        { id: "B1.A", icon: "📊", label: "Audit des Besoins", parent: "B1", dx: 200, dy: -120, unlocked: false, desc: "Analyse d'écart de compétences et diagnostic d'organisation.", details: "Entretiens de cadrage, bilans et questionnaires de besoins." },
+                        { id: "B1.B", icon: "📄", label: "Cahier des Charges", parent: "B1", dx: 210, dy: -50, unlocked: false, desc: "Rédaction de cahier des charges et conformité Qualiopi.", details: "Définition du public cible, contraintes budgétaires et qualité RNCP/RS." },
+                        { id: "B1.C", icon: "📱", label: "Blended Learning", parent: "B1.A", dx: 310, dy: -160, unlocked: false, desc: "Architecture de parcours hybrides et micro-learning.", details: "Combinaison e-learning, classes virtuelles et présentiel." },
+                        { id: "B2.A", icon: "📐", label: "Alignement Pédag.", parent: "B1", dx: 210, dy: 30, unlocked: false, desc: "Alignement Objectifs, Méthodes et Évaluations.", details: "Taxonomie de Bloom, scénarios pédagogiques et séquençage." },
+                        { id: "B2.B", icon: "🤖", label: "IA en Ingénierie", parent: "B2.A", dx: 310, dy: 10, unlocked: false, desc: "Intégration de l'IA générative dans la scénarisation.", details: "Création assistée d'études de cas, quiz et supports multimédias." },
+                        { id: "B3.A", icon: "🧠", label: "Andragogie & Actif", parent: "B1", dx: 200, dy: 100, unlocked: false, desc: "Animation en méthodes actives et neurosciences.", details: "Posture de facilitateur, levée des freins et motivation des adultes." },
+                        { id: "B4.A", icon: "📈", label: "Mesure d'Impact (Kirkpatrick)", parent: "B3.A", dx: 310, dy: 110, unlocked: false, desc: "Évaluation à chaud, à froid et transfert sur le terrain.", details: "Mesure des acquis, retours à M+3/M+6 et amélioration continue." }
                     ]
                 },
                 {
