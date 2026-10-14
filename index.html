@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Expertise Nord Intégrale & Zéro Croisement)</title>
+    <title>Arbre de Compétences - Théo Legros (Expertise Nord & Sud Ultime)</title>
     <style>
         :root {
             --bg-color: #05070f;
@@ -382,30 +382,20 @@
                     key: "A", name: "🔴 PILOTAGE, STRATÉGIE & DIRECTION ACM (NORD)", color: "var(--color-a)",
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale ACM", parent: "CENTER", dx: 0, dy: -140, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un Accueil Collectif de Mineurs.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
-
-                        /* Sous-branche Nord-Ouest : Projet & Familles */
                         { id: "A1.1", icon: "🎯", label: "Projet Pédagogique", parent: "A1", dx: -120, dy: -260, unlocked: false, link: "", desc: "Rédaction, opérationnalisation et évaluation de la vision éducative.", details: "Déclinaison des valeurs citoyennes et des objectifs en actions concrètes pour l'équipe." },
                         { id: "A1.2", icon: "🏛️", label: "Ancrage PEDT & Territoire", parent: "A1.1", dx: -220, dy: -380, unlocked: false, link: "", desc: "Articulation du projet avec le Projet Éducatif de Territoire (PEDT) et collectivités.", details: "Négociation partenariale avec les SDJES, CAF, mairies et intercommunalités." },
                         { id: "A1.3", icon: "👪", label: "Gouvernance & Familles", parent: "A1.1", dx: -120, dy: -380, unlocked: false, link: "", desc: "Co-construction éducative, conseils de jeunes et alliance avec les parents.", details: "Mise en place de temps d'échange réguliers, accueil individualisé et médiation." },
-
-                        /* Sous-branche Nord-Est : Juridique, Droit & Crises */
                         { id: "A2.1", icon: "📋", label: "Conformité & Réglementation", parent: "A1", dx: 120, dy: -260, unlocked: false, link: "", desc: "Maîtrise du Code de l'Action Sociale et des Familles (CASF).", details: "Contrôle des taux d'encadrement, qualifications, locaux et déclarations SDJES." },
                         { id: "A2.2", icon: "⚖️", label: "Droit du Travail & CEE", parent: "A2.1", dx: 220, dy: -380, unlocked: false, link: "", desc: "Gestion des contrats (CEE, Convention Éclat), repos et temps de travail.", details: "Application stricte de la législation du travail adaptée à l'animation volontaire." },
                         { id: "A2.3", icon: "🚨", label: "PPMS & Plan de Sûreté", parent: "A2.1", dx: 120, dy: -380, unlocked: false, link: "", desc: "Conception et entraînement au Plan Particulier de Mise en Sûreté.", details: "Gestion des risques majeurs (intrusion, risque naturel, attentat) et exercices." },
                         { id: "A2.4", icon: "🔥", label: "Gestion de Crise & EIG", parent: "A2.2", dx: 320, dy: -480, unlocked: false, link: "", desc: "Gestion des Événements Indésirables Graves et communication d'urgence.", details: "Déclaration SDJES en moins de 24h, cellule de crise et accompagnement psychologique." },
                         { id: "A2.5", icon: "🛡️", label: "Signalements & CRIP", parent: "A2.2", dx: 220, dy: -480, unlocked: false, link: "", desc: "Protocole de protection de l'enfance, prévention des violences et signalement.", details: "Repérage des signaux d'alerte, saisine de la CRIP et coordination avec les services sociaux." },
-
-                        /* Sous-branche Axe Nord Central : Finance, Logistique & HACCP */
                         { id: "A3.1", icon: "💰", label: "Budget & Gestion Financière", parent: "A1", dx: 0, dy: -280, unlocked: false, link: "", desc: "Gestion de la régie, compta prévisionnelle et analyse des coûts.", details: "Équilibre budgétaire, maîtrise des coûts/jour/enfant et clôture des bilans." },
                         { id: "A3.2", icon: "📄", label: "Subventions & Marchés", parent: "A3.1", dx: 0, dy: -420, unlocked: false, link: "", desc: "Montage de dossiers de subvention (CAF, FDVA, ANS).", details: "Réponse aux appels d'offres publics et dossiers de justification d'emplois d'aide." },
                         { id: "A3.3", icon: "🍳", label: "HACCP & Restauration", parent: "A3.2", dx: 0, dy: -560, unlocked: false, link: "", desc: "Sécurité sanitaire des aliments et maîtrise des procédures HACCP.", details: "Contrôle de la chaîne du froid, traçabilité des repas, PAI alimentaires et hygiène." },
-
-                        /* Sous-branche Nord Large Gauche : Management RH & QVT */
                         { id: "A4.1", icon: "👥", label: "Management RH & Recrutement", parent: "A1", dx: -180, dy: -180, unlocked: false, link: "", desc: "Attraction des talents, entretiens de sélection et fidélisation.", details: "Constitution d'équipes pluridisciplinaires équilibrées et profils complémentaires." },
                         { id: "A4.2", icon: "⚖️", label: "RPS, QVT & Burn-out", parent: "A4.1", dx: -320, dy: -240, unlocked: false, link: "", desc: "Prévention de la charge mentale et bien-être au travail en ACM.", details: "Régulation du stress saisonnier, suivi des plannings de repos et climat bienveillant." },
                         { id: "A4.3", icon: "🎓", label: "Accompagnement Pro (BAFD/BPJEPS)", parent: "A4.1", dx: -320, dy: -120, unlocked: false, link: "", desc: "Tutorat, formation continue et accompagnement des stagiaires.", details: "Évaluations formatives quotidiennes, livret de suivi BAFD/BPJEPS." },
-
-                        /* Sous-branche Nord Large Droite : Éco & Bilans */
                         { id: "A5.1", icon: "🌱", label: "Éco-Responsabilité & Carbone", parent: "A3.3", dx: 140, dy: -560, unlocked: false, link: "", desc: "Transition écologique globale du centre de loisirs.", details: "Réduction des déchets, approvisionnement bio/local, sobriété énergétique." },
                         { id: "A5.2", icon: "📈", label: "Bilan Qualitatif & Audit", parent: "A1", dx: 180, dy: -180, unlocked: false, link: "", desc: "Évaluation d'impact éducatif et rédaction des bilans d'activité.", details: "Mise en place d'indicateurs d'évaluation, auto-évaluation d'équipe et rapport moral." }
                     ]
@@ -433,13 +423,26 @@
                 {
                     key: "C", name: "🟢 PÉDAGOGIE, JEUNESSE & ACM (SUD)", color: "var(--color-c)",
                     nodes: [
-                        { id: "C1", icon: "🏕️", label: "Animation & ACM", parent: "CENTER", dx: 0, dy: 160, unlocked: true, link: "", desc: "Encadrement global et animation de groupes de jeunes (BAFA/BAFD).", details: "Garantie du cadre de vie, sécurité physique et animation du quotidien." },
-                        { id: "C1.1", icon: "🛡️", label: "Bientraitance & Écoute", parent: "C1", dx: -180, dy: 300, unlocked: false, link: "", desc: "Sécurité affective, bienveillance et repérage des signaux faibles.", details: "Offrir un espace de parole sécurisant et individualisé pour chaque mineur." },
-                        { id: "C1.2", icon: "🎲", label: "Grands Jeux & Veillées", parent: "C1", dx: 180, dy: 300, unlocked: false, link: "", desc: "Scénarisation et animation d'univers immersifs collectifs.", details: "Création de jeux de piste, grands jeux de rôle et gestion des temps forts." },
-                        { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression", parent: "C1.1", dx: -300, dy: 450, unlocked: false, link: "", desc: "Activités manuelles, artistiques et valorisation des talents.", details: "Projets de création libre, bricolage, théâtre et arts plastiques." },
-                        { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes", parent: "C1.2", dx: 300, dy: 450, unlocked: false, link: "", desc: "Co-élaboration des règles de vie et régulation collective.", details: "Animation d'instances participatives et médiation par le dialogue." },
-                        { id: "C3.1", icon: "📰", label: "Éducation Médias (EMI)", parent: "C2.1", dx: -440, dy: 600, unlocked: false, link: "", desc: "Sensibilisation ludique aux écrans et esprit critique.", details: "Ateliers de décryptage de l'information et création de supports partagés." },
-                        { id: "C3.2", icon: "🌿", label: "Pédagogie Nature", parent: "C2.1", dx: -260, dy: 600, unlocked: false, link: "", desc: "Immersion en plein air et Outdoor Education.", details: "Bivouacs, exploration de l'environnement et sensibilisation écologique." }
+                        { id: "C1", icon: "🏕️", label: "Animation & ACM", parent: "CENTER", dx: 0, dy: 140, unlocked: true, link: "", desc: "Encadrement global et animation de groupes de jeunes (BAFA/BAFD).", details: "Garantie du cadre de vie, sécurité physique et animation du quotidien." },
+
+                        /* Sous-branche Sud-Ouest (Sécurité Affective & Inclusion) */
+                        { id: "C1.1", icon: "🛡️", label: "Sécurité Affective & Bientraitance", parent: "C1", dx: -150, dy: 260, unlocked: false, link: "", desc: "Bienveillance active et repérage des signaux faibles.", details: "Offrir un espace de parole sécurisant, bientraitance physique et morale." },
+                        { id: "C1.3", icon: "⚠️", label: "Gestion de Crise & Violences", parent: "C1.1", dx: -260, dy: 360, unlocked: false, link: "", desc: "Régulation des conflits aigus, repérage du harcèlement et posture protectrice.", details: "Protocoles d'écoute, signalements internes et protection immédiate des mineurs." },
+                        { id: "C1.4", icon: "💬", label: "Soutien Individualisé", parent: "C1.3", dx: -260, dy: 460, unlocked: false, link: "", desc: "Entretiens de médiation et accompagnement des profils sensibles.", details: "Suivi personnalisé, écoute active et adaptation relationnelle." },
+
+                        /* Sous-branche Sud Centre-Gauche (Expression & Démocratie) */
+                        { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression", parent: "C1", dx: -50, dy: 260, unlocked: false, link: "", desc: "Création artistique, manuelle et théâtrale pour libérer l'expression.", details: "Projets de création libre, bricolage, expression corporelle et mise en scène." },
+                        { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes", parent: "C2.1", dx: -90, dy: 380, unlocked: false, link: "", desc: "Animation d'instances participatives et co-élaboration des règles.", details: "Gestion démocratique du séjour, responsabilisation et civisme au quotidien." },
+                        { id: "C3.3", icon: "📰", label: "Éducation aux Médias (EMI)", parent: "C2.2", dx: -90, dy: 500, unlocked: false, link: "", desc: "Esprit critique, décryptage de l'information et fake news.", details: "Ateliers ludo-éducatifs sur les écrans, les réseaux sociaux et la vérification des sources." },
+
+                        /* Sous-branche Sud Centre-Droite (Grands Jeux & Immersion) */
+                        { id: "C1.2", icon: "🎲", label: "Grands Jeux & Veillées", parent: "C1", dx: 50, dy: 260, unlocked: false, link: "", desc: "Scénarisation et animation d'univers immersifs collectifs.", details: "Création de grands jeux de rôle, chasses au trésor et gestion des veillées." },
+                        { id: "C2.3", icon: "🗺️", label: "Ingénierie de Grands Jeux", parent: "C1.2", dx: 90, dy: 380, unlocked: false, link: "", desc: "Conception architecturale de jeux complexes et grande envergure.", details: "Écriture de scénarios immersifs (GN), gestion de vastes espaces et logistique des règles." },
+                        { id: "C3.1", icon: "🧩", label: "Inclusion & Handicap", parent: "C2.3", dx: 90, dy: 500, unlocked: false, link: "", desc: "Accueil universel des publics et adaptation des activités.", details: "Mise en place de PAI/PAP, accompagnement individualisé et accessibilité pour tous." },
+
+                        /* Sous-branche Sud-Est (Outdoor Education & Nature) */
+                        { id: "C3.2", icon: "🌿", label: "Pédagogie Nature (Outdoor)", parent: "C1", dx: 150, dy: 260, unlocked: false, link: "", desc: "Immersion en plein air et éducation à l'environnement (EEDD).", details: "Exploration naturaliste, sensibilisation écologique et activités outdoor." },
+                        { id: "C4.1", icon: "⛺", label: "Camps & Bivouacs", parent: "C3.2", dx: 260, dy: 360, unlocked: false, link: "", desc: "Organisation de séjours sous tentes et vie en autonomie.", details: "Apprentissage de la vie de camp, cuisine au feu de bois et gestion du risque en plein air." }
                     ]
                 },
                 {
@@ -529,7 +532,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_v10');
+            const saved = localStorage.getItem('theo_final_app_skills_v11');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -550,7 +553,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_v10', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_v11', JSON.stringify(data));
         }
 
         function initGraph() {
