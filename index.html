@@ -155,7 +155,6 @@
             font-weight: 800; font-size: 0.85em; color: #f8fafc;
         }
 
-        /* Indicateur de sauvegarde en local */
         .save-indicator {
             display: flex; align-items: center; gap: 6px;
             font-size: 0.75em; font-weight: 700; padding: 3px 8px;
@@ -447,7 +446,7 @@
                         { id: "C5.3", icon: "🏛️", label: "Pédagogie Institutionnelle (Freinet & Oury)", parent: "C2.2", dx: -350, dy: 3500, unlocked: false, link: "", desc: "Mise en place de structures coopératives internes.", details: "Ceintures de compétences, métiers et conseil de coopérative." },
                         { id: "C3.0", icon: "🌿", label: "Branche Plein Air, Outdoor & Inclusion Universelle", parent: "C1", dx: 300, dy: 2600, unlocked: true, link: "", desc: "Autonomie en milieu naturel, aventures outdoor et accueil de la différence.", details: "Campements rustiques, secourisme, éco-citoyenneté et adaptation PAI/PSH." },
                         { id: "C3.3", icon: "🧩", label: "Accueil Universel & Pédagogie Inclusive", parent: "C3.0", dx: 550, dy: 2900, unlocked: false, link: "", desc: "Adaptation des activités pour tous les publics.", details: "Collaboration AESH, aménagement sensoriel et accessibilité." },
-                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 850, dy: 3100, unlocked: false, link: "", desc: "Sécurisation la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
+                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 850, dy: 3100, unlocked: false, link: "", desc: "Sécurisation de la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
                         { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: 550, dy: 3200, unlocked: false, link: "", desc: "Valorisation des réussites individuelles sans stigmatisation.", details: "Échelles de difficulté adaptatives et coopération." },
                         { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste & Éco-citoyenneté", parent: "C3.0", dx: 150, dy: 2900, unlocked: false, link: "", desc: "Découverte de la biodiversité et sensibilisation.", details: "Lecture de paysages, flore/faune et respect du milieu." },
                         { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps Autonomes", parent: "C4.1", dx: 150, dy: 3200, unlocked: false, link: "", desc: "Séjours nomades et vie collective sous tente.", details: "Montage du campement, gestion de l'eau et feux contrôlés." },
@@ -658,7 +657,7 @@
                     });
                 });
                 localStorage.setItem('theo_final_app_skills_full_separated_menu', JSON.stringify(data));
-                setTimeout(() => { updateSaveStatus('saved'); }, 400); // Petit délai visuel fluide
+                setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
                 updateSaveStatus('error');
                 console.error(e);
@@ -826,6 +825,28 @@
         function toggleSkill() {
             if (activeNode) {
                 activeNode.unlocked = !activeNode.unlocked;
+
+                // Auto-validation des nodes mères (ancêtres) si une node fille est validée
+                if (activeNode.unlocked) {
+                    let curr = activeNode;
+                    while (curr && curr.parent && curr.parent !== "CENTER") {
+                        let parentNode = null;
+                        for (let r of graphData.regions) {
+                            let found = r.nodes.find(n => n.id === curr.parent);
+                            if (found) {
+                                parentNode = found;
+                                break;
+                            }
+                        }
+                        if (parentNode) {
+                            parentNode.unlocked = true;
+                            curr = parentNode;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
                 saveState();
                 initGraph();
                 buildSidebarMenu();
