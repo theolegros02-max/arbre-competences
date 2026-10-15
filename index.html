@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version Intégrale Expert Structurée)</title>
+    <title>Arbre de Compétences - Théo Legros (Version Intégrale Agrégation Ultra-Atomisée)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -13,7 +13,7 @@
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
             --color-b: #3b82f6; /* Est / Bleu - Formation RH & Directeur BAFA/BAFD */
             --color-c: #10b981; /* Sud / Vert - Pédagogie, Youth & IA Pédagogique */
-            --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert Atomisé */
+            --color-d: #a855f7; /* Ouest / Violet - Agrégation d'Anglais Expert Ultra-Atomisé */
             --locked-color: #475569;
         }
 
@@ -51,14 +51,14 @@
         }
 
         #world {
-            position: absolute; top: 0; left: 0; width: 14000px; height: 14000px;
+            position: absolute; top: 0; left: 0; width: 16000px; height: 16000px;
             transform-origin: 0 0; cursor: grab; z-index: 1;
         }
 
         #world:active { cursor: grabbing; }
 
         #svg-canvas {
-            width: 14000px; height: 14000px;
+            width: 16000px; height: 16000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -75,7 +75,7 @@
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
 
         #nodes-container {
-            width: 14000px; height: 14000px;
+            width: 16000px; height: 16000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -279,7 +279,7 @@
             <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (ACM):</span> <span id="score-a">0</span></div>
             <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formateur & BAFA):</span> <span id="score-b">0</span></div>
             <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie & IA):</span> <span id="score-c">0</span></div>
-            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
+            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (Agrégation Anglais):</span> <span id="score-d">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
     </div>
@@ -470,58 +470,43 @@
                     ]
                 },
                 {
-                    key: "D", name: "🟣 Ouest (CAPES Anglais Expert Atomisé)", color: "var(--color-d)",
+                    key: "D", name: "🟣 Ouest (Agrégation d'Anglais Expert Ultra-Atomisée)", color: "var(--color-d)",
                     nodes: [
-                        { id: "D1", icon: "🇬🇧", label: "Pôle Réussite CAPES Anglais", parent: "CENTER", dx: -600, dy: 0, unlocked: true, link: "", desc: "Centre de préparation intensive au CAPES externe d'anglais (Écrit & Oral).", details: "Maîtrise académique de l'admissibilité et précision didactique de l'admission." },
+                        { id: "D1", icon: "🏛️", label: "Pôle Agrégation Externe d'Anglais (Recherche)", parent: "CENTER", dx: -600, dy: 0, unlocked: true, link: "", desc: "Centre de préparation de niveau universitaire supérieur (Admissibilité & Admission).", details: "Maîtrise absolue de la philologie, de la linguistique formelle et de l'érudition critique." },
                         
-                        // --- BRANCHE 1 : LITTÉRATURE, CIVILISATION & CORPUS (ATOMISÉE) ---
-                        { id: "D1.0", icon: "📑", label: "Branche Littérature, Civilisation & Corpus", parent: "D1", dx: -1000, dy: -600, unlocked: true, link: "", desc: "Méthodologie comparée, problématisation, stylistique et analyse iconographique.", details: "Maîtrise des épreuves écrites et analyse critique de documents." },
-                        { id: "D1.1", icon: "📑", label: "Méthodologie Comparée de Corpus Tridimensionnel", parent: "D1.0", dx: -1250, dy: -850, unlocked: false, link: "", desc: "Analyse croisée d'un corpus documentaire littéraire, iconographique et journalistique.", details: "Extraction des convergences, divergences et problématisation globale des textes et documents." },
-                        { id: "D1.2", icon: "🧭", label: "Problématisation & Architecture du Plan Dialectique", parent: "D1.1", dx: -1650, dy: -1100, unlocked: false, link: "", desc: "Construction logique et dialectique de la composition littéraire et civilisationnelle.", details: "Élaboration de la problématique centrale et articulation rigoureuse des parties en temps limité." },
-                        { id: "D1.3", icon: "📖", label: "Stylistique, Polyphonie & Rhétorique Littéraire", parent: "D1.2", dx: -2150, dy: -1300, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des textes littéraires (prose/poésie/théâtre).", details: "Registres, polyphonie bakhtinienne, tropes, figures de style et impact narratif." },
-                        { id: "D1.4", icon: "🖼️", label: "Analyse Critique Iconographique & Visuelle", parent: "D1.1", dx: -1650, dy: -600, unlocked: false, link: "", desc: "Critique de l'image fixe (peinture, photographie d'art, caricature de presse).", details: "Composition, cadrage, jeux de lumière, contexte historique et implicite visuel." },
-                        { id: "D1.5", icon: "📰", label: "Analyse de Presse Anglophone (UK/US) & Biais", parent: "D1.4", dx: -2150, dy: -600, unlocked: false, link: "", desc: "Étude des articles de fond (The Guardian, NYT, The Atlantic) et rhétorique journalistique.", details: "Biais éditoriaux, registres de langue, implicite idéologique et positionnement géopolitique." },
-                        { id: "D1.6", icon: "✍️", label: "Maîtrise de la Langue Académique Écrite & Style", parent: "D1.1", dx: -1250, dy: -1300, unlocked: false, link: "", desc: "Perfectionnement de l'anglais écrit de niveau universitaire supérieur.", details: "Lexique de spécialité, variété syntaxique complexe, cohésion textuelle et élégance stylistique." },
-                        { id: "D1.7", icon: "🎭", label: "Dramaturgie & Étude des Textes Dramatiques", parent: "D1.3", dx: -2650, dy: -1450, unlocked: false, link: "", desc: "Analyse spécifique des pièces de théâtre au programme du CAPES.", details: "Didascalies, tension dramatique, apartés, structure scénique et voix des personnages." },
-                        { id: "D1.8", icon: "📜", label: "Contextualisation Historique & Civilisationnelle", parent: "D1.1", dx: -1650, dy: -850, unlocked: false, link: "", desc: "Maîtrise des grands repères historiques britanniques et américains.", details: "Évolution politique, mouvements sociaux, faits culturels majeurs et mutations sociétales." },
+                        // --- BRANCHE D1 : LITTÉRATURE & CRITIQUE LITTÉRAIRE ---
+                        { id: "D1.0", icon: "📚", label: "Branche Littérature & Critique Savante", parent: "D1", dx: -1000, dy: -700, unlocked: true, link: "", desc: "Maîtrise des courants critiques, des poétiques et des œuvres au programme limitatif.", details: "Approche théorique et universitaire de haut niveau." },
+                        { id: "D1.1", icon: "🔍", label: "Critique Post-Coloniale & Subaltern Studies", parent: "D1.0", dx: -1300, dy: -1000, unlocked: false, link: "", desc: "Analyse des discours hégémoniques, altérité et déconstruction des empires.", details: "Application des théories de Said, Spivak et Bhabha aux textes littéraires." },
+                        { id: "D1.2", icon: "♀️", label: "Gender Studies, Queer Theory & Intersectionnalité", parent: "D1.0", dx: -1300, dy: -800, unlocked: false, link: "", desc: "Étude des représentations du genre, des identités et des rapports de domination.", details: "Concepts de Judith Butler, Eve Sedgwick et poétiques du corps." },
+                        { id: "D1.3", icon: "🌳", label: "Ecocritique & Humanités Environnementales", parent: "D1.0", dx: -1300, dy: -600, unlocked: false, link: "", desc: "Représentation de la nature, Anthropocène et pastoralisme critique dans les textes.", details: "Analyse des liens entre écologie, pouvoir et narration." },
+                        { id: "D1.4", icon: "🎭", label: "Dramaturgie, Théâtre & Performance Scénique", parent: "D1.0", dx: -1300, dy: -400, unlocked: false, link: "", desc: "Analyse formelle et structurelle des pièces de théâtre au programme.", details: "Didascalies, tension dramatique, énonciation théâtrale et mise en scène." },
+                        { id: "D1.5", icon: "✒️", label: "Poétique du Roman & Narratologie Avancée", parent: "D1.0", dx: -1700, dy: -900, unlocked: false, link: "", desc: "Étude des instances narratoriales, focalisations, temps et métafiction.", details: "Génette, Booth et rhétorique de la fiction." },
 
-                        // --- BRANCHE 2 : LINGUISTIQUE & THÉORIE CULIOLIENNE (ATOMISÉE) ---
-                        { id: "D2.0", icon: "🗣️", label: "Branche Linguistique & Théorie Culiolienne (TOPE)", parent: "D1", dx: -1000, dy: 0, unlocked: true, link: "", desc: "TOPE, repérage énonciatif, système verbal, aspectualité et traduction.", details: "Analyse grammaticale et linguistique de haut niveau." },
-                        { id: "D2.1", icon: "🗣️", label: "Application Stricte de la TOPE sur Corpus", parent: "D2.0", dx: -1250, dy: 0, unlocked: true, link: "", desc: "Mise en pratique rigoureuse de la Théorie des Opérations Énonciatives d'Antoine Culioli.", details: "Repères origines, opérations de prédication, balayage et instanciation du concept." },
-                        { id: "D2.2", icon: "📍", label: "Repérage Énonciatif S0 / T0 / E0 & Acteurs", parent: "D2.1", dx: -1650, dy: -150, unlocked: false, link: "", desc: "Analyse fine de l'ancrage temporel, spatial et subjectif de l'énoncé.", details: "Relations entre le moment de l'énonciation, l'événement référent et l'énonciateur." },
-                        { id: "D2.3", icon: "⚙️", label: "Système Verbal & Auxiliaires Modaux Complexes", parent: "D2.1", dx: -2150, dy: 0, unlocked: false, link: "", desc: "Déconstruction exhaustive du groupe verbal, des temps et des modaux (must, should, may, can).", details: "Valeurs épistémiques vs déontiques, marqueurs de modalité et effet de sens contextuel." },
-                        { id: "D2.4", icon: "⏳", label: "Aspectualité (be+V-ing / have+en) & Procès", parent: "D2.3", dx: -2650, dy: 0, unlocked: false, link: "", desc: "Analyse des valeurs aspectuelles et repérages inter-locuteurs.", details: "Effets de sens de l'auxiliation, parcours, rupture, validation et bilan du procès." },
-                        { id: "D2.5", icon: "🔗", label: "Structures Passives, Causatives & Subordination", parent: "D2.1", dx: -1650, dy: 150, unlocked: false, link: "", desc: "Analyse syntaxique des structures complexes et enchâssements.", details: "Constructions passives, causatives (make/have/get) et propositions subordonnées." },
-                        { id: "D2.6", icon: "🏷️", label: "Détermination Nominale & Quantification Fine", parent: "D2.1", dx: -2150, dy: 220, unlocked: false, link: "", desc: "Grammaire approfondie du groupe nominal et de la quantification.", details: "Fonctionnement des articles (a, the, ø), génitifs (saxon/of) et structures relatives." },
-                        { id: "D2.7", icon: "🔄", label: "Traduction Contrastive (Thème & Version Littéraire)", parent: "D2.1", dx: -2650, dy: 300, unlocked: false, link: "", desc: "Maîtrise des faits de traduction littéraire, idiomatique et technique.", details: "Équivalences interlinguistiques, gestion des temps du récit et pièges des calques." },
-                        { id: "D2.8", icon: "🧩", label: "Connecteurs Logiques, Adverbes & Concession", parent: "D2.5", dx: -2150, dy: 400, unlocked: false, link: "", desc: "Analyse des articulateurs textuels et de la mise en relief (cleft sentences).", details: "Valeurs de liaison, inversion sujet-verbe après polarité négative et focalisation." },
+                        // --- BRANCHE D2 : CIVILISATION, HISTOIRE DES IDÉES & GÉOPOLITIQUE ---
+                        { id: "D2.0", icon: "🌐", label: "Branche Civilisation, Idées & Géopolitique", parent: "D1", dx: -1000, dy: -200, unlocked: true, link: "", desc: "Maîtrise des contextes historiques profonds et des grands débats intellectuels UK/US.", details: "Épistémologie des faits civilisationnels." },
+                        { id: "D2.1", icon: "📜", label: "Historiographie & Politique Britannique", parent: "D2.0", dx: -1300, dy: -200, unlocked: false, link: "", desc: "Évolution institutionnelle, constitutionnelle et sociale du Royaume-Uni.", details: "De l'ère victorienne aux mutations contemporaines (post-Brexit)." },
+                        { id: "D2.2", icon: "🗽", label: "Histoire Politique & Constitutionnelle des USA", parent: "D2.0", dx: -1300, dy: 0, unlocked: false, link: "", desc: "Dynamiques fédérales, fédéralisme, Cour Suprême et mouvements civiques.", details: "Analyse critique des fondements de la démocratie américaine." },
+                        { id: "D2.3", icon: "💡", label: "Histoire des Idées Politiques & Philosophiques", parent: "D2.0", dx: -1700, dy: -150, unlocked: false, link: "", desc: "Libéralisme, républicanisme, conservatisme, marxisme et théories critiques anglo-saxonnes.", details: "De Locke et Hobbes aux penseurs contemporains." },
+                        { id: "D2.4", icon: "🖼️", label: "Analyse Critique Iconographique & Arts Visuels", parent: "D2.0", dx: -1700, dy: 50, unlocked: false, link: "", desc: "Peinture, photographie d'art, propagande visuelle et caricatures de presse.", details: "Sémiologie de l'image fixe et contexte historico-politique." },
 
-                        // --- BRANCHE 3 : PHONÉTIQUE, API & PHONOLOGIE (ATOMISÉE) ---
-                        { id: "D3.0", icon: "🔤", label: "Branche Phonétique, API & Phonologie", parent: "D1", dx: -1000, dy: 500, unlocked: true, link: "", desc: "Transcriptions API, accentuation, stress shift et morpho-phonologie.", details: "Maîtrise de la prononciation et des règles intonatives (RP/GA)." },
-                        { id: "D3.1", icon: "🔤", label: "Transcriptions Phonétiques API (RP & GA)", parent: "D3.0", dx: -1250, dy: 500, unlocked: true, link: "", desc: "Transcriptions phonétiques rigoureuses en Received Pronunciation et General American.", details: "Symboles API, voyelles, diphthongues, consonnes et variations dialectales standard." },
-                        { id: "D3.2", icon: "🎵", label: "Accentuation Lexicale des Mots Simples", parent: "D3.1", dx: -1650, dy: 700, unlocked: false, link: "", desc: "Maîtrise absolue des règles de placement des accents primaire et secondaire.", details: "Schémas accentuels lexicaux fondamentaux selon la catégorie grammaticale et l'origine morphologique." },
-                        { id: "D3.3", icon: "📌", label: "Suffixation Contrainte vs Neutre en Phonologie", parent: "D3.2", dx: -2150, dy: 700, unlocked: false, link: "", desc: "Incidence des affixes sur le déplacement ou le maintien de l'accent principal.", details: "Suffixes attirants/imposants vs suffixes transparents (ex: -ity vs -ness)." },
-                        { id: "D3.4", icon: "⚡", label: "Stress Shift (Déplacement d'Accent Rythmique)", parent: "D3.3", dx: -2650, dy: 700, unlocked: false, link: "", desc: "Dynamique intonative en contexte rythmique de phrase (règle du clash rythmique).", details: "Règles de déplacement de l'accent principal sous l'effet de l'euphonie et du rythme." },
-                        { id: "D3.5", icon: "🧩", label: "Accentuation des Mots Composés & Phrasal Verbs", parent: "D3.2", dx: -2150, dy: 950, unlocked: false, link: "", desc: "Règles accentuelles N+N, Adj+N, Verbe+Particule.", details: "Compound stress rule vs phrasal stress (stress maximum en fin de groupe verbal/nominal)." },
-                        { id: "D3.6", icon: "🔊", label: "Morpho-Phonologie, Liaison, Elision & Schwa", parent: "D3.1", dx: -1650, dy: 980, unlocked: false, link: "", desc: "Allomorphie des désinences (-ed, -s) et réductions vocaliques.", details: "Règles d'édulcoration du schwa, formes fortes/faibles et phénomènes de linking (r-linking, intrusive r)." },
-                        { id: "D3.7", icon: "📈", label: "Intonation, Courbes Mélodiques & Emphase", parent: "D3.4", dx: -3150, dy: 700, unlocked: false, link: "", desc: "Analyse des schémas intonatifs montants, descendants et complexes (tunes).", details: "Marquage de la focalisation, attitudes et modulations pragmatiques de la voix." },
+                        // --- BRANCHE D3 : LINGUISTIQUE FORMELLE & TOPE ---
+                        { id: "D3.0", icon: "🗣️", label: "Branche Linguistique Formelle & TOPE", parent: "D1", dx: -1000, dy: 300, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli), syntaxe formelle et sémantique.", details: "Analyse linguistique de niveau universitaire de recherche." },
+                        { id: "D3.1", icon: "📍", label: "Repérage Énonciatif S0/T0/E0 & Subjectivité", parent: "D3.0", dx: -1300, dy: 200, unlocked: false, link: "", desc: "Analyse fine de l'ancrage énonciatif, de la deixis et de l'altérité.", details: "Opérations de repérage, repères-origines et co-énonciation." },
+                        { id: "D3.2", icon: "⚙️", label: "Modalité Épistémique vs Déontique & Modaux", parent: "D3.0", dx: -1300, dy: 400, unlocked: false, link: "", desc: "Étude formelle des auxiliaires modaux et de la prise en charge (assertion).", details: "Valeurs du possible, du nécessaire et validation du prédicat." },
+                        { id: "D3.3", icon: "⏳", label: "Aspectualité, Quantification & Détermination", parent: "D3.2", dx: -1700, dy: 300, unlocked: false, link: "", desc: "Valeurs de be+V-ing, have+en, articles (a/the/ø) et structures nominales.", details: "Parcours, rupture, bornage et instanciation du nominal." },
+                        { id: "D3.4", icon: "🔗", label: "Syntaxe Complexe, Subordination & Inversion", parent: "D3.2", dx: -1700, dy: 500, unlocked: false, link: "", desc: "Enchâssements, structures clefts, passifs et relatives complexes.", details: "Architecture de la phrase et contraintes syntaxiques." },
 
-                        // --- BRANCHE 4 : DIDACTIQUE, CECRL & SÉQUENCE (ATOMISÉE) ---
-                        { id: "D4.0", icon: "🏫", label: "Branche Didactique, CECRL & Séquence", parent: "D1", dx: -1000, dy: 1000, unlocked: true, link: "", desc: "Transposition didactique, CECRL, architecture de séquence et différenciation.", details: "Conception de cours et de projets d'apprentissage en anglais." },
-                        { id: "D4.1", icon: "🏫", label: "Transposition Didactique & Niveaux CECRL", parent: "D4.0", dx: -1250, dy: 1150, unlocked: true, link: "", desc: "Exploitation pédagogique de documents authentiques pour l'enseignement secondaire.", details: "Alignement sur les niveaux du CECRL (A1 à C1) et programmes officiels de l'Éducation Nationale." },
-                        { id: "D4.2", icon: "📋", label: "Architecture Complète de Séquence Pédagogique", parent: "D4.1", dx: -1650, dy: 1400, unlocked: false, link: "", desc: "Conception de projets d'apprentissage structurés pour le collège/lycée.", details: "Rétroplanning, choix de la tâche finale motivante et articulation logique des séances." },
-                        { id: "D4.3", icon: "🎯", label: "Activités Langagières & Tâches Finales Actionnelles", parent: "D4.2", dx: -2150, dy: 1400, unlocked: false, link: "", desc: "Mise en œuvre de la réception, production et interaction (approche actionnelle).", details: "Création de tâches ancrées dans l'action sociale et évaluation formative par compétences." },
-                        { id: "D4.4", icon: "⚖️", label: "Différenciation Pédagogique & Gestion d'Hétérogénéité", parent: "D4.1", dx: -1650, dy: 1700, unlocked: false, link: "", desc: "Adapter les parcours d'apprentissage pour les classes de la 6ème au BTS.", details: "Étayages (scaffolding), remédiations pour élèves Dys et enrichissement pour profils avancés." },
-                        { id: "D4.5", icon: "📊", label: "Évaluation Formative & Sommative en Langue Vivante", parent: "D4.2", dx: -2150, dy: 1700, unlocked: false, link: "", desc: "Mesure des acquisitions et conception de grilles d'évaluation critériées.", details: "Critères d'évaluation de l'expression orale/écrite et auto-évaluation guidée pour les élèves." },
-                        { id: "D4.6", icon: "💻", label: "Intégration du Numérique & EdTech en Cours d'Anglais", parent: "D4.2", dx: -2650, dy: 1400, unlocked: false, link: "", desc: "Utilisation d'outils digitaux et plateformes interactives en classe de langue.", details: "Laboratoires de langues virtuels, baladodiffusion, capsules vidéo et gamification." },
+                        // --- BRANCHE D4 : PHONÉTIQUE & PHONOLOGIE AVANCÉE ---
+                        { id: "D4.0", icon: "🎵", label: "Branche Phonétique, API & Phonologie", parent: "D1", dx: -1000, dy: 800, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables (RP/GA) et phonologie métrique.", details: "Maîtrise des structures suprasegmentales." },
+                        { id: "D4.1", icon: "🔤", label: "Transcription Phonétique Rigoureuse (API)", parent: "D4.0", dx: -1300, dy: 700, unlocked: false, link: "", desc: "Maîtrise des normes RP et General American sans aucune approximation.", details: "Voyelles, diphtongues, consonnes et variations dialectales standard." },
+                        { id: "D4.2", icon: "⚡", label: "Stress Shift & Rythme (Compound/Phrasal)", parent: "D4.0", dx: -1300, dy: 900, unlocked: false, link: "", desc: "Règles d'alternance rythmique, stress clash et accentuation des composés.", details: "Phonologie métrique et structuration intonative de l'énoncé." },
+                        { id: "D4.3", icon: "🔊", label: "Morpho-phonologie, Liaison, Schwa & Elision", parent: "D4.1", dx: -1700, dy: 800, unlocked: false, link: "", desc: "Phénomènes d'allomorphie des désinences (-ed, -s) et r-linking.", details: "Réductions vocaliques et lois euphoniques en chaîne parlée." },
 
-                        // --- BRANCHE 5 : VALEURS DE LA RÉPUBLIQUE & DÉONTOLOGIE (ATOMISÉE) ---
-                        { id: "D5.0", icon: "🇫🇷", label: "Branche Valeurs de la République & Déontologie", parent: "D1", dx: -750, dy: 1200, unlocked: true, link: "", desc: "Laïcité, éthique du fonctionnaire, gestion de classe et inclusion EBEP.", details: "Maîtrise institutionnelle pour l'épreuve d'entretien et la vie scolaire." },
-                        { id: "D5.1", icon: "🇫🇷", label: "Principes de la République & Charte de la Laïcité", parent: "D5.0", dx: -950, dy: 1450, unlocked: false, link: "", desc: "Maîtrise institutionnelle fondamentale pour l'épreuve d'entretien du CAPES.", details: "Loi de 1905, charte de la laïcité à l'école, neutralité du service public et égalité filles-garçons." },
-                        { id: "D5.2", icon: "⚖️", label: "Éthique, Droits & Devoirs du Professeur Fonctionnaire", parent: "D5.1", dx: -1350, dy: 1750, unlocked: false, link: "", desc: "Posture professionnelle, statut et déontologie du professeur dans l'EN.", details: "Obligation de réserve, secret professionnel, loyauté, intégrité et exemplarité." },
-                        { id: "D5.3", icon: "🧘", label: "Gestion de Classe, Autorité & Climat Scolaire", parent: "D5.1", dx: -950, dy: 1800, unlocked: false, link: "", desc: "Exercice d'une autorité bienveillante et prévention de la violence scolaire.", details: "Mise en place d'un cadre de travail sécurisant, gestion des conflits et coopération avec la vie scolaire." },
-                        { id: "D5.4", icon: "🤝", label: "Partenariat Institutionnel, Communauté & Équipe", parent: "D5.3", dx: -1350, dy: 2050, unlocked: false, link: "", desc: "Travail en équipe pluridisciplinaire et lien avec les services médico-sociaux.", details: "Rôle central du professeur principal, relations constructives avec les parents et réseaux d'aide." },
-                        { id: "D5.5", icon: "🧩", label: "Inclusion, Accessibilité & Élèves à Besoins (EBEP)", parent: "D5.3", dx: -950, dy: 2100, unlocked: false, link: "", desc: "Accueil et scolarisation des élèves en situation de handicap et à besoins éducatifs particuliers.", details: "Coordination étroite avec les AESH, mise en place des PAI, PPS, PAP et adaptations de cours." }
+                        // --- BRANCHE D5 : TRADUCTION SAVANTE (THÈME & VERSION) ---
+                        { id: "D5.0", icon: "🔄", label: "Branche Traduction Savante (Thème & Version)", parent: "D1", dx: -1000, dy: 1300, unlocked: true, link: "", desc: "Maîtrise des registres littéraires, archaïques, techniques et de la stylistique comparée.", details: "Excellence traductologique." },
+                        { id: "D5.1", icon: "📖", label: "Version Littéraire & Stylistique (Anglais > Fr)", parent: "D5.0", dx: -1300, dy: 1200, unlocked: false, link: "", desc: "Traduction de textes classiques ou contemporains exigeants.", details: "Rendu des nuances esthétiques, registres et polyphonies textuelles." },
+                        { id: "D5.2", icon: "✍️", label: "Thème Littéraire & Idiomatique (Français > Anglais)", parent: "D5.0", dx: -1300, dy: 1400, unlocked: false, link: "", desc: "Maîtrise de la phraséologie anglaise authentique et élégante.", details: "Évitement des calques, transposition et modulation stylistique." },
+                        { id: "D5.3", icon: "📜", label: "Traduction de Textes Anciens ou Spécifiques", parent: "D5.1", dx: -1700, dy: 1300, unlocked: false, link: "", desc: "Gestion des registres archaïques, de la poésie et des subtilités rhétoriques rares.", details: "Équivalences interlinguistiques de haut vol." }
                     ]
                 }
             ]
@@ -648,7 +633,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_full_atomized_capes');
+            const saved = localStorage.getItem('theo_final_app_skills_full_agregation_atomized');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -671,7 +656,7 @@
                         data[n.id] = { unlocked: n.unlocked, link: n.link };
                     });
                 });
-                localStorage.setItem('theo_final_app_skills_full_atomized_capes', JSON.stringify(data));
+                localStorage.setItem('theo_final_app_skills_full_agregation_atomized', JSON.stringify(data));
                 setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
                 updateSaveStatus('error');
