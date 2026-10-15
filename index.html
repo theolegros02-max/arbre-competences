@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version Directitude BAFA Expert)</title>
+    <title>Arbre de Compétences - Théo Legros (Pédagogie Sud Réorganisée)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -248,7 +248,7 @@
             <div style="font-size: 0.75em; font-weight: 800; margin-bottom: 2px; color: #f8fafc;">MAÎTRISE GLOBALE</div>
             <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (ACM):</span> <span id="score-a">0</span></div>
             <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (RH & Direction BAFA):</span> <span id="score-b">0</span></div>
-            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Youth & IA):</span> <span id="score-c">0</span></div>
+            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie & IA Structurée):</span> <span id="score-c">0</span></div>
             <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
@@ -342,8 +342,6 @@
                     key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)",
                     nodes: [
                         { id: "B1", icon: "🎓", label: "Direction Générale de Formation BAFA/BAFD", parent: "CENTER", dx: 600, dy: 0, unlocked: true, link: "", desc: "Pilotage global, pédagogique, humain et réglementaire des sessions de formation d'animateurs et directeurs.", details: "Garantie de la qualité des stages, encadrement de l'équipe de formateurs et conformité SDJES." },
-                        
-                        // --- SOUS-BRANCHE B1 : Ingénierie de Formation & Modèles Pédagogiques ---
                         { id: "B1.1", icon: "🔍", label: "ADDIE - Phase A (Analyse du Besoin)", parent: "B1", dx: 1050, dy: -750, unlocked: false, link: "", desc: "Cadrage amont des profils de stagiaires et attentes du secteur.", details: "Positionnement initial, diagnostic des représentations et besoins spécifiques des groupes." },
                         { id: "B1.2", icon: "📐", label: "ADDIE - Phase D (Design & Scénarisation)", parent: "B1.1", dx: 1550, dy: -1000, unlocked: false, link: "", desc: "Architecture globale du stage (Générale, Perfectionnement, BAFD).", details: "Découpage du planning, alternance théorie/pratique et rythme biologique des stagiaires." },
                         { id: "B1.3", icon: "📝", label: "ADDIE - Phase D2 (Développement des Fiches)", parent: "B1.1", dx: 1550, dy: -750, unlocked: false, link: "", desc: "Création du livret formateur et des fiches séquences.", details: "Rédaction des déroulés, consignes d'ateliers, supports visuels et matériel nécessaire." },
@@ -353,33 +351,23 @@
                         { id: "B2.2", icon: "🔗", label: "Alignement Constructif (Biggs)", parent: "B1.2", dx: 2050, dy: -1000, unlocked: false, link: "", desc: "Cohérence entre objectifs, mises en situation et évaluation.", details: "S'assurer que chaque temps pratique évalue directement une compétence réglementaire du BAFA." },
                         { id: "B2.3", icon: "🔀", label: "Pédagogie de l'Alternance & Mises en Situation", parent: "B1.3", dx: 2050, dy: -750, unlocked: false, link: "", desc: "Conception de jeux de rôle, simulations et grands jeux de stage.", details: "Simulation de convocation de parents, gestion de conflits d'enfants et grands jeux thématiques." },
                         { id: "B2.4", icon: "💻", label: "E-Learning & Outils Digitaux (BAFA Hybride)", parent: "B2.3", dx: 2550, dy: -750, unlocked: false, link: "", desc: "Utilisation des LMS et espaces numériques en formation.", details: "Suivi des parcours en distanciel pour les approfondissements et dépôts de productions." },
-
-                        // --- SOUS-BRANCHE B2 : Cadre Réglementaire SDJES & Habilitations ---
                         { id: "B5.1", icon: "🏕️", label: "Arrêté du 15 juillet 2015 & Textes de Référence", parent: "B1", dx: 1050, dy: 1000, unlocked: true, link: "", desc: "Maîtrise absolue de la réglementation des brevets BAFA/BAFD.", details: "Durées minimales (8 jours base, 14 jours pratique, 6 jours perf), délais et prérequis d'âge." },
                         { id: "B5.2", icon: "📋", label: "Gestion Administrative & Télé-procédure FORMFOP", parent: "B5.1", dx: 1550, dy: 1000, unlocked: false, link: "", desc: "Suivi administratif officiel avec les services de l'État.", details: "Inscriptions, gestion des listes de présence, transmission des procès-verbaux et liens SDJES." },
                         { id: "B5.3", icon: "⚖️", label: "Responsabilité Civile & Pénale du Directeur", parent: "B5.1", dx: 1550, dy: 1250, unlocked: false, link: "", desc: "Sécurisation juridique du centre de formation.", details: "Obligations de moyens, sécurité des locaux d'accueil, assurances et gestion des accidents stagiaires." },
                         { id: "B5.4", icon: "🏛️", label: "Jurys Départementaux & Rapport d'Avis", parent: "B5.2", dx: 2050, dy: 1000, unlocked: false, link: "", desc: "Soutenance et défense des décisions de stage devant le jury SDJES.", details: "Rédaction des avis synthétiques, défense des dossiers complexes et représentation de l'organisme." },
-
-                        // --- SOUS-BRANCHE B3 : Management & Supervision des Formateurs ---
                         { id: "B3.1", icon: "👥", label: "Recrutement & Sourcing de l'Équipe de Formateurs", parent: "B1", dx: 1050, dy: 150, unlocked: false, link: "", desc: "Constitution d'une équipe complémentaire et qualifiée.", details: "Sélection des formateurs selon leurs spécialités (grands jeux, petite enfance, réglementation, secourisme)." },
                         { id: "B3.2", icon: "🤝", label: "Tutorat & Compagnonnage des Nouveaux Formateurs", parent: "B3.1", dx: 1550, dy: 50, unlocked: false, link: "", desc: "Accompagnement des formateurs stagiaires.", details: "Co-animation guidée, observation en situation, feedback constructif et transmission des postures." },
                         { id: "B3.3", icon: "🗣️", label: "Animation des Réunions d'Équipe de Formation", parent: "B3.1", dx: 1550, dy: 300, unlocked: false, link: "", desc: "Conduite des temps de préparation, bilans quotidiens et régulations.", details: "Mise en place de la réunion préparatoire de session, débriefings de fin de journée et cohésion d'équipe." },
                         { id: "B3.4", icon: "🧘", label: "Gestion de la Fatigue & Climat d'Équipe", parent: "B3.2", dx: 2050, dy: 50, unlocked: false, link: "", desc: "Prévention du surmenage en stage intensif (pension complète).", details: "Régulation des plannings de garde, équilibre des charges de travail et maintien de la motivation." },
-
-                        // --- SOUS-BRANCHE B4 : Andragogie & Accompagnement des Stagiaires ---
                         { id: "B4.1", icon: "🧠", label: "Andragogie & Psychologie de l'Adulte en Formation", parent: "B1", dx: 1050, dy: 550, unlocked: false, link: "", desc: "Compréhension des leviers d'apprentissage des jeunes adultes (16-25 ans).", details: "Gestion des représentations, valorisation des expériences antérieures et autonomisation." },
                         { id: "B4.2", icon: "💬", label: "Entretiens Individuels de Suivi Pédagogique", parent: "B4.1", dx: 1550, dy: 500, unlocked: false, link: "", desc: "Accompagnement réflexif des stagiaires tout au long du stage.", details: "Entretiens de mi-stage, auto-évaluation guidée et fixation d'objectifs personnels de progression." },
                         { id: "B4.3", icon: "☀️", label: "Sécurité Affective & Gestion des Crises Stagiaires", parent: "B4.1", dx: 1550, dy: 750, unlocked: false, link: "", desc: "Prise en charge du mal-être, stress d'évaluation ou conflits.", details: "Désescalade des tensions en groupe, écoute active, gestion du mal du pays ou des crises anxieuses." },
                         { id: "B4.4", icon: "🧩", label: "Inclusion & Adaptation Pédagogique (Handicap/Dys)", parent: "B4.2", dx: 2050, dy: 500, unlocked: false, link: "", desc: "Aménagement des épreuves et des supports pour tous les profils.", details: "Adaptation des temps de parole, soutien à l'écrit, aménagement du rythme et bienveillance." },
-
-                        // --- SOUS-BRANCHE B5 : Évaluation Formative, Summative & Délibération ---
                         { id: "B6.1", icon: "📊", label: "Conception de Grilles d'Évaluation Critériées", parent: "B1", dx: 600, dy: 900, unlocked: false, link: "", desc: "Élaboration d'outils d'évaluation objectifs et partagés.", details: "Définition d'indicateurs observables pour chaque fonction de l'animateur (sécurité, vie quotidienne, projets)." },
                         { id: "B6.2", icon: "🔍", label: "Observation Armée des Pratiques en Stage", parent: "B6.1", dx: 950, dy: 1200, unlocked: false, link: "", desc: "Prise de notes factuelles pendant les temps d'animation des stagiaires.", details: "Différenciation stricte entre faits observés, interprétations et jugements de valeur." },
                         { id: "B6.3", icon: "⚖️", label: "Conduite des Conseils de Formateurs (Délibérations)", parent: "B6.1", dx: 600, dy: 1300, unlocked: false, link: "", desc: "Présidence des réunions de décision d'aptitude/inaptitude.", details: "Recherche du consensus d'équipe, neutralisation des biais de confirmation et argumentation factuelle." },
                         { id: "B6.4", icon: "✍️", label: "Rédaction des Appréciations Synthétiques BAFA", parent: "B6.3", dx: 950, dy: 1500, unlocked: false, link: "", desc: "Rédaction de bilans qualitatifs motivés pour la SDJES.", details: "Formulations constructives, explicitation des motifs d'Ajournement ou de Non-Validation." },
                         { id: "B6.5", icon: "🚨", label: "Gestion des Ajournements & Non-Validations", parent: "B6.3", dx: 300, dy: 1500, unlocked: false, link: "", desc: "Annonce et accompagnement des décisions défavorables.", details: "Entretien d'annonce sécurisé, explication des voies de recours, conseil d'orientation et posture éthique." },
-
-                        // --- SOUS-BRANCHE B6 : Démarche Qualité Qualiopi & Audit ---
                         { id: "B7.1", icon: "📑", label: "Conformité Qualiopi - Critères 1 à 3 (Information & Prérequis)", parent: "B1", dx: 1400, dy: 200, unlocked: false, link: "", desc: "Information du public, objectifs et modalités d'accès au stage.", details: "Transparence des tarifs, conditions d'annulation, taux de réussite et accueil des publics PSH." },
                         { id: "B7.2", icon: "🛡️", label: "Qualiopi - Critères 4 à 7 (Moyens, Veille & Amélioration)", parent: "B7.1", dx: 1850, dy: 200, unlocked: false, link: "", desc: "Gestion des compétences des formateurs et amélioration continue.", details: "Suivi des formations de formateurs, traitement des réclamations, questionnaires de satisfaction et audits." }
                     ]
@@ -387,45 +375,58 @@
                 {
                     key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)",
                     nodes: [
-                        { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 600, unlocked: true, link: "", desc: "Maîtrise absolue de la sécurité affective, de la bientraitance et de la démocratie participative.", details: "Encadrement expert de groupes de mineurs et animation d'activités à fort impact éducatif et émancipateur." },
-                        { id: "C1.1", icon: "🛡️", label: "Repérage Fin des Signaux Faibles", parent: "C1", dx: -550, dy: 950, unlocked: false, link: "", desc: "Détection précoce du mal-être, de l'isolement et des changements de comportements.", details: "Observation clinique des dynamiques de groupe, écoute active et traçabilité rigoureuse des incidents éducatifs." },
-                        { id: "C1.2", icon: "⚠️", label: "Stratégies de Prévention du Harcèlement", parent: "C1.1", dx: -950, dy: 1350, unlocked: false, link: "", desc: "Lutte active contre le bouc émissaire et les micro-violences entre pairs.", details: "Mise en place de protocoles de médiation par les pairs, cercles de parole et sanctions réparatrices." },
-                        { id: "C1.3", icon: "🔥", label: "Gestion de Crise Aiguë & Désescalade", parent: "C1.1", dx: -550, dy: 1400, unlocked: false, link: "", desc: "Protocoles d'apaisement immédiat en cas de crises comportementales violentes.", details: "Techniques de communication de crise, posture non-confrontationnelle, mise en sécurité collective et individuelle." },
-                        { id: "C1.4", icon: "💬", label: "Entretiens de Soutien & Alliance Éducative", parent: "C1.1", dx: -950, dy: 950, unlocked: false, link: "", desc: "Accompagnement individualisé des jeunes en situation de vulnérabilité.", details: "Postures d'empathie structurée, co-construction d'objectifs de progrès et restauration de l'estime de soi." },
-                        { id: "C1.5", icon: "⚖️", label: "Garantie de l'Intégrité Morale & Physique", parent: "C1.1", dx: -750, dy: 1750, unlocked: false, link: "", desc: "Application stricte des chartes de bientraitance en ACM.", details: "Prévention des violences intrafamiliales, repérage de la maltraitance et application des obligations de signalement." },
-                        { id: "C2.1", icon: "🎨", label: "Ateliers d'Expression Artistique & Catharsis", parent: "C1", dx: -200, dy: 1050, unlocked: false, link: "", desc: "Libération de la parole et de la créativité par l'art.", details: "Mise en place d'ateliers théâtre-forum, arts plastiques émancipateurs et écriture créative thérapeutique." },
-                        { id: "C2.2", icon: "🤝", label: "Ingénierie des Conseils de Jeunes", parent: "C2.1", dx: -350, dy: 1500, unlocked: false, link: "", desc: "Animation d'instances participatives et co-élaboration des règles de vie.", details: "Apprentissage de la citoyenneté active, votes démocratiques, régulation des conflits par le droit et autogestion." },
-                        { id: "C2.3", icon: "📰", label: "Éducation aux Médias & Esprit Critique (EMI)", parent: "C2.1", dx: -200, dy: 1850, unlocked: false, link: "", desc: "Décryptage de l'information et lutte contre les infox (fake news).", details: "Ateliers de vérification des sources, compréhension des algorithmes et création de médias libres par les jeunes." },
-                        { id: "C2.4", icon: "📱", label: "Régulation des Écrans & Sobriété Numérique", parent: "C2.1", dx: 150, dy: 1850, unlocked: false, link: "", desc: "Sensibilisation aux dérives des réseaux sociaux et cyberharcèlement.", details: "Co-construction d'une charte numérique d'utilisation des smartphones et proposition d'alternatives ludiques hors-ligne." },
-                        { id: "C2.5", icon: "🏛️", label: "Projets d'Utilité Sociale & Citoyenneté", parent: "C2.2", dx: -350, dy: 1950, unlocked: false, link: "", desc: "Implication des adolescents dans des actions d'intérêt général.", details: "Chantiers jeunes, solidarité intergénérationnelle, écocitoyenneté et responsabilisation au sein de la cité." },
-                        { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux & GN Immersifs", parent: "C1", dx: 250, dy: 1050, unlocked: false, link: "", desc: "Conception d'univers ludiques complexes de grande envergure.", details: "Écriture de scénarios interactifs, équilibrage des règles, gestion des PNJ (Personnages Non Joueurs) et temporalité." },
-                        { id: "C3.2", icon: "🗺️", label: "Logistique des Terrains de Jeu & Sécurité", parent: "C3.1", dx: 550, dy: 1500, unlocked: false, link: "", desc: "Aménagement des espaces et gestion des flux de participants.", details: "Sécurisation des zones de jeu extérieures, balisage, gestion du matériel et arbitrage des conflits ludiques." },
-                        { id: "C3.3", icon: "🧩", label: "Accueil Universel & Pédagogie Inclusive", parent: "C3.1", dx: 250, dy: 1850, unlocked: false, link: "", desc: "Adaptation universelle des activités pour tous les publics.", details: "Intégration des enfants à besoins spécifiques, collaboration étroite avec les AESH et adaptation sensorielle." },
-                        { id: "C3.4", icon: "📋", label: "Suivi rigoureux des PAI & Protocoles", parent: "C3.3", dx: 550, dy: 1950, unlocked: false, link: "", desc: "Sécurisation de la santé des mineurs en situation de handicap ou de pathologie.", details: "Gestion des régimes spécifiques, administration des traitements selon prescription et veille sanitaire active." },
-                        { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: -50, dy: 1950, unlocked: false, link: "", desc: "Accès de chaque enfant à l'activité sans stigmatisation.", details: "Variabilité des niveaux de difficulté, valorisation des réussites singulières et refus de l'élitisme ludique." },
-                        { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste & Éco-citoyenneté", parent: "C1", dx: 700, dy: 950, unlocked: false, link: "", desc: "Immersion active dans la nature et sensibilisation écologique.", details: "Ateliers de découverte de la biodiversité, lecture de paysages, écologie scientifique et respect des milieux." },
-                        { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps Autonomes", parent: "C4.1", dx: 1100, dy: 1350, unlocked: false, link: "", desc: "Organisation et encadrement de séjours en itinérance ou en pleine nature.", details: "Montage des campements rustiques, gestion de l'eau, autonomie énergétique et vie collective outdoor." },
-                        { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène Nomade", parent: "C4.2", dx: 1350, dy: 1650, unlocked: false, link: "", desc: "Maîtrise des techniques culinaires au feu de bois en conditions isolées.", details: "Application des règles d'hygiène alimentaire nomade, gestion des stocks non réfrigérés et tri sélectif en camp." },
-                        { id: "C4.4", icon: "🧭", label: "Orientation, Risques & Météo Plein Air", parent: "C4.1", dx: 700, dy: 1400, unlocked: false, link: "", desc: "Lecture de cartes IGN, maniement de la boussole et anticipation des aléas.", details: "Évaluation des risques météorologiques en temps réel, choix des itinéraires de repli et sens de l'orientation." },
-                        { id: "C4.5", icon: "🩺", label: "Secours en Milieu Isolé & Premiers Secours", parent: "C4.4", dx: 1100, dy: 1750, unlocked: false, link: "", desc: "Protocole d'urgence médicale éloignée des centres de soins.", details: "Réactions face aux traumatismes outdoor, bilans de santé primaires et coordination des secours héliportés." },
-                        { id: "C5.1", icon: "🧠", label: "Neurosciences & Développement Cognitif", parent: "C1", dx: 0, dy: 1250, unlocked: false, link: "", desc: "Compréhension des mécanismes cérébraux des apprentissages chez l'enfant et l'ado.", details: "Gestion de l'attention, plasticité cérébrale, impact du stress sur la mémoire de travail et régulation émotionnelle." },
-                        { id: "C5.2", icon: "🤝", label: "Médiation par les Pairs & Justice Restaurative", parent: "C1.2", dx: -750, dy: 1600, unlocked: false, link: "", desc: "Formation des mineurs à la résolution pacifique des différends.", details: "Protocoles formels de cercles restaurateurs, écoute active non-violente et réparation des torts collectifs." },
-                        { id: "C5.3", icon: "🎭", label: "Pédagogie Institutionnelle (Freinet & Oury)", parent: "C2.2", dx: -150, dy: 1600, unlocked: false, link: "", desc: "Mise en place de structures coopératives et d'institutions internes.", details: "Ceintures de comportements, institutions de régulation, métiers autogérés et monnaies symboliques." },
-                        { id: "C5.4", icon: "🏕️", label: "Pédagogie du Projet & Auto-détermination", parent: "C1", dx: 350, dy: 1350, unlocked: false, link: "", desc: "Théorie de l'autodétermination (Deci & Ryan) appliquée aux loisirs.", details: "Soutien aux trois besoins psychologiques fondamentaux : autonomie, compétence et affiliation sociale." },
-                        { id: "C6.1", icon: "👥", label: "Sociométrie & Analyse des Leaderships", parent: "C1", dx: 550, dy: 1150, unlocked: false, link: "", desc: "Cartographie des affinités informelles et des sous-groupes au sein d'une colo.", details: "Identification des leaders d'opinion, des enfants isolés ou rejetés et stratégies d'intégration par l'activité." },
-                        { id: "C6.2", icon: "🌀", label: "Gestion des Phénomènes de Bouc Émissaire", parent: "C1.2", dx: -1150, dy: 1600, unlocked: false, link: "", desc: "Intervention sociologique face à la stigmatisation collective.", details: "Déconstruction des mécanismes d'exclusion de groupe, protection de la cible et recadrage systémique." },
-                        { id: "C6.3", icon: "🧘", label: "Gestion de l'Anxiété de Séparation (Colonies)", parent: "C1", dx: -350, dy: 750, unlocked: false, link: "", desc: "Accompagnement des premiers départs en séjour et mal du pays.", details: "Protocoles d'accueil bienveillant, rituels de transition, gestion relationnelle des parents anxieux." },
-                        { id: "C6.4", icon: "🎯", label: "Évaluation d'Impact Éducatif & qualitatif", parent: "C1", dx: 350, dy: 750, unlocked: false, link: "", desc: "Mesurer les progrès relationnels et l'émancipation des mineurs.", details: "Indicateurs qualitatifs de socialisation, autonomie quotidienne et questionnaires réflexifs de fin de séjour." },
-                        { id: "C7.0", icon: "🤖", label: "IA Générative & Prompt Engineering Pédagogique", parent: "C1", dx: 0, dy: 1550, unlocked: true, link: "", desc: "Maîtrise des LLM, des prompts structurés et de l'intégration EdTech en milieu éducatif.", details: "Fondamentaux des modèles génératifs et application directe à la conception pédagogique." },
-                        { id: "C7.1", icon: "📝", label: "Prompts Structurés & Méthode CRAFT", parent: "C7.0", dx: -250, dy: 2000, unlocked: false, link: "", desc: "Création de consignes de rédaction précises et optimisées.", details: "Rôle, Contexte, Contraintes, Format et application de la méthode CRAFT pour l'enseignement." },
-                        { id: "C7.2", icon: "🧠", label: "Few-Shot, CoT & Tuteur Socratique", parent: "C7.1", dx: -500, dy: 2350, unlocked: false, link: "", desc: "Utilisation du raisonnement guidé et simulation de tuteurs intelligents.", details: "Chain-of-Thought et configuration de l'IA pour ne pas donner les réponses mais guider l'élève (maïeutique)." },
-                        { id: "C7.3", icon: "📚", label: "Conception de Séquences & Quiz Adaptatifs", parent: "C7.0", dx: 250, dy: 2000, unlocked: false, link: "", desc: "Génération de plans de cours et d'évaluations par l'IA.", details: "Alignement sur la taxonomie de Bloom et création de parcours d'apprentissage individualisés." },
-                        { id: "C7.4", icon: "⚖️", label: "Différenciation, Remédiation & Inclusivité IA", parent: "C7.3", dx: 500, dy: 2350, unlocked: false, link: "", desc: "Adapter les supports pour les élèves Dys et besoins spécifiques.", details: "Réécriture de textes en langage clair, simplification lexicale et étayage sur-mesure." },
-                        { id: "C7.5", icon: "📊", label: "Grilles Critériées & Automatisation de l'Évaluation", parent: "C7.3", dx: 150, dy: 2700, unlocked: false, link: "", desc: "Génération de rubriques d'évaluation formatives objectives.", details: "Création de grilles critériées multicritères et génération de rétroactions nuancées pour les apprenants." },
-                        { id: "C7.6", icon: "🗺️", label: "Ingénierie de Séquences en Pédagogie par Projet (PBL)", parent: "C7.0", dx: -150, dy: 2700, unlocked: false, link: "", desc: "Conception de parcours d'apprentissage par projets complexes avec l'IA.", details: "Scénarisation de tâches finales immersives, jalons temporels et ressources documentaires générées par LLM." },
-                        { id: "C7.7", icon: "📈", label: "Learning Analytics & Diagnostic des Lacunes", parent: "C7.5", dx: 450, dy: 2950, unlocked: false, link: "", desc: "Exploitation des données de quiz pour repérer les incompréhensions.", details: "Analyse des erreurs récurrentes d'une cohorte et génération automatique de modules de remédiation ciblés." },
-                        { id: "C7.8", icon: "🛠️", label: "Création d'Agents Pédagogiques Sur-Mesure", parent: "C7.1", dx: -450, dy: 2950, unlocked: false, link: "", desc: "Paramétrage de GPTs et assistants dédiés à un cours ou un séjour.", details: "Intégration de documents de référence (RAG), consignes strictes de posture et maîtrise du ton." },
-                        { id: "C7.9", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique face aux Hallucinations", parent: "C7.0", dx: -650, dy: 1950, unlocked: false, link: "", desc: "Protection des données et regard critique sur les productions de l'IA.", details: "Sensibilisation aux biais cognitifs des modèles, respect de la vie privée des mineurs et vérification des sources." }
+                        { id: "C1", icon: "🏕️", label: "Pôle Pédagogie, Youth & IA Structurée", parent: "CENTER", dx: 0, dy: 600, unlocked: true, link: "", desc: "Direction de l'action éducative, bientraitance, pédagogies actives et innovation EdTech.", details: "Convergence des sciences de l'éducation, de la gestion de groupe et des technologies éducatives." },
+                        
+                        // --- PÔLE 1 : Protection, Bientraitance & Postures Éducatives ---
+                        { id: "C1.0", icon: "🛡️", label: "Branche Protection, Bientraitance & Climat Éducatif", parent: "C1", dx: -700, dy: 950, unlocked: true, link: "", desc: "Garantie de la sécurité affective, médiation et régulation des comportements.", details: "Prévention des violences, alliance éducative et restauration du climat de groupe." },
+                        { id: "C1.1", icon: "🔍", label: "Repérage Fin des Signaux Faibles", parent: "C1.0", dx: -1100, dy: 1200, unlocked: false, link: "", desc: "Détection précoce du mal-être, de l'isolement et du décrochage.", details: "Observation clinique des dynamiques informelles, traçabilité et écoute active." },
+                        { id: "C1.2", icon: "⚠️", label: "Stratégies de Prévention du Harcèlement", parent: "C1.0", dx: -1100, dy: 1450, unlocked: false, link: "", desc: "Lutte contre les micro-violences et mécanismes d'exclusion.", details: "Protocoles de médiation par les pairs et cercles de parole." },
+                        { id: "C1.3", icon: "🔥", label: "Gestion de Crise Aiguë & Désescalade", parent: "C1.0", dx: -700, dy: 1500, unlocked: false, link: "", desc: "Protocoles d'apaisement en cas de crises comportementales.", details: "Communication non-confrontationnelle et mise en sécurité." },
+                        { id: "C1.4", icon: "💬", label: "Entretiens de Soutien & Alliance Éducative", parent: "C1.0", dx: -1300, dy: 950, unlocked: false, link: "", desc: "Accompagnement individualisé des jeunes en difficulté.", details: "Restaurer l'estime de soi et co-construire des objectifs de progrès." },
+                        { id: "C1.5", icon: "⚖️", label: "Garantie de l'Intégrité Morale & Physique (CRIP)", parent: "C1.0", dx: -700, dy: 1800, unlocked: false, link: "", desc: "Application des chartes de bientraitance et procédures légales.", details: "Signalement CRIP, protection des mineurs et cadre réglementaire." },
+                        { id: "C5.2", icon: "🤝", label: "Médiation par les Pairs & Justice Restaurative", parent: "C1.2", dx: -1500, dy: 1450, unlocked: false, link: "", desc: "Résolution pacifique et responsabilisation collective.", details: "Cercles restaurateurs et réparation symbolique ou matérielle." },
+                        { id: "C6.2", icon: "🌀", label: "Gestion du Bouc Émissaire", parent: "C1.2", dx: -1500, dy: 1650, unlocked: false, link: "", desc: "Intervention sociologique sur les phénomènes de groupe.", details: "Déconstruction des stéréotypes et réintégration de la cible." },
+                        { id: "C6.3", icon: "🧘", label: "Anxiété de Séparation & Premier Départ", parent: "C1.4", dx: -1600, dy: 950, unlocked: false, link: "", desc: "Accompagnement du mal du pays et gestion des familles.", details: "Rituels de transition et sécurisation des parents." },
+
+                        // --- PÔLE 2 : Animation, Démocratie & Grands Jeux Immersifs ---
+                        { id: "C2.0", icon: "🎨", label: "Branche Animation, Démocratie & Immersive Gaming", parent: "C1", dx: -250, dy: 1000, unlocked: true, link: "", desc: "Ingénierie des projets citoyens, d'expression et grands scénarios ludiques.", details: "Autonomisation des jeunes, médias libres et jeux grandeur nature." },
+                        { id: "C2.1", icon: "🎭", label: "Expression Artistique & Théâtre Forum", parent: "C2.0", dx: -450, dy: 1350, unlocked: false, link: "", desc: "Libération de la parole et scénarisation sociale.", details: "Catharsis par l'art, ateliers écriture et mise en scène." },
+                        { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes & Démocratie Participative", parent: "C2.0", dx: -150, dy: 1400, unlocked: false, link: "", desc: "Co-construction des règles de vie et apprentissage du vote.", details: "Instances décisionnelles autogérées et budgets participatifs." },
+                        { id: "C2.3", icon: "📰", label: "Éducation aux Médias & Esprit Critique (EMI)", parent: "C2.1", dx: -650, dy: 1650, unlocked: false, link: "", desc: "Décodage de l'information, fact-checking et réseaux.", details: "Lutte contre les infox et journalisme jeune." },
+                        { id: "C2.4", icon: "📱", label: "Sobriété Numérique & Charte Écrans", parent: "C2.3", dx: -650, dy: 1900, unlocked: false, link: "", desc: "Régulation de l'usage des smartphones en séjour.", details: "Sensibilisation au cyberharcèlement et alternatives déconnectées." },
+                        { id: "C2.5", icon: "🏛️", label: "Projets d'Utilité Sociale & Citoyenneté", parent: "C2.2", dx: -150, dy: 1700, unlocked: false, link: "", desc: "Engagement des ados dans des chantiers solidaires.", details: "Partenariats associatifs et bénévolat jeune." },
+                        { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux & GN Immersifs", parent: "C2.0", dx: 100, dy: 1350, unlocked: false, link: "", desc: "Conception de jeux de rôle grandeur nature et quêtes.", details: "Écriture de PNJ, game design et immersion narrative." },
+                        { id: "C3.2", icon: "🗺️", label: "Logistique des Terrains & Sécurité de Jeu", parent: "C3.1", dx: 250, dy: 1650, unlocked: false, link: "", desc: "Aménagement des espaces extérieurs et flux.", details: "Balisage des zones à risques et arbitrage." },
+                        { id: "C5.3", icon: "🏛️", label: "Pédagogie Institutionnelle (Freinet & Oury)", parent: "C2.2", dx: -350, dy: 1900, unlocked: false, link: "", desc: "Mise en place de structures coopératives internes.", details: "Ceintures de compétences, métiers et conseil de coopérative." },
+
+                        // --- PÔLE 3 : Extérieur, Bivouacs & Pédagogie Inclusive ---
+                        { id: "C3.0", icon: "🌿", label: "Branche Plein Air, Outdoor & Inclusion Universelle", parent: "C1", dx: 300, dy: 1000, unlocked: true, link: "", desc: "Autonomie en milieu naturel, aventures outdoor et accueil de la différence.", details: "Campements rustiques, secourisme, éco-citoyenneté et adaptation PAI/PSH." },
+                        { id: "C3.3", icon: "🧩", label: "Accueil Universel & Pédagogie Inclusive", parent: "C3.0", dx: 550, dy: 1300, unlocked: false, link: "", desc: "Adaptation des activités pour tous les publics.", details: "Collaboration AESH, aménagement sensoriel et accessibilité." },
+                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 850, dy: 1500, unlocked: false, link: "", desc: "Sécurisation de la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
+                        { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", dx: 550, dy: 1600, unlocked: false, link: "", desc: "Valorisation des réussites individuelles sans stigmatisation.", details: "Échelles de difficulté adaptatives et coopération." },
+                        { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste & Éco-citoyenneté", parent: "C3.0", dx: 150, dy: 1300, unlocked: false, link: "", desc: "Découverte de la biodiversité et sensibilisation.", details: "Lecture de paysages, flore/faune et respect du milieu." },
+                        { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps Autonomes", parent: "C4.1", dx: 150, dy: 1600, unlocked: false, link: "", desc: "Séjours nomades et vie collective sous tente.", details: "Montage du campement, gestion de l'eau et feux contrôlés." },
+                        { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène Nomade", parent: "C4.2", dx: 150, dy: 1850, unlocked: false, link: "", desc: "Repas trappeur et traçabilité en camp itinérant.", details: "Conservation des aliments sans frigo et tri sélectif." },
+                        { id: "C4.4", icon: "🧭", label: "Orientation, Risques & Météo Plein Air", parent: "C4.1", dx: -100, dy: 1600, unlocked: false, link: "", desc: "Lecture de cartes IGN, boussole et suivi météo.", details: "Anticipation des orages et choix des parcours de repli." },
+                        { id: "C4.5", icon: "🩺", label: "Secours en Milieu Isolé & Urgences Outdoor", parent: "C4.4", dx: -100, dy: 1850, unlocked: false, link: "", desc: "Gestion des traumatismes loin des centres de secours.", details: "Bilans de santé outdoor et évacuation d'urgence." },
+
+                        // --- PÔLE 4 : EdTech, IA Générative & Ingénierie Pédagogique ---
+                        { id: "C7.0", icon: "🤖", label: "Branche EdTech, IA Générative & Neuro-Ingénierie", parent: "C1", dx: 800, dy: 850, unlocked: true, link: "", desc: "Pédagogies augmentées, prompt engineering éducatif et analyse d'apprentissage.", details: "Utilisation professionnelle des LLM pour décupler l'impact pédagogique." },
+                        { id: "C5.1", icon: "🧠", label: "Neurosciences & Développement Cognitif", parent: "C7.0", dx: 1200, dy: 700, unlocked: false, link: "", desc: "Mécanismes de la mémoire, de l'attention et des émotions.", details: "Plasticité cérébrale, surcharge cognitive et mémorisation active." },
+                        { id: "C5.4", icon: "🏕️", label: "Théorie de l'Autodétermination (Deci & Ryan)", parent: "C7.0", dx: 1200, dy: 900, unlocked: false, link: "", desc: "Leviers de la motivation intrinsèque en apprentissage.", details: "Besoins d'autonomie, de compétence et d'affiliation." },
+                        { id: "C6.1", icon: "👥", label: "Sociométrie & Analyse des Leaderships", parent: "C7.0", dx: 1200, dy: 1100, unlocked: false, link: "", desc: "Cartographie des affinités et des sous-groupes.", details: "Grapho-sociométrie et intégration des isolés par l'activité." },
+                        { id: "C6.4", icon: "🎯", label: "Évaluation d'Impact Éducatif Qualitatif", parent: "C7.0", dx: 1200, dy: 1300, unlocked: false, link: "", desc: "Mesure du développement des compétences douces (soft skills).", details: "Grilles d'auto-évaluation réflexives et bilans individuels." },
+                        
+                        // Sous-nœuds Prompting & IA
+                        { id: "C7.1", icon: "📝", label: "Prompts Structurés & Méthode CRAFT Éducative", parent: "C7.0", dx: 800, dy: 1150, unlocked: false, link: "", desc: "Rédaction de consignes pédagogiques pour LLM.", details: "Contexte, Rôle, Action, Format et Target adaptés aux cours." },
+                        { id: "C7.2", icon: "🧠", label: "Few-Shot, CoT & Simulation de Tuteur Socratique", parent: "C7.1", dx: 600, dy: 1450, unlocked: false, link: "", desc: "Guidage pas à pas des élèves sans donner directement la réponse.", details: "Prompts maïeutiques et exemples d'apprentissage guidé." },
+                        { id: "C7.3", icon: "📚", label: "Génération de Séquences & Quiz Adaptatifs", parent: "C7.0", dx: 1100, dy: 1550, unlocked: false, link: "", desc: "Création automatisée de supports sur-mesure.", details: "Alignement Bloom, niveaux de difficulté progressifs et variantes." },
+                        { id: "C7.4", icon: "⚖️", label: "Différenciation & Inclusivité Assistées par IA", parent: "C7.3", dx: 1450, dy: 1750, unlocked: false, link: "", desc: "Réadaptation instantanée de textes pour publics Dys/EBEP.", details: "Simplification syntaxique, synthèses et aides visuelles." },
+                        { id: "C7.5", icon: "📊", label: "Grilles Critériées & Automatisation des Retours", parent: "C7.3", dx: 1100, dy: 1850, unlocked: false, link: "", desc: "Génération de grilles d'évaluation formatives.", details: "Feedbacks personnalisés et nuancés générés par IA." },
+                        { id: "C7.6", icon: "🗺️", label: "Ingénierie de Séquences par Projets (PBL)", parent: "C7.0", dx: 1450, dy: 1450, unlocked: false, link: "", desc: "Scénarisation de grands projets d'apprentissage avec l'IA.", details: "Tâches complexes, jalons temporels et ressources automatisées." },
+                        { id: "C7.7", icon: "📈", label: "Learning Analytics & Diagnostic de Cohorte", parent: "C7.5", dx: 1100, dy: 2100, unlocked: false, link: "", desc: "Analyse des erreurs récurrentes d'un groupe d'élèves.", details: "Identification des malentendus cognitifs et remédiation rapide." },
+                        { id: "C7.8", icon: "🛠️", label: "Création d'Agents Pédagogiques (GPTs Sur-Mesure)", parent: "C7.1", dx: 800, dy: 1750, unlocked: false, link: "", desc: "Configuration d'assistants IA avec base documentaire dédiée.", details: "Custom Instructions, RAG pédagogique et posture fermement cadrée." },
+                        { id: "C7.9", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique (Hallucinations)", parent: "C7.0", dx: 500, dy: 1750, unlocked: false, link: "", desc: "Sensibilisation aux limites et règles de confidentialité.", details: "Détection des biais, protection des données des mineurs et fact-checking." }
                     ]
                 },
                 {
@@ -469,7 +470,7 @@
         let activeNode = null;
         let nodePositions = {};
 
-        let scale = 0.20; 
+        let scale = 0.18; 
         let panX = 0; 
         let panY = 0; 
         let isDragging = false; let startX = 0; let startY = 0;
@@ -480,14 +481,14 @@
         }
 
         function resetView() { 
-            scale = 0.20; 
+            scale = 0.18; 
             panX = (window.innerWidth / 2) - (5000 * scale);
             panY = (window.innerHeight / 2) - (5000 * scale);
             updateTransform(); 
         }
 
         function centerOnNode(dx, dy) {
-            scale = 0.60; 
+            scale = 0.55; 
             panX = (window.innerWidth / 2) - ((5000 + dx) * scale);
             panY = (window.innerHeight / 2) - ((5000 + dy) * scale);
             updateTransform();
@@ -547,7 +548,7 @@
                 const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 let prevScale = scale;
                 if (e.deltaY < 0) { scale *= (1 + zoomIntensity); } else { scale /= (1 + zoomIntensity); }
-                scale = Math.max(0.05, Math.min(3, scale));
+                scale = Math.max(0.04, Math.min(3, scale));
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
                 panY = mouseY - (mouseY - panY) * (scale / prevScale);
                 updateTransform();
@@ -555,7 +556,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_bafa_expert');
+            const saved = localStorage.getItem('theo_final_app_skills_sud_struct');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -576,7 +577,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_bafa_expert', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_sud_struct', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
@@ -754,7 +755,7 @@
         initGraph();
         buildSidebarMenu();
         
-        scale = 0.20;
+        scale = 0.18;
         panX = (window.innerWidth / 2) - (5000 * scale);
         panY = (window.innerHeight / 2) - (5000 * scale);
         updateTransform();
