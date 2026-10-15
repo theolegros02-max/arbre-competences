@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version Finale Ultime)</title>
+    <title>Arbre de Compétences - Théo Legros (Version IA & Prompt Engineering)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -14,6 +14,7 @@
             --color-b: #3b82f6; /* Est / Bleu - Formation RH */
             --color-c: #10b981; /* Sud / Vert - Pédagogie Youth Ultime */
             --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert */
+            --color-e: #06b6d4; /* Zénith / Cyan - IA & Prompt Engineering */
             --locked-color: #475569;
         }
 
@@ -73,6 +74,7 @@
         .connection-line.active-b { stroke: var(--color-b); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-b)); }
         .connection-line.active-c { stroke: var(--color-c); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-c)); }
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
+        .connection-line.active-e { stroke: var(--color-e); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-e)); }
 
         #nodes-container {
             width: 10000px; height: 10000px;
@@ -109,6 +111,7 @@
         .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 25px var(--color-b); }
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 25px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 25px var(--color-d); }
+        .skill-node.unlocked-e { border-color: var(--color-e); background: var(--color-e); color: #fff; box-shadow: 0 0 25px var(--color-e); }
 
         .node-icon { font-size: 1.8em; }
 
@@ -250,6 +253,7 @@
             <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est:</span> <span id="score-b">0</span></div>
             <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud:</span> <span id="score-c">0</span></div>
             <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest:</span> <span id="score-d">0</span></div>
+            <div class="hud-row" style="color: var(--color-e);"><span>🪙 Zénith (IA):</span> <span id="score-e">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
     </div>
@@ -434,6 +438,19 @@
                         { id: "D5.4", icon: "🤝", label: "Partenariat Institutionnel & Équipe", parent: "D5.3", dx: -1150, dy: 1700, unlocked: false, link: "", desc: "Travail en équipe pluridisciplinaire et médico-sociale.", details: "Rôle du professeur principal, relations avec les parents d'élèves et réseaux d'aide." },
                         { id: "D5.5", icon: "🧩", label: "Inclusion & Élèves à Besoins Éducatifs (EBEP)", parent: "D5.3", dx: -750, dy: 1750, unlocked: false, link: "", desc: "Accueil des élèves en situation de handicap.", details: "Coordination avec les AESH, mise en place des PAI/PPS/PAP et adaptations pédagogiques." }
                     ]
+                },
+                {
+                    key: "E", name: "🪙 Zénith (IA & Prompt Engineering)", color: "var(--color-e)",
+                    nodes: [
+                        { id: "E1", icon: "🤖", label: "Maîtrise des IA Génératives & LLM", parent: "CENTER", dx: 600, dy: -600, unlocked: true, link: "", desc: "Compréhension globale des modèles de langage et des écosystèmes d'IA générative.", details: "Architecture des Transformers, tokens, fenêtres de contexte et choix des modèles (GPT, Claude, Gemini)." },
+                        { id: "E1.1", icon: "📝", label: "Anatomie du Prompt Structuré (R-C-C-F)", parent: "E1", dx: 1050, dy: -900, unlocked: false, link: "", desc: "Maîtrise des composantes fondamentales d'un prompt efficace.", details: "Rôle, Contexte, Contraintes, Format de sortie et exemples pour éliminer l'ambiguïté." },
+                        { id: "E1.2", icon: "🧠", label: "Techniques Avancées (Few-Shot & CoT)", parent: "E1.1", dx: 1550, dy: -1150, unlocked: false, link: "", desc: "Utilisation de méthodes de raisonnement guidé.", details: "Chain-of-Thought (chaîne de pensée), Few-Shot prompting (exemples par l'analogie) et Tree-of-Thoughts." },
+                        { id: "E1.3", icon: "🎭", label: "Roleplay & System Prompts experts", parent: "E1.1", dx: 1550, dy: -900, unlocked: false, link: "", desc: "Assignation de personas et cadrage des comportements de l'IA.", details: "Définition de la posture d'expert, contraintes tonales, limites et boucles de rétroaction." },
+                        { id: "E1.4", icon: "⚙️", label: "Paramétrage Technique (Température & Top-P)", parent: "E1", dx: 1050, dy: -450, unlocked: false, link: "", desc: "Ajustement des hyperparamètres des modèles.", details: "Maîtrise de la température (créativité vs déterminisme), présence penalty et pénalité de fréquence." },
+                        { id: "E1.5", icon: "📚", label: "IA pour la Pédagogie & Formation", parent: "E1.1", dx: 2050, dy: -1050, unlocked: false, link: "", desc: "Génération de plans de cours, quiz adaptatifs et scénarios d'apprentissage.", details: "Automatisation de la conception pédagogique alignée sur la taxonomie de Bloom." },
+                        { id: "E1.6", icon: "🔍", label: "RAG & Agents IA (Workflows)", parent: "E1.5", dx: 2550, dy: -1050, unlocked: false, link: "", desc: "Couplage des IA avec des bases documentaires externes.", details: "Retrieval-Augmented Generation, réduction des hallucinations et construction d'agents autonomes." },
+                        { id: "E1.7", icon: "⚖️", label: "Éthique, Biais & Sécurité des Prompts", parent: "E1", dx: 600, dy: -1050, unlocked: false, link: "", desc: "Esprit critique face aux limites et risques des IA.", details: "Gestion des hallucinations, conformité RGPD, propriété intellectuelle et prompt injection." }
+                    ]
                 }
             ]
         };
@@ -527,7 +544,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_ultimate');
+            const saved = localStorage.getItem('theo_final_app_skills_zenith_ai');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -548,7 +565,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_ultimate', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_zenith_ai', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
@@ -581,7 +598,7 @@
             centerWrap.onclick = (e) => { e.stopPropagation(); openCenterModal(); };
             container.appendChild(centerWrap);
 
-            let hudScores = { A: 0, B: 0, C: 0, D: 0 };
+            let hudScores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
 
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => {
@@ -633,6 +650,7 @@
             document.getElementById('score-b').innerText = hudScores.B;
             document.getElementById('score-c').innerText = hudScores.C;
             document.getElementById('score-d').innerText = hudScores.D;
+            document.getElementById('score-e').innerText = hudScores.E;
         }
 
         function openCenterModal() {
