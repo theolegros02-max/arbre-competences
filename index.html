@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Agrégation & CAPES Concentriques)</title>
+    <title>Arbre de Compétences - Théo Legros (Expertises Anglais Unifiées)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -13,8 +13,7 @@
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
             --color-b: #3b82f6; /* Est / Bleu - Formation RH & Directeur BAFA/BAFD */
             --color-c: #10b981; /* Sud / Vert - Pédagogie, Youth & IA Pédagogique */
-            --color-d: #a855f7; /* Ouest / Violet - Agrégation d'Anglais Expert */
-            --color-e: #f97316; /* Sud-Ouest / Orange - CAPES Externe d'Anglais */
+            --color-d: #a855f7; /* Ouest / Violet - Agrégation & CAPES d'Anglais Expert */
             --locked-color: #475569;
         }
 
@@ -74,7 +73,6 @@
         .connection-line.active-b { stroke: var(--color-b); stroke-width: 4px; filter: drop-shadow(0 0 8px var(--color-b)); }
         .connection-line.active-c { stroke: var(--color-c); stroke-width: 4px; filter: drop-shadow(0 0 8px var(--color-c)); }
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 4px; filter: drop-shadow(0 0 8px var(--color-d)); }
-        .connection-line.active-e { stroke: var(--color-e); stroke-width: 4px; filter: drop-shadow(0 0 8px var(--color-e)); }
 
         #nodes-container {
             width: 9000px; height: 9000px;
@@ -111,7 +109,6 @@
         .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 20px var(--color-b); }
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 20px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 20px var(--color-d); }
-        .skill-node.unlocked-e { border-color: var(--color-e); background: var(--color-e); color: #fff; box-shadow: 0 0 20px var(--color-e); }
 
         .node-icon { font-size: 1.6em; }
 
@@ -282,8 +279,7 @@
             <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (ACM):</span> <span id="score-a">0</span></div>
             <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (Formateur & BAFA):</span> <span id="score-b">0</span></div>
             <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie & IA):</span> <span id="score-c">0</span></div>
-            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (Agrégation):</span> <span id="score-d">0</span></div>
-            <div class="hud-row" style="color: var(--color-e);"><span>🟠 Sud-Ouest (CAPES Anglais):</span> <span id="score-e">0</span></div>
+            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (Anglais: Agrégation & CAPES):</span> <span id="score-d">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
     </div>
@@ -353,7 +349,7 @@
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
             regions: [
                 {
-                    key: "A", name: "🔴 Nord (Pilotage ACM Expert)", color: "var(--color-a)", centerAngle: -Math.PI / 2, span: Math.PI / 2.5,
+                    key: "A", name: "🔴 Nord (Pilotage ACM Expert)", color: "var(--color-a)", centerAngle: -Math.PI / 2, span: Math.PI / 2.2,
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale & Stratégie ACM", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un ACM.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
                         { id: "A1.0", icon: "🎯", label: "Branche Projet Éducatif, PEDT & Partenariats", parent: "A1", level: 2, unlocked: true, link: "", desc: "Traduction de la vision éducative, ancrage territorial et relations institutionnelles.", details: "Pilotage des valeurs citoyennes et coordination avec les collectivités." },
@@ -393,7 +389,7 @@
                     ]
                 },
                 {
-                    key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)", centerAngle: -Math.PI / 6, span: Math.PI / 2.5,
+                    key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)", centerAngle: 0, span: Math.PI / 2.2,
                     nodes: [
                         { id: "B1", icon: "🎓", label: "Direction Générale de Formation BAFA/BAFD", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Pilotage global, pédagogique, humain et réglementaire des sessions de formation d'animateurs et directeurs.", details: "Garantie de la qualité des stages, encadrement de l'équipe de formateurs et conformité SDJES." },
                         { id: "B1.0", icon: "📐", label: "Branche Ingénierie de Formation & ADDIE", parent: "B1", level: 2, unlocked: true, link: "", desc: "Modèle ADDIE complet, taxonomie de Bloom, alignement constructif et hybridation.", details: "Architecture globale des parcours de formation professionnels." },
@@ -433,7 +429,7 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)", centerAngle: Math.PI / 6, span: Math.PI / 2.5,
+                    key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)", centerAngle: Math.PI / 2, span: Math.PI / 2.2,
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie, Youth & IA Structurée", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Direction de l'action éducative, bientraitance, pédagogies actives et innovation EdTech.", details: "Convergence des sciences de l'éducation, de la gestion de groupe et des technologies éducatives." },
                         { id: "C1.0", icon: "🛡️", label: "Branche Protection, Bientraitance & Climat Éducatif", parent: "C1", level: 2, unlocked: true, link: "", desc: "Garantie de la sécurité affective, médiation et régulation des comportements.", details: "Prévention des violences, alliance éducative et restauration du climat de groupe." },
@@ -480,66 +476,63 @@
                     ]
                 },
                 {
-                    key: "D", name: "🟣 Ouest (Agrégation d'Anglais Expert)", color: "var(--color-d)", centerAngle: Math.PI, span: Math.PI / 2.5,
+                    key: "D", name: "🟣 Ouest (Anglais: Agrégation & CAPES)", color: "var(--color-d)", centerAngle: Math.PI, span: Math.PI / 2.0,
                     nodes: [
-                        { id: "D1", icon: "🏛️", label: "Pôle Agrégation Externe d'Anglais (Recherche)", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Centre de préparation de niveau universitaire supérieur (Admissibilité & Admission).", details: "Maîtrise absolue de la philologie, de la linguistique formelle et de l'érudition critique." },
-                        { id: "D1.0", icon: "📚", label: "Branche Littérature & Critique Savante", parent: "D1", level: 2, unlocked: true, link: "", desc: "Maîtrise des courants critiques, des poétiques et des œuvres au programme limitatif.", details: "Approche théorique et universitaire de haut niveau." },
-                        { id: "D1.1", icon: "🔍", label: "Critique Post-Coloniale & Subaltern Studies", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Analyse des discours hégémoniques, altérité et déconstruction des empires.", details: "Application des théories de Said, Spivak et Bhabha aux textes littéraires." },
-                        { id: "D1.2", icon: "♀️", label: "Gender Studies, Queer Theory & Intersectionnalité", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Étude des représentations du genre, des identités et des rapports de domination.", details: "Concepts de Judith Butler, Eve Sedgwick et poétiques du corps." },
-                        { id: "D1.3", icon: "🌳", label: "Ecocritique & Humanités Environnementales", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Représentation de la nature, Anthropocène et pastoralisme critique dans les textes.", details: "Analyse des liens entre écologie, pouvoir et narration." },
-                        { id: "D1.4", icon: "🎭", label: "Dramaturgie, Théâtre & Performance Scénique", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Analyse formelle et structurelle des pièces de théâtre au programme.", details: "Didascalies, tension dramatique, énonciation théâtrale et mise en scène." },
-                        { id: "D1.5", icon: "✒️", label: "Poétique du Roman & Narratologie Avancée", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Étude des instances narratoriales, focalisations, temps et métafiction.", details: "Genette, Booth et rhétorique de la fiction." },
-                        { id: "D1.6", icon: "📖", label: "Stylistique Textuelle & Rhétorique Profonde", parent: "D1.5", level: 4, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des figures de style et rythmes.", details: "Analyse des écarts, tropes et polyphonies textuelles." },
-                        { id: "D1.7", icon: "📜", label: "Intertextualité & Généalogie des Formes", parent: "D1.5", level: 4, unlocked: false, link: "", desc: "Repérage des réseaux d'influences, réécritures et mythes littéraires.", details: "Archéologie textuelle et dialogue inter-œuvres." },
-                        { id: "D2.0", icon: "🌐", label: "Branche Civilisation, Idées & Géopolitique", parent: "D1", level: 2, unlocked: true, link: "", desc: "Maîtrise des contextes historiques profonds et des grands débats intellectuels UK/US.", details: "Épistémologie des faits civilisationnels." },
-                        { id: "D2.1", icon: "📜", label: "Historiographie & Politique Britannique", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Évolution institutionnelle, constitutionnelle et sociale du Royaume-Uni.", details: "De l'ère victorienne aux mutations contemporaines (post-Brexit)." },
-                        { id: "D2.2", icon: "🗽", label: "Histoire Politique & Constitutionnelle des USA", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Dynamiques fédérales, fédéralisme, Cour Suprême et mouvements civiques.", details: "Analyse critique des fondements de la démocratie américaine." },
-                        { id: "D2.3", icon: "💡", label: "Histoire des Idées Politiques & Philosophiques", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Libéralisme, républicanisme, conservatisme, marxisme et théories critiques anglo-saxonnes.", details: "De Locke et Hobbes aux penseurs contemporains." },
-                        { id: "D2.4", icon: "🖼️", label: "Analyse Critique Iconographique & Arts Visuels", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Peinture, photographie d'art, propagande visuelle et caricatures de presse.", details: "Sémiologie de l'image fixe et contexte historico-politique." },
-                        { id: "D2.5", icon: "🏛️", label: "Politiques Publiques & Fractures Sociales", parent: "D2.1", level: 4, unlocked: false, link: "", desc: "Système de santé, éducation, politiques d'inégalités et welfare state.", details: "Enjeux socio-économiques et tensions institutionnelles." },
-                        { id: "D2.6", icon: "🌍", label: "Relations Internationales & Géopolitique", parent: "D2.2", level: 4, unlocked: false, link: "", desc: "Diplomatie, alliances stratégiques, impérialisme et conflits mondiaux.", details: "Place du Royaume-Uni et des USA sur l'échiquier global." },
-                        { id: "D3.0", icon: "🗣️", label: "Branche Linguistique Formelle & TOPE", parent: "D1", level: 2, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli), syntaxe formelle et sémantique.", details: "Analyse linguistique de niveau universitaire de recherche." },
-                        { id: "D3.1", icon: "📍", label: "Repérage Énonciatif S0/T0/E0 & Subjectivité", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Analyse fine de l'ancrage énonciatif, de la deixis et de l'altérité.", details: "Opérations de repérage, repères-origines et co-énonciation." },
-                        { id: "D3.2", icon: "⚙️", label: "Modalité Épistémique vs Déontique & Modaux", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Étude formelle des auxiliaires modaux et de la prise en charge (assertion).", details: "Valeurs du possible, du nécessaire et validation du prédicat." },
-                        { id: "D3.3", icon: "⏳", label: "Aspectualité, Quantification & Détermination", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Valeurs de be+V-ing, have+en, articles (a/the/ø) et structures nominales.", details: "Parcours, rupture, bornage et instanciation du nominal." },
-                        { id: "D3.4", icon: "🔗", label: "Syntaxe Complexe, Subordination & Inversion", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Enchâssements, structures clefts, passifs et relatives complexes.", details: "Architecture de la phrase et contraintes syntaxiques." },
-                        { id: "D4.0", icon: "🎵", label: "Branche Phonétique, API & Phonologie", parent: "D1", level: 2, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables (RP/GA) et phonologie métrique.", details: "Maîtrise des structures suprasegmentales." },
-                        { id: "D4.1", icon: "🔤", label: "Transcription Phonétique Rigoureuse (API)", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Maîtrise des normes RP et General American sans aucune approximation.", details: "Voyelles, diphtongues, consonnes et variations dialectales standard." },
-                        { id: "D4.2", icon: "⚡", label: "Stress Shift & Rythme (Compound/Phrasal)", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Règles d'alternance rythmique, stress clash et accentuation des composés.", details: "Phonologie métrique et structuration intonative de l'énoncé." },
-                        { id: "D4.3", icon: "🔊", label: "Morpho-phonologie, Liaison, Schwa & Elision", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Phénomènes d'allomorphie des désinences (-ed, -s) et r-linking.", details: "Réductions vocaliques et lois euphoniques en chaîne parlée." },
-                        { id: "D5.0", icon: "🔄", label: "Branche Traduction Savante (Thème & Version)", parent: "D1", level: 2, unlocked: true, link: "", desc: "Maîtrise des registres littéraires, archaïques, techniques et de la stylistique comparée.", details: "Excellence traductologique." },
-                        { id: "D5.1", icon: "📖", label: "Version Littéraire & Stylistique (Anglais > Fr)", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Traduction de textes classiques ou contemporains exigeants.", details: "Rendu des nuances esthétiques, registres et polyphonies textuelles." },
-                        { id: "D5.2", icon: "✍️", label: "Thème Littéraire & Idiomatique (Français > Anglais)", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Maîtrise de la phraséologie anglaise authentique et élégante.", details: "Évitement des calques, transposition et modulation stylistique." },
-                        { id: "D5.3", icon: "📜", label: "Traduction de Textes Anciens ou Spécifiques", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Gestion des registres archaïques, de la poésie et des subtilités rhétoriques rares.", details: "Équivalences interlinguistiques de haut vol." }
-                    ]
-                },
-                {
-                    key: "E", name: "🟠 Sud-Ouest (CAPES Externe d'Anglais)", color: "var(--color-e)", centerAngle: 3 * Math.PI / 4, span: Math.PI / 2.5,
-                    nodes: [
-                        { id: "E1", icon: "🎓", label: "Pôle CAPES Externe d'Anglais (Concours & Didactique)", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Maîtrise des épreuves d'admissibilité (composition, commentaire) et d'admission (leçon, entretien).", details: "Préparation professionnelle au métier de professeur certifié d'anglais dans le secondaire." },
+                        { id: "D1", icon: "🏛️", label: "Pôle Anglais (Agrégation & CAPES)", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Centre d'expertise universitaire et didactique de l'anglais.", details: "Maîtrise globale de la recherche (Agrégation) et de la didactique professionnelle (CAPES)." },
                         
-                        // --- BRANCHE E1 : ADMISSIBILITÉ (ÉPREUVE 1 : COMPOSITION & ESSAI) ---
-                        { id: "E1.0", icon: "✍️", label: "Branche Admissibilité - Composition en Anglais", parent: "E1", level: 2, unlocked: true, link: "", desc: "Maîtrise de l'essai critique sur dossier et problématisation civilisationnelle/littéraire.", details: "Argumentation structurée, rigueur académique et maîtrise des concepts culturels." },
-                        { id: "E1.1", icon: "📋", label: "Méthodologie de la Synthèse de Dossier (Essai)", parent: "E1.0", level: 3, unlocked: false, link: "", desc: "Exploitation croisée et critique de documents iconographiques et textuels.", details: "Hiérarchisation des arguments et problématisation rigoureuse." },
-                        { id: "E1.2", icon: "✒️", label: "Maîtrise de la Rhétorique & Syntaxe Avancée (C1/C2)", parent: "E1.0", level: 3, unlocked: false, link: "", desc: "Excellence de l'expression écrite en anglais (idiomaticité, nuances).", details: "Évitement des interférences de la langue source et fluidité discursive." },
+                        // --- BRANCHES AGRÉGATION ---
+                        { id: "D1.0", icon: "📚", label: "Branche Littérature & Critique Savante", parent: "D1", level: 2, unlocked: true, link: "", desc: "Courants critiques, poétiques et œuvres au programme limitatif.", details: "Approche théorique et universitaire de haut niveau." },
+                        { id: "D1.1", icon: "🔍", label: "Critique Post-Coloniale & Subaltern Studies", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Analyse des discours hégémoniques et altérité.", details: "Application des théories de Said, Spivak et Bhabha." },
+                        { id: "D1.2", icon: "♀️", label: "Gender Studies & Queer Theory", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Représentations du genre et rapports de domination.", details: "Concepts de Judith Butler et poétiques du corps." },
+                        { id: "D1.3", icon: "🌳", label: "Ecocritique & Humanités Environnementales", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Représentation de la nature et Anthropocène.", details: "Analyse des liens écologie et narration." },
+                        { id: "D1.4", icon: "🎭", label: "Dramaturgie & Théâtre Scénique", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Analyse formelle des pièces de théâtre au programme.", details: "Didascalies, tension et mise en scène." },
+                        { id: "D1.5", icon: "✒️", label: "Poétique du Roman & Narratologie", parent: "D1.0", level: 3, unlocked: false, link: "", desc: "Étude des instances narratoriales et focalisations.", details: "Genette, Booth et rhétorique de la fiction." },
+                        { id: "D1.6", icon: "📖", label: "Stylistique & Rhétorique Profonde", parent: "D1.5", level: 4, unlocked: false, link: "", desc: "Déconstruction formelle des figures de style.", details: "Analyse des écarts, tropes et polyphonies." },
+                        { id: "D1.7", icon: "📜", label: "Intertextualité & Généalogie des Formes", parent: "D1.5", level: 4, unlocked: false, link: "", desc: "Réseaux d'influences et réécritures.", details: "Archéologie textuelle et dialogue inter-œuvres." },
 
-                        // --- BRANCHE E2 : ADMISSIBILITÉ (ÉPREUVE 2 : COMMENTAIRE & TRADUCTION) ---
-                        { id: "E2.0", icon: "📖", label: "Branche Admissibilité - Commentaire & Traduction", parent: "E1", level: 2, unlocked: true, link: "", desc: "Commentaire composé de texte littéraire et traduction (thème et version).", details: "Analyse stylistique rigoureuse et sens de l'équivalence interlinguistique." },
-                        { id: "E2.1", icon: "🔍", label: "Technique du Commentaire Composé (Pratique CAPES)", parent: "E2.0", level: 3, unlocked: false, link: "", desc: "Repérage des faits d'écriture, tension narrative et visée esthétique.", details: "Construction d'un plan dialectique et équilibré en temps limité." },
-                        { id: "E2.2", icon: "🔄", label: "Version & Thème Appliqués au Secondaire", parent: "E2.0", level: 3, unlocked: false, link: "", desc: "Traduction exacte et respectueuse des registres de langue.", details: "Maîtrise des faux-amis, des structures grammaticales contrastives et de la syntaxe." },
+                        { id: "D2.0", icon: "🌐", label: "Branche Civilisation, Idées & Géopolitique", parent: "D1", level: 2, unlocked: true, link: "", desc: "Contextes historiques et grands débats intellectuels UK/US.", details: "Épistémologie des faits civilisationnels." },
+                        { id: "D2.1", icon: "📜", label: "Historiographie & Politique Britannique", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Évolution institutionnelle et sociale du Royaume-Uni.", details: "De l'ère victorienne aux mutations post-Brexit." },
+                        { id: "D2.2", icon: "🗽", label: "Histoire Politique & Constitutionnelle USA", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Fédéralisme, Cour Suprême et mouvements civiques.", details: "Analyse des fondements démocratiques américains." },
+                        { id: "D2.3", icon: "💡", label: "Histoire des Idées Politiques", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Libéralisme, conservatisme et théories critiques.", details: "De Locke et Hobbes aux penseurs contemporains." },
+                        { id: "D2.4", icon: "🖼️", label: "Analyse Iconographique & Arts Visuels", parent: "D2.0", level: 3, unlocked: false, link: "", desc: "Peinture, photographie et propagande visuelle.", details: "Sémiologie de l'image fixe." },
+                        { id: "D2.5", icon: "🏛️", label: "Politiques Publiques & Fractures Sociales", parent: "D2.1", level: 4, unlocked: false, link: "", desc: "Système de santé, éducation et welfare state.", details: "Enjeux socio-économiques UK/US." },
+                        { id: "D2.6", icon: "🌍", label: "Relations Internationales & Géopolitique", parent: "D2.2", level: 4, unlocked: false, link: "", desc: "Diplomatie, impérialisme et conflits mondiaux.", details: "Place du RU et des USA sur l'échiquier global." },
 
-                        // --- BRANCHE E3 : ADMISSION (ÉPREUVE 1 : MISE EN SITUATION PROFESSIONNELLE / LEÇON) ---
-                        { id: "E3.0", icon: "🏫", label: "Branche Admission - La Leçon (Dossier & Séquence)", parent: "E1", level: 2, unlocked: true, link: "", desc: "Conception et présentation d'une séance ou séquence pédagogique à partir d'un dossier.", details: "Maîtrise des programmes du collège/lycée et du Cadre Européen Commun de Référence (CECRL)." },
-                        { id: "E3.1", icon: "🎯", label: "Élaboration d'Objectifs Communicatifs & Linguistiques", parent: "E3.0", level: 3, unlocked: false, link: "", desc: "Définition des tâches finales (action-oriented approach) et micro-tâches.", details: "Alignement des activités langagières (réception, production, interaction, médiation)." },
-                        { id: "E3.2", icon: "📊", label: "Exploitation de Documents Authentiques (Texte, Audio, Vidéo)", parent: "E3.0", level: 3, unlocked: false, link: "", desc: "Sélection, étayage (scaffolding) et différenciation pédagogique.", details: "Adaptation des documents aux besoins des élèves (EBEP, élèves dys)." },
-                        { id: "E3.3", icon: "💻", label: "Intégration du Numérique & TICE en Classe d'Anglais", parent: "E3.2", level: 4, unlocked: false, link: "", desc: "Utilisation raisonnée des outils connectés et tablettes en cours.", details: "Baladodiffusion, capsules vidéo et interactivité en classe." },
-                        { id: "E3.4", icon: "🧪", label: "Évaluation Formative & Sommative (Grilles Critériées)", parent: "E3.2", level: 4, unlocked: false, link: "", desc: "Conception d'évaluations alignées sur les compétences du CECRL.", details: "Auto-évaluation, rétroaction (feedback) constructive et remédiation." },
+                        { id: "D3.0", icon: "🗣️", label: "Branche Linguistique Formelle & TOPE", parent: "D1", level: 2, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli).", details: "Analyse linguistique de niveau recherche." },
+                        { id: "D3.1", icon: "📍", label: "Repérage Énonciatif S0/T0/E0", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Analyse fine de l'ancrage énonciatif et deixis.", details: "Opérations de repérage et co-énonciation." },
+                        { id: "D3.2", icon: "⚙️", label: "Modalité Épistémique vs Déontique", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Auxiliaires modaux et prise en charge.", details: "Valeurs du possible et du nécessaire." },
+                        { id: "D3.3", icon: "⏳", label: "Aspectualité, Quantification & Détermination", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Valeurs de be+V-ing, have+en et articles (a/the/ø).", details: "Parcours, rupture et instanciation." },
+                        { id: "D3.4", icon: "🔗", label: "Syntaxe Complexe & Subordination", parent: "D3.0", level: 3, unlocked: false, link: "", desc: "Enchâssements, clefts et relatives complexes.", details: "Architecture de la phrase." },
 
-                        // --- BRANCHE E4 : ADMISSION (ÉPREUVE 2 : ENTRETIENS AVEC LE JURY / CSE) ---
-                        { id: "E4.0", icon: "⚖️", label: "Branche Admission - Entretien avec le Jury & CSE", parent: "E1", level: 2, unlocked: true, link: "", desc: "Connaissance du système éducatif français, éthique professionnelle et posture de fonctionnaire.", details: "Maîtrise des valeurs de la République, laïcité, mixité et mixité sociale." },
-                        { id: "E4.1", icon: "🏛️", label: "Connaissance du Système Éducatif & Valeurs de la République", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Organisation de l'Éducation Nationale, cycles, réformes et déontologie.", details: "Laïcité, neutralité, obligation de réserve et transmission des valeurs civiques." },
-                        { id: "E4.2", icon: "🤝", label: "Gestion de Classe, Autorité & Climat Scolaire", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Posture professionnelle, prévention des incivilités et médiation.", details: "Instauration d'un climat de confiance propice aux apprentissages linguistiques." },
-                        { id: "E4.3", icon: "👥", label: "Co-éducation, Relations Parents & Partenaires", parent: "E4.2", level: 4, unlocked: false, link: "", desc: "Dialogue constructif avec les familles et équipes médico-sociales.", details: "Suivi des élèves à besoins éducatifs particuliers (PAI, PPS, PAP)." }
+                        { id: "D4.0", icon: "🎵", label: "Branche Phonétique, API & Phonologie", parent: "D1", level: 2, unlocked: true, link: "", desc: "Transcriptions phonétiques (RP/GA) et métrique.", details: "Maîtrise des structures suprasegmentales." },
+                        { id: "D4.1", icon: "🔤", label: "Transcription Phonétique Rigoureuse (API)", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Normes RP et General American sans approximation.", details: "Voyelles, diphtongues et consonnes." },
+                        { id: "D4.2", icon: "⚡", label: "Stress Shift & Rythme", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Règles d'alternance rythmique et stress clash.", details: "Phonologie métrique." },
+                        { id: "D4.3", icon: "🔊", label: "Morpho-phonologie & Liaison", parent: "D4.0", level: 3, unlocked: false, link: "", desc: "Allomorphie des désinences et r-linking.", details: "Réductions vocaliques." },
+
+                        { id: "D5.0", icon: "🔄", label: "Branche Traduction Savante (Thème & Version)", parent: "D1", level: 2, unlocked: true, link: "", desc: "Registres littéraires, archaïques et stylistique comparée.", details: "Excellence traductologique." },
+                        { id: "D5.1", icon: "📖", label: "Version Littéraire & Stylistique (> Fr)", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Traduction de textes classiques ou contemporains.", details: "Nuances esthétiques et polyphonies." },
+                        { id: "D5.2", icon: "✍️", label: "Thème Littéraire & Idiomatique (> Anglais)", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Phraséologie anglaise authentique et élégante.", details: "Évitement des calques." },
+                        { id: "D5.3", icon: "📜", label: "Traduction de Textes Anciens", parent: "D5.0", level: 3, unlocked: false, link: "", desc: "Registres archaïques et poésie.", details: "Équivalences interlinguistiques." },
+
+                        // --- BRANCHES CAPES (Intégrées à l'Ouest) ---
+                        { id: "E1.0", icon: "✍️", label: "Branche CAPES - Composition en Anglais", parent: "D1", level: 2, unlocked: true, link: "", desc: "Essai critique sur dossier et problématisation.", details: "Argumentation structurée et rigueur académique." },
+                        { id: "E1.1", icon: "📋", label: "Synthèse de Dossier & Essai CAPES", parent: "E1.0", level: 3, unlocked: false, link: "", desc: "Exploitation critique de documents.", details: "Hiérarchisation des arguments." },
+                        { id: "E1.2", icon: "✒️", label: "Rhétorique & Syntaxe Avancée (CAPES)", parent: "E1.0", level: 3, unlocked: false, link: "", desc: "Excellence de l'expression écrite.", details: "Fluidité discursive." },
+
+                        { id: "E2.0", icon: "📖", label: "Branche CAPES - Commentaire & Traduction", parent: "D1", level: 2, unlocked: true, link: "", desc: "Commentaire composé et traduction didactique.", details: "Analyse stylistique et sens de l'équivalence." },
+                        { id: "E2.1", icon: "🔍", label: "Technique du Commentaire Composé", parent: "E2.0", level: 3, unlocked: false, link: "", desc: "Faits d'écriture et tension narrative.", details: "Plan dialectique en temps limité." },
+                        { id: "E2.2", icon: "🔄", label: "Version & Thème Secondaire", parent: "E2.0", level: 3, unlocked: false, link: "", desc: "Traduction exacte et respect des registres.", details: "Maîtrise des faux-amis." },
+
+                        { id: "E3.0", icon: "🏫", label: "Branche CAPES - La Leçon & Séquence", parent: "D1", level: 2, unlocked: true, link: "", desc: "Conception de séance pédagogique (Collège/Lycée).", details: "Programmes et CECRL." },
+                        { id: "E3.1", icon: "🎯", label: "Objectifs Communicatifs & Tâches (CECRL)", parent: "E3.0", level: 3, unlocked: false, link: "", desc: "Action-oriented approach.", details: "Alignement des activités langagières." },
+                        { id: "E3.2", icon: "📊", label: "Documents Authentiques & Scaffolding", parent: "E3.0", level: 3, unlocked: false, link: "", desc: "Étayage et différenciation pédagogique.", details: "Adaptation aux élèves EBEP/dys." },
+                        { id: "E3.3", icon: "💻", label: "Intégration du Numérique & TICE", parent: "E3.2", level: 4, unlocked: false, link: "", desc: "Outils connectés en classe d'anglais.", details: "Baladodiffusion et capsules." },
+                        { id: "E3.4", icon: "🧪", label: "Évaluation Formative & Sommative", parent: "E3.2", level: 4, unlocked: false, link: "", desc: "Grilles critériées et feedbacks.", details: "Remédiation." },
+
+                        { id: "E4.0", icon: "⚖️", label: "Branche CAPES - Entretien avec le Jury & CSE", parent: "D1", level: 2, unlocked: true, link: "", desc: "Système éducatif, éthique et posture de fonctionnaire.", details: "Valeurs de la République et laïcité." },
+                        { id: "E4.1", icon: "🏛️", label: "Système Éducatif & Valeurs de la République", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Organisation de l'Éducation Nationale et déontologie.", details: "Neutralité et obligation de réserve." },
+                        { id: "E4.2", icon: "🤝", label: "Gestion de Classe, Autorité & Climat Scolaire", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Posture professionnelle et médiation.", details: "Climat de confiance." },
+                        { id: "E4.3", icon: "👥", label: "Co-éducation & Relations Parents", parent: "E4.2", level: 4, unlocked: false, link: "", desc: "Dialogue avec les familles et équipes médico-sociales.", details: "Suivi des élèves à besoins particuliers." }
                     ]
                 }
             ]
@@ -666,7 +659,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_capes_extended');
+            const saved = localStorage.getItem('theo_final_app_skills_merged_west');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -689,7 +682,7 @@
                         data[n.id] = { unlocked: n.unlocked, link: n.link };
                     });
                 });
-                localStorage.setItem('theo_final_app_skills_capes_extended', JSON.stringify(data));
+                localStorage.setItem('theo_final_app_skills_merged_west', JSON.stringify(data));
                 setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
                 updateSaveStatus('error');
@@ -755,7 +748,7 @@
             centerWrap.onclick = (e) => { e.stopPropagation(); openCenterModal(); };
             container.appendChild(centerWrap);
 
-            let hudScores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+            let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => {
@@ -807,7 +800,6 @@
             document.getElementById('score-b').innerText = hudScores.B;
             document.getElementById('score-c').innerText = hudScores.C;
             document.getElementById('score-d').innerText = hudScores.D;
-            document.getElementById('score-e').innerText = hudScores.E;
         }
 
         function openCenterModal() {
