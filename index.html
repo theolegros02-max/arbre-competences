@@ -370,7 +370,7 @@
         const R2 = 1400;  
         const R3 = 2200;  
         const R4 = 3000;  
-        const R5 = 3800;  // Niveau 5 (Périphérie d'excellence globale)
+        const R5 = 3800;  
 
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
@@ -412,7 +412,13 @@
                         { id: "A5.4", icon: "📦", label: "Gestion du Matériel & Inventaire Logistique", parent: "A5.3", level: 4, unlocked: false, link: "", desc: "Renouvellement et sécurisation des équipements d'animation.", details: "Inventaire rigoureux, maintenance des équipements sportifs, ludiques et sécurisation des stocks." },
                         { id: "A5.5", icon: "💡", label: "Veille Réglementaire & Innovation", parent: "A5.3", level: 4, unlocked: false, link: "", desc: "Observation des évolutions des pratiques d'accueil de loisirs.", details: "Adaptation aux nouvelles attentes des familles, loisirs numériques et modernisation des séjours." },
                         { id: "A5.6", icon: "🔍", label: "Audit & Contrôle Interne Qualité", parent: "A1", level: 3, unlocked: false, link: "", desc: "Mise en place de grilles d'audit qualité au sein de l'ACM.", details: "Auto-évaluation des pratiques, conformité des dossiers administratifs et préparation aux contrôles SDJES inopinés." },
-                        { id: "A5.9", icon: "🌐", label: "Numérisation des Processus & Gestion de Données", parent: "A5.5", level: 4, unlocked: false, link: "", desc: "Sécurisation informatique et portails familles en ligne.", details: "Conformité RGPD des données des mineurs, logiciels de gestion d'accueil et dématérialisation." }
+                        { id: "A5.9", icon: "🌐", label: "Numérisation des Processus & Gestion de Données", parent: "A5.5", level: 4, unlocked: false, link: "", desc: "Sécurisation informatique et portails familles en ligne.", details: "Conformité RGPD des données des mineurs, logiciels de gestion d'accueil et dématérialisation." },
+                        
+                        /* --- NOUVEAU NIVEAU 5 (NORD / ACM EXPERT & PROSPECTIVE) --- */
+                        { id: "A8.1", icon: "⚡", label: "Management de Crise Média & Communication Réseau", parent: "A2.4", level: 5, unlocked: false, link: "", desc: "Maîtrise de la communication sous pression médiatique et réseaux sociaux.", details: "Élaboration d'éléments de langage, sécurisation de la réputation de la structure et gestion de crise H24." },
+                        { id: "A8.2", icon: "🌱", label: "Prospective, Éco-Responsabilité & Sobriété 2030", parent: "A5.1", level: 5, unlocked: false, link: "", desc: "Transformation bas-carbone globale des centres et séjours.", details: "Bilan carbone complet, circuits courts exclusifs et conduite du changement écologique auprès des équipes." },
+                        { id: "A8.3", icon: "🌐", label: "Transformation Digitale & Systèmes d'Information ACM", parent: "A5.9", level: 5, unlocked: false, link: "", desc: "Pilotage stratégique de la numérisation des process de l'ACM.", details: "Déploiement de SI métiers, gestion des accès sécurisés et intégration d'outils collaboratifs." },
+                        { id: "A8.4", icon: "🏛️", label: "Ingénierie Contractuelle & Marchés d'Avenir", parent: "A3.8", level: 5, unlocked: false, link: "", desc: "Ingénierie de réponses aux grands appels d'offres publics et DSP.", details: "Montage de délégations de service public, partenariats complexes et soutenances de projets d'envergure." }
                     ]
                 },
                 {
@@ -454,7 +460,6 @@
                         { id: "B7.1", icon: "📑", label: "Conformité Qualiopi - Critères 1 à 3 (Information & Prérequis)", parent: "B7.0", level: 3, unlocked: false, link: "", desc: "Information du public, objectifs et modalités d'accès au stage.", details: "Transparence des tarifs, conditions d'annulation, taux de réussite et accueil des publics PSH." },
                         { id: "B7.2", icon: "🛡️", label: "Qualiopi - Critères 4 à 7 (Moyens, Veille & Amélioration)", parent: "B7.1", level: 4, unlocked: false, link: "", desc: "Gestion des compétences des formateurs et amélioration continue.", details: "Suivi des formations de formateurs, traitement des réclamations, questionnaires de satisfaction et audits." },
                         
-                        /* --- NOUVEAU NIVEAU 5 (PÉRIPHÉRIE EXCELLENCE RH & FORMATION) --- */
                         { id: "B8.1", icon: "⚡", label: "Gestion de Crise Institutionnelle & Médiatique", parent: "B5.3", level: 5, unlocked: false, link: "", desc: "Protocoles de communication et gestion des situations de crise en organisme de formation.", details: "Cellule de crise, relations avec la presse et sécurisation de l'image de l'organisme." },
                         { id: "B8.2", icon: "📈", label: "Ingénierie Financière & Financement des Certifications", parent: "B5.2", level: 5, unlocked: false, link: "", desc: "Maîtrise des fonds de formation, OPCO, Région et cofinancements publics.", details: "Optimisation du plan de développement des compétences et montage de dossiers complexes." },
                         { id: "B8.3", icon: "👥", label: "Pilotage de la GPEC des Métiers de l'Animation", parent: "B3.0", level: 5, unlocked: false, link: "", desc: "Anticipation des évolutions des métiers de l'éducation populaire et de la direction d'ACM.", details: "Cartographie des compétences internes, plans de succession et parcours d'évolution." },
@@ -570,7 +575,13 @@
                         { id: "E4.0", icon: "⚖️", label: "Branche CAPES - Entretien avec le Jury & CSE", parent: "D1", level: 2, unlocked: true, link: "", desc: "Système éducatif, éthique et posture de fonctionnaire.", details: "Valeurs de la République et laïcité." },
                         { id: "E4.1", icon: "🏛️", label: "Système Éducatif & Valeurs de la République", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Organisation de l'Éducation Nationale et déontologie.", details: "Neutralité et obligation de réserve." },
                         { id: "E4.2", icon: "🤝", label: "Gestion de Classe, Autorité & Climat Scolaire", parent: "E4.0", level: 3, unlocked: false, link: "", desc: "Posture professionnelle et médiation.", details: "Climat de confiance." },
-                        { id: "E4.3", icon: "👥", label: "Co-éducation & Relations Parents", parent: "E4.2", level: 4, unlocked: false, link: "", desc: "Dialogue avec les familles et équipes médico-sociales.", details: "Suivi des élèves à besoins particuliers." }
+                        { id: "E4.3", icon: "👥", label: "Co-éducation & Relations Parents", parent: "E4.2", level: 4, unlocked: false, link: "", desc: "Dialogue avec les familles et équipes médico-sociales.", details: "Suivi des élèves à besoins particuliers." },
+
+                        /* --- NOUVEAU NIVEAU 5 (OUEST / ANGLAIS & DIDACTIQUE D'EXCELLENCE) --- */
+                        { id: "A9.1", icon: "💻", label: "Humanités Numériques & Stylistique sur Corpus", parent: "D1.6", level: 5, unlocked: false, link: "", desc: "Exploitation d'outils informatiques et de corpus pour l'analyse littéraire.", details: "Text-mining, analyse des collocations et études stylistiques quantitatives sur grands corpus." },
+                        { id: "A9.2", icon: "🎙️", label: "Analyse Énonciative Approfondie Poésie & Théâtre", parent: "D3.1", level: 5, unlocked: false, link: "", desc: "Modélisation énondiative poussée sur les genres littéraires complexes.", details: "Polyphonie, voix poétique, énonciation dramatique et décalages pragmatiques." },
+                        { id: "A9.3", icon: "📊", label: "Didactique de l'Évaluation & Remédiation Réflexive", parent: "E3.4", level: 5, unlocked: false, link: "", desc: "Conception de systèmes d'évaluation critériée alignés CECRL avancés.", details: "Auto-évaluation guidée, évaluation par les pairs et remédiation linguistique ciblée." },
+                        { id: "A9.4", icon: "🌍", label: "Postcolonialisme & Mondes Anglophones Émergents", parent: "D1.1", level: 5, unlocked: false, link: "", desc: "Analyse critique des productions littéraires et culturelles postcoloniales.", details: "Littératures nigériane, indienne, caribéenne et déconstruction des centres hégémoniques." }
                     ]
                 }
             ]
