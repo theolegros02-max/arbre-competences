@@ -174,6 +174,12 @@
             margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(255,255,255,0.05);
         }
 
+        .menu-sub-header {
+            font-size: 0.7em; font-weight: 800; padding: 4px 8px;
+            margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 4px; border-radius: 4px;
+        }
+
         .menu-node-item {
             padding: 5px 8px; border-radius: 6px; font-size: 0.75em;
             color: var(--text-muted); cursor: pointer; transition: all 0.2s;
@@ -505,15 +511,6 @@
             sidebar.classList.toggle('closed');
         }
 
-        function isDescendant(r, nodeId, targetId) {
-            let curr = r.nodes.find(n => n.id === nodeId);
-            while (curr && curr.parent) {
-                if (curr.parent === targetId) return true;
-                curr = r.nodes.find(n => n.id === curr.parent);
-            }
-            return false;
-        }
-
         function buildSidebarMenu() {
             const listContainer = document.getElementById('sidebar-menu-list');
             listContainer.innerHTML = '';
@@ -533,57 +530,48 @@
                 regTitle.innerText = r.name;
                 listContainer.appendChild(regTitle);
 
-                // Racine de la région (A1, B1, C1, D1)
-                const rootNode = r.nodes.find(n => n.parent === "CENTER");
-                if (rootNode) {
-                    const rootItem = document.createElement('div');
-                    rootItem.className = 'menu-node-item';
-                    rootItem.style.fontWeight = 'bold';
-                    rootItem.innerHTML = `<span>${rootNode.icon}</span> <span>${rootNode.id} - ${rootNode.label}</span>`;
-                    rootItem.onclick = () => { centerOnNode(rootNode.dx, rootNode.dy); };
-                    listContainer.appendChild(rootItem);
+                const lockedNodes = r.nodes.filter(n => !n.unlocked);
+                const unlockedNodes = r.nodes.filter(n => n.unlocked);
+
+                // --- SECTION 1 : À DÉBLOQUER ---
+                if (lockedNodes.length > 0) {
+                    const lockedHeader = document.createElement('div');
+                    lockedHeader.className = 'menu-sub-header';
+                    lockedHeader.style.color = '#94a3b8';
+                    lockedHeader.style.background = 'rgba(148, 163, 184, 0.1)';
+                    lockedHeader.innerHTML = `<span>⏳</span> <span>NŒUDS À DÉBLOQUER (${lockedNodes.length})</span>`;
+                    listContainer.appendChild(lockedHeader);
+
+                    lockedNodes.forEach(n => {
+                        const item = document.createElement('div');
+                        item.className = 'menu-node-item';
+                        item.style.paddingLeft = '14px';
+                        item.innerHTML = `<span>${n.icon}</span> <span>${n.id} - ${n.label}</span>`;
+                        item.onclick = () => { centerOnNode(n.dx, n.dy); };
+                        listContainer.appendChild(item);
+                    });
                 }
 
-                // Catégories / Branches principales (se terminant par .0)
-                const branchNodes = r.nodes.filter(n => n.id.endsWith('.0'));
-                const handledIds = new Set([rootNode ? rootNode.id : '']);
+                // --- SECTION 2 : ACQUISES & VALIDÉES ---
+                if (unlockedNodes.length > 0) {
+                    const unlockedHeader = document.createElement('div');
+                    unlockedHeader.className = 'menu-sub-header';
+                    unlockedHeader.style.color = r.color;
+                    unlockedHeader.style.background = 'rgba(16, 185, 129, 0.1)';
+                    unlockedHeader.innerHTML = `<span>✅</span> <span>COMPÉTENCES MAÎTRISÉES (${unlockedNodes.length})</span>`;
+                    listContainer.appendChild(unlockedHeader);
 
-                branchNodes.forEach(b => {
-                    handledIds.add(b.id);
-                    const branchItem = document.createElement('div');
-                    branchItem.className = 'menu-node-item';
-                    branchItem.style.fontWeight = '750';
-                    branchItem.style.color = r.color;
-                    branchItem.style.paddingLeft = '10px';
-                    branchItem.style.background = 'rgba(255,255,255,0.03)';
-                    branchItem.innerHTML = `<span>${b.icon}</span> <span>📁 ${b.id} - ${b.label}</span>`;
-                    branchItem.onclick = () => { centerOnNode(b.dx, b.dy); };
-                    listContainer.appendChild(branchItem);
-
-                    // Sous-nœuds de cette branche
-                    const childNodes = r.nodes.filter(n => n.parent === b.id || isDescendant(r, n.id, b.id));
-                    childNodes.forEach(c => {
-                        handledIds.add(c.id);
-                        const childItem = document.createElement('div');
-                        childItem.className = 'menu-node-item';
-                        childItem.style.paddingLeft = '22px';
-                        childItem.style.fontSize = '0.9em';
-                        childItem.innerHTML = `<span>${c.icon}</span> <span>${c.id} - ${c.label}</span>`;
-                        childItem.onclick = () => { centerOnNode(c.dx, c.dy); };
-                        listContainer.appendChild(childItem);
+                    unlockedNodes.forEach(n => {
+                        const item = document.createElement('div');
+                        item.className = 'menu-node-item';
+                        item.style.paddingLeft = '14px';
+                        item.style.fontWeight = '700';
+                        item.style.color = '#f8fafc';
+                        item.innerHTML = `<span>${n.icon}</span> <span>✓ ${n.id} - ${n.label}</span>`;
+                        item.onclick = () => { centerOnNode(n.dx, n.dy); };
+                        listContainer.appendChild(item);
                     });
-                });
-
-                // Nœuds isolés restants
-                const unhandledNodes = r.nodes.filter(n => !handledIds.has(n.id));
-                unhandledNodes.forEach(n => {
-                    const item = document.createElement('div');
-                    item.className = 'menu-node-item';
-                    item.style.paddingLeft = '10px';
-                    item.innerHTML = `<span>${n.icon}</span> <span>${n.id} - ${n.label}</span>`;
-                    item.onclick = () => { centerOnNode(n.dx, n.dy); };
-                    listContainer.appendChild(item);
-                });
+                }
             });
         }
 
@@ -614,7 +602,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_full_hierarchical');
+            const saved = localStorage.getItem('theo_final_app_skills_full_separated_menu');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -635,7 +623,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_full_hierarchical', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_full_separated_menu', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
@@ -802,6 +790,7 @@
                 activeNode.unlocked = !activeNode.unlocked;
                 saveState();
                 initGraph();
+                buildSidebarMenu();
                 closeModal();
             }
         }
