@@ -120,7 +120,6 @@
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 20px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 20px var(--color-d); }
 
-        /* Animation d'identification temporaire au clic depuis le menu */
         @keyframes pulse-flash {
             0% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9); }
             50% { transform: scale(1.5); filter: brightness(1.4); box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.8); z-index: 50; }
@@ -371,6 +370,7 @@
         const R2 = 1400;  
         const R3 = 2200;  
         const R4 = 3000;  
+        const R5 = 3800;  // Niveau 5 (Périphérie d'excellence ajoutée)
 
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
@@ -499,7 +499,14 @@
                         { id: "C7.6", icon: "🗺️", label: "Ingénierie de Séquences par Projets (PBL)", parent: "C7.0", level: 4, unlocked: false, link: "", desc: "Scénarisation de grands projets d'apprentissage avec l'IA.", details: "Tâches complexes, jalons temporels et ressources automatisées." },
                         { id: "C7.7", icon: "📈", label: "Learning Analytics & Diagnostic de Cohorte", parent: "C7.5", level: 4, unlocked: false, link: "", desc: "Analyse des erreurs récurrentes d'un groupe d'élèves.", details: "Identification des malentendus cognitifs et remédiation rapide." },
                         { id: "C7.8", icon: "🛠️", label: "Création d'Agents Pédagogiques (GPTs Sur-Mesure)", parent: "C7.1", level: 4, unlocked: false, link: "", desc: "Configuration d'agents IA avec base documentaire dédiée.", details: "Custom Instructions, RAG pédagogique et posture fermement cadrée." },
-                        { id: "C7.9", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique (Hallucinations)", parent: "C7.0", level: 4, unlocked: false, link: "", desc: "Sensibilisation aux limites et règles de confidentialité.", details: "Détection des biais, protection des données des mineurs et fact-checking." }
+                        { id: "C7.9", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique (Hallucinations)", parent: "C7.0", level: 4, unlocked: false, link: "", desc: "Sensibilisation aux limites et règles de confidentialité.", details: "Détection des biais, protection des données des mineurs et fact-checking." },
+                        
+                        /* --- NOUVEAU NIVEAU 5 (PÉRIPHÉRIE PÉDAGOGIQUE) --- */
+                        { id: "C8.1", icon: "📐", label: "Ingénierie de Séquences par Projets (PBL)", parent: "C7.6", level: 5, unlocked: false, link: "", desc: "Conception de tâches complexes ancrées dans le monde réel.", details: "Définition des jalons, production finale et évaluation critériée par compétences." },
+                        { id: "C8.2", icon: "🔍", label: "Diagnostic Précis des Obstacles Cognitifs", parent: "C7.7", level: 5, unlocked: false, link: "", desc: "Identification fine des malentendus conceptuels et remédiation ciblée.", details: "Analyse des erreurs récurrentes et construction d'exercices de consolidation." },
+                        { id: "C8.3", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique Face à l'IA", parent: "C7.9", level: 5, unlocked: false, link: "", desc: "Sensibilisation aux biais algorithmiques et protection de la vie privée.", details: "Détection des hallucinations, vérification des sources et cadre de responsabilité numérique." },
+                        { id: "C8.4", icon: "🧩", label: "Adaptation Pédagogique Avancée (Profils EBEP & DYS)", parent: "C3.3", level: 5, unlocked: false, link: "", desc: "Personnalisation fine des supports d'apprentissage pour la neurodiversité.", details: "Accessibilité universelle, typographies adaptées et étayage multimodal." },
+                        { id: "C8.5", icon: "🌐", label: "Design d'Environnements d'Apprentissage Hybrides", parent: "C7.0", level: 5, unlocked: false, link: "", desc: "Articulation fluide entre temps en présentiel et activités numériques distantes.", details: "Flipped classroom, capsules vidéo et espaces de collaboration en ligne." }
                     ]
                 },
                 {
@@ -565,7 +572,7 @@
 
         let activeNode = null;
         let nodePositions = {};
-        let domNodeElements = {}; // Référence aux éléments DOM des nœuds
+        let domNodeElements = {};
 
         let scale = 0.35; 
         let panX = 0; 
@@ -590,11 +597,10 @@
             panY = (window.innerHeight / 2) - ((4500 + dy) * scale);
             updateTransform();
 
-            // Déclenchement de l'identification temporaire sur le nœud ciblé
             if (nodeId && domNodeElements[nodeId]) {
                 const el = domNodeElements[nodeId];
                 el.classList.remove('highlight-flash');
-                void el.offsetWidth; // Force reflow pour relancer l'animation
+                void el.offsetWidth; 
                 el.classList.add('highlight-flash');
                 setTimeout(() => {
                     el.classList.remove('highlight-flash');
@@ -753,15 +759,15 @@
         }
 
         function computeRadialPositions() {
-            const radii = { 1: R1, 2: R2, 3: R3, 4: R4 };
+            const radii = { 1: R1, 2: R2, 3: R3, 4: R4, 5: R5 };
 
             graphData.regions.forEach(r => {
-                const byLevel = { 1: [], 2: [], 3: [], 4: [] };
+                const byLevel = { 1: [], 2: [], 3: [], 4: [], 5: [] };
                 r.nodes.forEach(n => {
                     if (byLevel[n.level]) byLevel[n.level].push(n);
                 });
 
-                for (let lvl = 1; lvl <= 4; lvl++) {
+                for (let lvl = 1; lvl <= 5; lvl++) {
                     const list = byLevel[lvl];
                     const count = list.length;
                     if (count === 0) continue;
