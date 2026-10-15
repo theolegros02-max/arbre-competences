@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Cercles Concentriques Rayonnants)</title>
+    <title>Arbre de Compétences - Théo Legros (Anti-Collision Concentrique)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -51,14 +51,14 @@
         }
 
         #world {
-            position: absolute; top: 0; left: 0; width: 6000px; height: 6000px;
+            position: absolute; top: 0; left: 0; width: 8000px; height: 8000px;
             transform-origin: 0 0; cursor: grab; z-index: 1;
         }
 
         #world:active { cursor: grabbing; }
 
         #svg-canvas {
-            width: 6000px; height: 6000px;
+            width: 8000px; height: 8000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -75,7 +75,7 @@
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 4px; filter: drop-shadow(0 0 8px var(--color-d)); }
 
         #nodes-container {
-            width: 6000px; height: 6000px;
+            width: 8000px; height: 8000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -339,17 +339,17 @@
             }
         }
 
-        // Rayons des cercles concentriques stricts et compacts
-        const R1 = 500;   // Niveau 1 (Pôles principaux)
-        const R2 = 950;   // Niveau 2 (Branches majeures)
-        const R3 = 1400;  // Niveau 3 (Sous-branches)
-        const R4 = 1850;  // Niveau 4 (Feuilles / Nœuds terminaux)
+        // Rayons des cercles concentriques stricts
+        const R1 = 700;   // Niveau 1
+        const R2 = 1400;  // Niveau 2
+        const R3 = 2200;  // Niveau 3
+        const R4 = 3000;  // Niveau 4
 
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
             regions: [
                 {
-                    key: "A", name: "🔴 Nord (Pilotage ACM Expert)", color: "var(--color-a)", centerAngle: -Math.PI / 2, span: Math.PI / 2,
+                    key: "A", name: "🔴 Nord (Pilotage ACM Expert)", color: "var(--color-a)", centerAngle: -Math.PI / 2, span: Math.PI / 2.2,
                     nodes: [
                         { id: "A1", icon: "🏕️", label: "Direction Générale & Stratégie ACM", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Pilotage stratégique, administratif et pédagogique global d'un ACM.", details: "Garantie du cadre légal, de la sécurité intégrale et de la gouvernance éducative." },
                         { id: "A1.0", icon: "🎯", label: "Branche Projet Éducatif, PEDT & Partenariats", parent: "A1", level: 2, unlocked: true, link: "", desc: "Traduction de la vision éducative, ancrage territorial et relations institutionnelles.", details: "Pilotage des valeurs citoyennes et coordination avec les collectivités." },
@@ -389,7 +389,7 @@
                     ]
                 },
                 {
-                    key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)", centerAngle: 0, span: Math.PI / 2,
+                    key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)", centerAngle: 0, span: Math.PI / 2.2,
                     nodes: [
                         { id: "B1", icon: "🎓", label: "Direction Générale de Formation BAFA/BAFD", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Pilotage global, pédagogique, humain et réglementaire des sessions de formation d'animateurs et directeurs.", details: "Garantie de la qualité des stages, encadrement de l'équipe de formateurs et conformité SDJES." },
                         { id: "B1.0", icon: "📐", label: "Branche Ingénierie de Formation & ADDIE", parent: "B1", level: 2, unlocked: true, link: "", desc: "Modèle ADDIE complet, taxonomie de Bloom, alignement constructif et hybridation.", details: "Architecture globale des parcours de formation professionnels." },
@@ -429,7 +429,7 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)", centerAngle: Math.PI / 2, span: Math.PI / 2,
+                    key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)", centerAngle: Math.PI / 2, span: Math.PI / 2.2,
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie, Youth & IA Structurée", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Direction de l'action éducative, bientraitance, pédagogies actives et innovation EdTech.", details: "Convergence des sciences de l'éducation, de la gestion de groupe et des technologies éducatives." },
                         { id: "C1.0", icon: "🛡️", label: "Branche Protection, Bientraitance & Climat Éducatif", parent: "C1", level: 2, unlocked: true, link: "", desc: "Garantie de la sécurité affective, médiation et régulation des comportements.", details: "Prévention des violences, alliance éducative et restauration du climat de groupe." },
@@ -452,7 +452,7 @@
                         { id: "C5.3", icon: "🏛️", label: "Pédagogie Institutionnelle (Freinet & Oury)", parent: "C2.2", level: 4, unlocked: false, link: "", desc: "Mise en place de structures coopératives internes.", details: "Ceintures de compétences, métiers et conseil de coopérative." },
                         { id: "C3.0", icon: "🌿", label: "Branche Plein Air, Outdoor & Inclusion Universelle", parent: "C1", level: 2, unlocked: true, link: "", desc: "Autonomie en milieu naturel, aventures outdoor et accueil de la différence.", details: "Campements rustiques, secourisme, éco-citoyenneté et adaptation PAI/PSH." },
                         { id: "C3.3", icon: "🧩", label: "Accueil Universel & Pédagogie Inclusive", parent: "C3.0", level: 3, unlocked: false, link: "", desc: "Adaptation des activités pour tous les publics.", details: "Collaboration AESH, aménagement sensoriel et accessibilité." },
-                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", level: 4, unlocked: false, link: "", desc: "Sécurisation de la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
+                        { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", level: 4, unlocked: false, link: "", desc: "Sécurisation la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
                         { id: "C3.5", icon: "⚖️", label: "Pédagogie Universelle & Différenciation", parent: "C3.3", level: 4, unlocked: false, link: "", desc: "Valorisation des réussites individuelles sans stigmatisation.", details: "Échelles de difficulté adaptatives et coopération." },
                         { id: "C4.1", icon: "🌿", label: "Exploration Naturaliste & Éco-citoyenneté", parent: "C3.0", level: 3, unlocked: false, link: "", desc: "Découverte de la biodiversité et sensibilisation.", details: "Lecture de paysages, flore/faune et respect du milieu." },
                         { id: "C4.2", icon: "⛺", label: "Ingénierie de Bivouacs & Camps Autonomes", parent: "C4.1", level: 4, unlocked: false, link: "", desc: "Séjours nomades et vie collective sous tente.", details: "Montage du campement, gestion de l'eau et feux contrôlés." },
@@ -476,7 +476,7 @@
                     ]
                 },
                 {
-                    key: "D", name: "🟣 Ouest (Agrégation d'Anglais Expert)", color: "var(--color-d)", centerAngle: Math.PI, span: Math.PI / 2,
+                    key: "D", name: "🟣 Ouest (Agrégation d'Anglais Expert)", color: "var(--color-d)", centerAngle: Math.PI, span: Math.PI / 2.2,
                     nodes: [
                         { id: "D1", icon: "🏛️", label: "Pôle Agrégation Externe d'Anglais (Recherche)", parent: "CENTER", level: 1, unlocked: true, link: "", desc: "Centre de préparation de niveau universitaire supérieur (Admissibilité & Admission).", details: "Maîtrise absolue de la philologie, de la linguistique formelle et de l'érudition critique." },
                         
@@ -525,7 +525,7 @@
         let activeNode = null;
         let nodePositions = {};
 
-        let scale = 0.30; 
+        let scale = 0.40; 
         let panX = 0; 
         let panY = 0; 
         let isDragging = false; let startX = 0; let startY = 0;
@@ -536,16 +536,16 @@
         }
 
         function resetView() { 
-            scale = 0.30; 
-            panX = (window.innerWidth / 2) - (3000 * scale);
-            panY = (window.innerHeight / 2) - (3000 * scale);
+            scale = 0.40; 
+            panX = (window.innerWidth / 2) - (4000 * scale);
+            panY = (window.innerHeight / 2) - (4000 * scale);
             updateTransform(); 
         }
 
         function centerOnNode(dx, dy) {
-            scale = 0.60; 
-            panX = (window.innerWidth / 2) - ((3000 + dx) * scale);
-            panY = (window.innerHeight / 2) - ((3000 + dy) * scale);
+            scale = 0.70; 
+            panX = (window.innerWidth / 2) - ((4000 + dx) * scale);
+            panY = (window.innerHeight / 2) - ((4000 + dy) * scale);
             updateTransform();
         }
 
@@ -635,7 +635,7 @@
                 const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 let prevScale = scale;
                 if (e.deltaY < 0) { scale *= (1 + zoomIntensity); } else { scale /= (1 + zoomIntensity); }
-                scale = Math.max(0.05, Math.min(3, scale));
+                scale = Math.max(0.1, Math.min(3, scale));
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
                 panY = mouseY - (mouseY - panY) * (scale / prevScale);
                 updateTransform();
@@ -643,7 +643,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_true_circles');
+            const saved = localStorage.getItem('theo_final_app_skills_anticollision');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -666,7 +666,7 @@
                         data[n.id] = { unlocked: n.unlocked, link: n.link };
                     });
                 });
-                localStorage.setItem('theo_final_app_skills_true_circles', JSON.stringify(data));
+                localStorage.setItem('theo_final_app_skills_anticollision', JSON.stringify(data));
                 setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
                 updateSaveStatus('error');
@@ -687,20 +687,17 @@
             const radii = { 1: R1, 2: R2, 3: R3, 4: R4 };
 
             graphData.regions.forEach(r => {
-                // Group nodes by level
                 const byLevel = { 1: [], 2: [], 3: [], 4: [] };
                 r.nodes.forEach(n => {
                     if (byLevel[n.level]) byLevel[n.level].push(n);
                 });
 
-                // Assign polar coordinates (dx, dy) automatically based on sector and level
                 for (let lvl = 1; lvl <= 4; lvl++) {
                     const list = byLevel[lvl];
                     const count = list.length;
                     if (count === 0) continue;
 
                     list.forEach((n, idx) => {
-                        // Spread nodes evenly across the region's angular span
                         const fraction = count === 1 ? 0.5 : (idx / (count - 1));
                         const angle = r.centerAngle - (r.span / 2) + fraction * r.span;
                         const radius = radii[lvl];
@@ -719,8 +716,8 @@
             const container = document.getElementById('nodes-container');
             linesGroup.innerHTML = ''; container.innerHTML = '';
 
-            const cx = 3000; 
-            const cy = 3000;
+            const cx = 4000; 
+            const cy = 4000;
 
             nodePositions["CENTER"] = { x: cx, y: cy };
 
@@ -901,9 +898,9 @@
         initGraph();
         buildSidebarMenu();
         
-        scale = 0.30;
-        panX = (window.innerWidth / 2) - (3000 * scale);
-        panY = (window.innerHeight / 2) - (3000 * scale);
+        scale = 0.40;
+        panX = (window.innerWidth / 2) - (4000 * scale);
+        panY = (window.innerHeight / 2) - (4000 * scale);
         updateTransform();
 
         setupPanAndZoom();
