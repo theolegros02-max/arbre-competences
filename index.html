@@ -141,13 +141,13 @@
             position: fixed; top: 20px; left: 20px; z-index: 200;
             background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);
             border: 1px solid #334155; border-radius: 14px;
-            width: 310px; max-height: calc(100vh - 40px);
+            width: 320px; max-height: calc(100vh - 40px);
             display: flex; flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.7); pointer-events: auto;
             transition: transform 0.3s ease;
         }
 
-        #sidebar.closed { transform: translateX(-340px); }
+        #sidebar.closed { transform: translateX(-350px); }
 
         .sidebar-header {
             padding: 14px; border-bottom: 1px solid #334155;
@@ -156,7 +156,7 @@
         }
 
         .sidebar-toggle-btn {
-            position: fixed; top: 20px; left: 345px; z-index: 205;
+            position: fixed; top: 20px; left: 355px; z-index: 205;
             background: #1e293b; border: 1px solid #475569; color: #fff;
             padding: 10px 12px; border-radius: 8px; cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold;
@@ -166,16 +166,16 @@
         .sidebar-toggle-btn:hover { background: #334155; }
 
         .sidebar-content {
-            overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 12px;
+            overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 6px;
         }
 
         .menu-region-title {
-            font-size: 0.75em; font-weight: 800; padding: 4px 8px; border-radius: 6px;
-            margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+            font-size: 0.75em; font-weight: 800; padding: 6px 8px; border-radius: 6px;
+            margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(255,255,255,0.05);
         }
 
         .menu-node-item {
-            padding: 6px 10px; border-radius: 6px; font-size: 0.75em;
+            padding: 5px 8px; border-radius: 6px; font-size: 0.75em;
             color: var(--text-muted); cursor: pointer; transition: all 0.2s;
             display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
@@ -239,7 +239,7 @@
     <!-- MENU LATÉRAL -->
     <div id="sidebar">
         <div class="sidebar-header">
-            <span>📚 NAVIGATION DES NÔUDS</span>
+            <span>📚 NAVIGATION HIÉRARCHIQUE</span>
         </div>
         <div class="sidebar-content" id="sidebar-menu-list">
             <!-- Rempli dynamiquement par JS -->
@@ -387,8 +387,6 @@
                     key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie, Youth & IA Structurée", parent: "CENTER", dx: 0, dy: 2200, unlocked: true, link: "", desc: "Direction de l'action éducative, bientraitance, pédagogies actives et innovation EdTech.", details: "Convergence des sciences de l'éducation, de la gestion de groupe et des technologies éducatives." },
-                        
-                        // --- PÔLE 1 : Protection, Bientraitance & Postures Éducatives ---
                         { id: "C1.0", icon: "🛡️", label: "Branche Protection, Bientraitance & Climat Éducatif", parent: "C1", dx: -700, dy: 2550, unlocked: true, link: "", desc: "Garantie de la sécurité affective, médiation et régulation des comportements.", details: "Prévention des violences, alliance éducative et restauration du climat de groupe." },
                         { id: "C1.1", icon: "🔍", label: "Repérage Fin des Signaux Faibles", parent: "C1.0", dx: -1100, dy: 2800, unlocked: false, link: "", desc: "Détection précoce du mal-être, de l'isolement et du décrochage.", details: "Observation clinique des dynamiques informelles, traçabilité et écoute active." },
                         { id: "C1.2", icon: "⚠️", label: "Stratégies de Prévention du Harcèlement", parent: "C1.0", dx: -1100, dy: 3050, unlocked: false, link: "", desc: "Lutte contre les micro-violences et mécanismes d'exclusion.", details: "Protocoles de médiation par les pairs et cercles de parole." },
@@ -398,8 +396,6 @@
                         { id: "C5.2", icon: "🤝", label: "Médiation par les Pairs & Justice Restaurative", parent: "C1.2", dx: -1500, dy: 3050, unlocked: false, link: "", desc: "Résolution pacifique et responsabilisation collective.", details: "Cercles restaurateurs et réparation symbolique ou matérielle." },
                         { id: "C6.2", icon: "🌀", label: "Gestion du Bouc Émissaire", parent: "C1.2", dx: -1500, dy: 3250, unlocked: false, link: "", desc: "Intervention sociologique sur les phénomènes de groupe.", details: "Déconstruction des stéréotypes et réintégration de la cible." },
                         { id: "C6.3", icon: "🧘", label: "Anxiété de Séparation & Premier Départ", parent: "C1.4", dx: -1600, dy: 2550, unlocked: false, link: "", desc: "Accompagnement du mal du pays et gestion des familles.", details: "Rituels de transition et sécurisation des parents." },
-
-                        // --- PÔLE 2 : Animation, Démocratie & Grands Jeux Immersifs ---
                         { id: "C2.0", icon: "🎨", label: "Branche Animation, Démocratie & Immersive Gaming", parent: "C1", dx: -250, dy: 2600, unlocked: true, link: "", desc: "Ingénierie des projets citoyens, d'expression et grands scénarios ludiques.", details: "Autonomisation des jeunes, médias libres et jeux grandeur nature." },
                         { id: "C2.1", icon: "🎭", label: "Expression Artistique & Théâtre Forum", parent: "C2.0", dx: -450, dy: 2950, unlocked: false, link: "", desc: "Libération de la parole et scénarisation sociale.", details: "Catharsis par l'art, ateliers écriture et mise en scène." },
                         { id: "C2.2", icon: "🤝", label: "Conseils de Jeunes & Démocratie Participative", parent: "C2.0", dx: -150, dy: 3000, unlocked: false, link: "", desc: "Co-construction des règles de vie et apprentissage du vote.", details: "Instances décisionnelles autogérées et budgets participatifs." },
@@ -409,8 +405,6 @@
                         { id: "C3.1", icon: "🎲", label: "Scénarisation de Grands Jeux & GN Immersifs", parent: "C2.0", dx: 100, dy: 2950, unlocked: false, link: "", desc: "Conception de jeux de rôle grandeur nature et quêtes.", details: "Écriture de PNJ, game design et immersion narrative." },
                         { id: "C3.2", icon: "🗺️", label: "Logistique des Terrains & Sécurité de Jeu", parent: "C3.1", dx: 250, dy: 3250, unlocked: false, link: "", desc: "Aménagement des espaces extérieurs et flux.", details: "Balisage des zones à risques et arbitrage." },
                         { id: "C5.3", icon: "🏛️", label: "Pédagogie Institutionnelle (Freinet & Oury)", parent: "C2.2", dx: -350, dy: 3500, unlocked: false, link: "", desc: "Mise en place de structures coopératives internes.", details: "Ceintures de compétences, métiers et conseil de coopérative." },
-
-                        // --- PÔLE 3 : Extérieur, Bivouacs & Pédagogie Inclusive ---
                         { id: "C3.0", icon: "🌿", label: "Branche Plein Air, Outdoor & Inclusion Universelle", parent: "C1", dx: 300, dy: 2600, unlocked: true, link: "", desc: "Autonomie en milieu naturel, aventures outdoor et accueil de la différence.", details: "Campements rustiques, secourisme, éco-citoyenneté et adaptation PAI/PSH." },
                         { id: "C3.3", icon: "🧩", label: "Accueil Universel & Pédagogie Inclusive", parent: "C3.0", dx: 550, dy: 2900, unlocked: false, link: "", desc: "Adaptation des activités pour tous les publics.", details: "Collaboration AESH, aménagement sensoriel et accessibilité." },
                         { id: "C3.4", icon: "📋", label: "Suivi des PAI & Protocoles Médicaux", parent: "C3.3", dx: 850, dy: 3100, unlocked: false, link: "", desc: "Sécurisation de la santé des enfants à besoins spécifiques.", details: "Gestion des ordonnances, trousses d'urgence et régimes." },
@@ -420,8 +414,6 @@
                         { id: "C4.3", icon: "🍳", label: "Cuisine Outdoor & Hygiène Nomade", parent: "C4.2", dx: 150, dy: 3450, unlocked: false, link: "", desc: "Repas trappeur et traçabilité en camp itinérant.", details: "Conservation des aliments sans frigo et tri sélectif." },
                         { id: "C4.4", icon: "🧭", label: "Orientation, Risques & Météo Plein Air", parent: "C4.1", dx: -100, dy: 3200, unlocked: false, link: "", desc: "Lecture de cartes IGN, boussole et suivi météo.", details: "Anticipation des orages et choix des parcours de repli." },
                         { id: "C4.5", icon: "🩺", label: "Secours en Milieu Isolé & Urgences Outdoor", parent: "C4.4", dx: -100, dy: 3450, unlocked: false, link: "", desc: "Gestion des traumatismes loin des centres de secours.", details: "Bilans de santé outdoor et évacuation d'urgence." },
-
-                        // --- PÔLE 4 : EdTech, IA Générative & Ingénierie Pédagogique ---
                         { id: "C7.0", icon: "🤖", label: "Branche EdTech, IA Générative & Neuro-Ingénierie", parent: "C1", dx: 800, dy: 2450, unlocked: true, link: "", desc: "Pédagogies augmentées, prompt engineering éducatif et analyse d'apprentissage.", details: "Utilisation professionnelle des LLM pour décupler l'impact pédagogique." },
                         { id: "C5.1", icon: "🧠", label: "Neurosciences & Développement Cognitif", parent: "C7.0", dx: 1200, dy: 2300, unlocked: false, link: "", desc: "Mécanismes de la mémoire, de l'attention et des émotions.", details: "Plasticité cérébrale, surcharge cognitive et mémorisation active." },
                         { id: "C5.4", icon: "🏕️", label: "Théorie de l'Autodétermination (Deci & Ryan)", parent: "C7.0", dx: 1200, dy: 2500, unlocked: false, link: "", desc: "Leviers de la motivation intrinsèque en apprentissage.", details: "Besoins d'autonomie, de compétence et d'affiliation." },
@@ -513,6 +505,15 @@
             sidebar.classList.toggle('closed');
         }
 
+        function isDescendant(r, nodeId, targetId) {
+            let curr = r.nodes.find(n => n.id === nodeId);
+            while (curr && curr.parent) {
+                if (curr.parent === targetId) return true;
+                curr = r.nodes.find(n => n.id === curr.parent);
+            }
+            return false;
+        }
+
         function buildSidebarMenu() {
             const listContainer = document.getElementById('sidebar-menu-list');
             listContainer.innerHTML = '';
@@ -529,13 +530,56 @@
                 const regTitle = document.createElement('div');
                 regTitle.className = 'menu-region-title';
                 regTitle.style.color = r.color;
-                regTitle.style.marginTop = '10px';
                 regTitle.innerText = r.name;
                 listContainer.appendChild(regTitle);
 
-                r.nodes.forEach(n => {
+                // Racine de la région (A1, B1, C1, D1)
+                const rootNode = r.nodes.find(n => n.parent === "CENTER");
+                if (rootNode) {
+                    const rootItem = document.createElement('div');
+                    rootItem.className = 'menu-node-item';
+                    rootItem.style.fontWeight = 'bold';
+                    rootItem.innerHTML = `<span>${rootNode.icon}</span> <span>${rootNode.id} - ${rootNode.label}</span>`;
+                    rootItem.onclick = () => { centerOnNode(rootNode.dx, rootNode.dy); };
+                    listContainer.appendChild(rootItem);
+                }
+
+                // Catégories / Branches principales (se terminant par .0)
+                const branchNodes = r.nodes.filter(n => n.id.endsWith('.0'));
+                const handledIds = new Set([rootNode ? rootNode.id : '']);
+
+                branchNodes.forEach(b => {
+                    handledIds.add(b.id);
+                    const branchItem = document.createElement('div');
+                    branchItem.className = 'menu-node-item';
+                    branchItem.style.fontWeight = '750';
+                    branchItem.style.color = r.color;
+                    branchItem.style.paddingLeft = '10px';
+                    branchItem.style.background = 'rgba(255,255,255,0.03)';
+                    branchItem.innerHTML = `<span>${b.icon}</span> <span>📁 ${b.id} - ${b.label}</span>`;
+                    branchItem.onclick = () => { centerOnNode(b.dx, b.dy); };
+                    listContainer.appendChild(branchItem);
+
+                    // Sous-nœuds de cette branche
+                    const childNodes = r.nodes.filter(n => n.parent === b.id || isDescendant(r, n.id, b.id));
+                    childNodes.forEach(c => {
+                        handledIds.add(c.id);
+                        const childItem = document.createElement('div');
+                        childItem.className = 'menu-node-item';
+                        childItem.style.paddingLeft = '22px';
+                        childItem.style.fontSize = '0.9em';
+                        childItem.innerHTML = `<span>${c.icon}</span> <span>${c.id} - ${c.label}</span>`;
+                        childItem.onclick = () => { centerOnNode(c.dx, c.dy); };
+                        listContainer.appendChild(childItem);
+                    });
+                });
+
+                // Nœuds isolés restants
+                const unhandledNodes = r.nodes.filter(n => !handledIds.has(n.id));
+                unhandledNodes.forEach(n => {
                     const item = document.createElement('div');
                     item.className = 'menu-node-item';
+                    item.style.paddingLeft = '10px';
                     item.innerHTML = `<span>${n.icon}</span> <span>${n.id} - ${n.label}</span>`;
                     item.onclick = () => { centerOnNode(n.dx, n.dy); };
                     listContainer.appendChild(item);
@@ -570,7 +614,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_full_structured_v2');
+            const saved = localStorage.getItem('theo_final_app_skills_full_hierarchical');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -591,7 +635,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_full_structured_v2', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_full_hierarchical', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
