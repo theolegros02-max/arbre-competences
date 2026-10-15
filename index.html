@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Agrégation d'Anglais Ultra-Atomisée)</title>
+    <title>Arbre de Compétences - Théo Legros (Agrégation d'Anglais - Espacement Optimisé)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -13,7 +13,7 @@
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
             --color-b: #3b82f6; /* Est / Bleu - Formation RH & Directeur BAFA/BAFD */
             --color-c: #10b981; /* Sud / Vert - Pédagogie, Youth & IA Pédagogique */
-            --color-d: #a855f7; /* Ouest / Violet - Agrégation d'Anglais Expert (Ultra-Atomisée) */
+            --color-d: #a855f7; /* Ouest / Violet - Agrégation d'Anglais Expert */
             --locked-color: #475569;
         }
 
@@ -51,14 +51,14 @@
         }
 
         #world {
-            position: absolute; top: 0; left: 0; width: 18000px; height: 18000px;
+            position: absolute; top: 0; left: 0; width: 22000px; height: 22000px;
             transform-origin: 0 0; cursor: grab; z-index: 1;
         }
 
         #world:active { cursor: grabbing; }
 
         #svg-canvas {
-            width: 18000px; height: 18000px;
+            width: 22000px; height: 22000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -75,7 +75,7 @@
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
 
         #nodes-container {
-            width: 18000px; height: 18000px;
+            width: 22000px; height: 22000px;
             position: absolute; top: 0; left: 0;
             pointer-events: none;
         }
@@ -474,47 +474,43 @@
                     nodes: [
                         { id: "D1", icon: "🏛️", label: "Pôle Agrégation Externe d'Anglais (Recherche)", parent: "CENTER", dx: -600, dy: 0, unlocked: true, link: "", desc: "Centre de préparation de niveau universitaire supérieur (Admissibilité & Admission).", details: "Maîtrise absolue de la philologie, de la linguistique formelle et de l'érudition critique." },
                         
-                        // --- BRANCHE D1 : LITTÉRATURE & CRITIQUE LITTÉRAIRE ---
-                        { id: "D1.0", icon: "📚", label: "Branche Littérature & Critique Savante", parent: "D1", dx: -1000, dy: -900, unlocked: true, link: "", desc: "Maîtrise des courants critiques, des poétiques et des œuvres au programme limitatif.", details: "Approche théorique et universitaire de haut niveau." },
-                        { id: "D1.1", icon: "🔍", label: "Critique Post-Coloniale & Subaltern Studies", parent: "D1.0", dx: -1350, dy: -1300, unlocked: false, link: "", desc: "Analyse des discours hégémoniques, altérité et déconstruction des empires.", details: "Application des théories de Said, Spivak et Bhabha aux textes littéraires." },
-                        { id: "D1.2", icon: "♀️", label: "Gender Studies, Queer Theory & Intersectionnalité", parent: "D1.0", dx: -1350, dy: -1050, unlocked: false, link: "", desc: "Étude des représentations du genre, des identités et des rapports de domination.", details: "Concepts de Judith Butler, Eve Sedgwick et poétiques du corps." },
-                        { id: "D1.3", icon: "🌳", label: "Ecocritique & Humanités Environnementales", parent: "D1.0", dx: -1350, dy: -800, unlocked: false, link: "", desc: "Représentation de la nature, Anthropocène et pastoralisme critique dans les textes.", details: "Analyse des liens entre écologie, pouvoir et narration." },
-                        { id: "D1.4", icon: "🎭", label: "Dramaturgie, Théâtre & Performance Scénique", parent: "D1.0", dx: -1350, dy: -550, unlocked: false, link: "", desc: "Analyse formelle et structurelle des pièces de théâtre au programme.", details: "Didascalies, tension dramatique, énonciation théâtrale et mise en scène." },
-                        { id: "D1.5", icon: "✒️", label: "Poétique du Roman & Narratologie Avancée", parent: "D1.0", dx: -1350, dy: -300, unlocked: false, link: "", desc: "Étude des instances narratoriales, focalisations, temps et métafiction.", details: "Genette, Booth et rhétorique de la fiction." },
-                        
-                        // Sous-nœuds détaillés de littérature
-                        { id: "D1.6", icon: "📖", label: "Stylistique Textuelle & Rhétorique Profonde", parent: "D1.5", dx: -1800, dy: -300, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des figures de style et rythmes.", details: "Analyse des écarts, tropes et polyphonies textuelles." },
-                        { id: "D1.7", icon: "📜", label: "Intertextualité & Généalogie des Formes", parent: "D1.5", dx: -1800, dy: -100, unlocked: false, link: "", desc: "Repérage des réseaux d'influences, réécritures et mythes littéraires.", details: "Archéologie textuelle et dialogue inter-œuvres." },
+                        // --- BRANCHE D1 : LITTÉRATURE & CRITIQUE LITTÉRAIRE (Rayonnement Nord-Ouest) ---
+                        { id: "D1.0", icon: "📚", label: "Branche Littérature & Critique Savante", parent: "D1", dx: -1400, dy: -1400, unlocked: true, link: "", desc: "Maîtrise des courants critiques, des poétiques et des œuvres au programme limitatif.", details: "Approche théorique et universitaire de haut niveau." },
+                        { id: "D1.1", icon: "🔍", label: "Critique Post-Coloniale & Subaltern Studies", parent: "D1.0", dx: -2000, dy: -2000, unlocked: false, link: "", desc: "Analyse des discours hégémoniques, altérité et déconstruction des empires.", details: "Application des théories de Said, Spivak et Bhabha aux textes littéraires." },
+                        { id: "D1.2", icon: "♀️", label: "Gender Studies, Queer Theory & Intersectionnalité", parent: "D1.0", dx: -2000, dy: -1700, unlocked: false, link: "", desc: "Étude des représentations du genre, des identités et des rapports de domination.", details: "Concepts de Judith Butler, Eve Sedgwick et poétiques du corps." },
+                        { id: "D1.3", icon: "🌳", label: "Ecocritique & Humanités Environnementales", parent: "D1.0", dx: -2000, dy: -1400, unlocked: false, link: "", desc: "Représentation de la nature, Anthropocène et pastoralisme critique dans les textes.", details: "Analyse des liens entre écologie, pouvoir et narration." },
+                        { id: "D1.4", icon: "🎭", label: "Dramaturgie, Théâtre & Performance Scénique", parent: "D1.0", dx: -2000, dy: -1100, unlocked: false, link: "", desc: "Analyse formelle et structurelle des pièces de théâtre au programme.", details: "Didascalies, tension dramatique, énonciation théâtrale et mise en scène." },
+                        { id: "D1.5", icon: "✒️", label: "Poétique du Roman & Narratologie Avancée", parent: "D1.0", dx: -2000, dy: -800, unlocked: false, link: "", desc: "Étude des instances narratoriales, focalisations, temps et métafiction.", details: "Genette, Booth et rhétorique de la fiction." },
+                        { id: "D1.6", icon: "📖", label: "Stylistique Textuelle & Rhétorique Profonde", parent: "D1.5", dx: -2600, dy: -950, unlocked: false, link: "", desc: "Déconstruction esthétique et formelle des figures de style et rythmes.", details: "Analyse des écarts, tropes et polyphonies textuelles." },
+                        { id: "D1.7", icon: "📜", label: "Intertextualité & Généalogie des Formes", parent: "D1.5", dx: -2600, dy: -650, unlocked: false, link: "", desc: "Repérage des réseaux d'influences, réécritures et mythes littéraires.", details: "Archéologie textuelle et dialogue inter-œuvres." },
 
-                        // --- BRANCHE D2 : CIVILISATION, HISTOIRE DES IDÉES & GÉOPOLITIQUE ---
-                        { id: "D2.0", icon: "🌐", label: "Branche Civilisation, Idées & Géopolitique", parent: "D1", dx: -1000, dy: 100, unlocked: true, link: "", desc: "Maîtrise des contextes historiques profonds et des grands débats intellectuels UK/US.", details: "Épistémologie des faits civilisationnels." },
-                        { id: "D2.1", icon: "📜", label: "Historiographie & Politique Britannique", parent: "D2.0", dx: -1350, dy: -50, unlocked: false, link: "", desc: "Évolution institutionnelle, constitutionnelle et sociale du Royaume-Uni.", details: "De l'ère victorienne aux mutations contemporaines (post-Brexit)." },
-                        { id: "D2.2", icon: "🗽", label: "Histoire Politique & Constitutionnelle des USA", parent: "D2.0", dx: -1350, dy: 200, unlocked: false, link: "", desc: "Dynamiques fédérales, fédéralisme, Cour Suprême et mouvements civiques.", details: "Analyse critique des fondements de la démocratie américaine." },
-                        { id: "D2.3", icon: "💡", label: "Histoire des Idées Politiques & Philosophiques", parent: "D2.0", dx: -1350, dy: 450, unlocked: false, link: "", desc: "Libéralisme, républicanisme, conservatisme, marxisme et théories critiques anglo-saxonnes.", details: "De Locke et Hobbes aux penseurs contemporains." },
-                        { id: "D2.4", icon: "🖼️", label: "Analyse Critique Iconographique & Arts Visuels", parent: "D2.0", dx: -1350, dy: 700, unlocked: false, link: "", desc: "Peinture, photographie d'art, propagande visuelle et caricatures de presse.", details: "Sémiologie de l'image fixe et contexte historico-politique." },
+                        // --- BRANCHE D2 : CIVILISATION, HISTOIRE DES IDÉES & GÉOPOLITIQUE (Rayonnement Ouest) ---
+                        { id: "D2.0", icon: "🌐", label: "Branche Civilisation, Idées & Géopolitique", parent: "D1", dx: -1800, dy: -200, unlocked: true, link: "", desc: "Maîtrise des contextes historiques profonds et des grands débats intellectuels UK/US.", details: "Épistémologie des faits civilisationnels." },
+                        { id: "D2.1", icon: "📜", label: "Historiographie & Politique Britannique", parent: "D2.0", dx: -2500, dy: -450, unlocked: false, link: "", desc: "Évolution institutionnelle, constitutionnelle et sociale du Royaume-Uni.", details: "De l'ère victorienne aux mutations contemporaines (post-Brexit)." },
+                        { id: "D2.2", icon: "🗽", label: "Histoire Politique & Constitutionnelle des USA", parent: "D2.0", dx: -2500, dy: -150, unlocked: false, link: "", desc: "Dynamiques fédérales, fédéralisme, Cour Suprême et mouvements civiques.", details: "Analyse critique des fondements de la démocratie américaine." },
+                        { id: "D2.3", icon: "💡", label: "Histoire des Idées Politiques & Philosophiques", parent: "D2.0", dx: -2500, dy: 150, unlocked: false, link: "", desc: "Libéralisme, républicanisme, conservatisme, marxisme et théories critiques anglo-saxonnes.", details: "De Locke et Hobbes aux penseurs contemporains." },
+                        { id: "D2.4", icon: "🖼️", label: "Analyse Critique Iconographique & Arts Visuels", parent: "D2.0", dx: -2500, dy: 450, unlocked: false, link: "", desc: "Peinture, photographie d'art, propagande visuelle et caricatures de presse.", details: "Sémiologie de l'image fixe et contexte historico-politique." },
+                        { id: "D2.5", icon: "🏛️", label: "Politiques Publiques & Fractures Sociales", parent: "D2.1", dx: -3100, dy: -600, unlocked: false, link: "", desc: "Système de santé, éducation, politiques d'inégalités et welfare state.", details: "Enjeux socio-économiques et tensions institutionnelles." },
+                        { id: "D2.6", icon: "🌍", label: "Relations Internationales & Géopolitique", parent: "D2.2", dx: -3100, dy: -150, unlocked: false, link: "", desc: "Diplomatie, alliances stratégiques, impérialisme et conflits mondiaux.", details: "Place du Royaume-Uni et des USA sur l'échiquier global." },
 
-                        // Sous-nœuds détaillés civilisation
-                        { id: "D2.5", icon: "🏛️", label: "Politiques Publiques & Fractures Sociales", parent: "D2.1", dx: -1800, dy: -150, unlocked: false, link: "", desc: "Système de santé, éducation, politiques d'inégalités et welfare state.", details: "Enjeux socio-économiques et tensions institutionnelles." },
-                        { id: "D2.6", icon: "🌍", label: "Relations Internationales & Géopolitique", parent: "D2.2", dx: -1800, dy: 200, unlocked: false, link: "", desc: "Diplomatie, alliances stratégiques, impérialisme et conflits mondiaux.", details: "Place du Royaume-Uni et des USA sur l'échiquier global." },
+                        // --- BRANCHE D3 : LINGUISTIQUE FORMELLE & TOPE (Rayonnement Sud-Ouest) ---
+                        { id: "D3.0", icon: "🗣️", label: "Branche Linguistique Formelle & TOPE", parent: "D1", dx: -1400, dy: 1000, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli), syntaxe formelle et sémantique.", details: "Analyse linguistique de niveau universitaire de recherche." },
+                        { id: "D3.1", icon: "📍", label: "Repérage Énonciatif S0/T0/E0 & Subjectivité", parent: "D3.0", dx: -2000, dy: 700, unlocked: false, link: "", desc: "Analyse fine de l'ancrage énonciatif, de la deixis et de l'altérité.", details: "Opérations de repérage, repères-origines et co-énonciation." },
+                        { id: "D3.2", icon: "⚙️", label: "Modalité Épistémique vs Déontique & Modaux", parent: "D3.0", dx: -2000, dy: 1000, unlocked: false, link: "", desc: "Étude formelle des auxiliaires modaux et de la prise en charge (assertion).", details: "Valeurs du possible, du nécessaire et validation du prédicat." },
+                        { id: "D3.3", icon: "⏳", label: "Aspectualité, Quantification & Détermination", parent: "D3.0", dx: -2000, dy: 1300, unlocked: false, link: "", desc: "Valeurs de be+V-ing, have+en, articles (a/the/ø) et structures nominales.", details: "Parcours, rupture, bornage et instanciation du nominal." },
+                        { id: "D3.4", icon: "🔗", label: "Syntaxe Complexe, Subordination & Inversion", parent: "D3.0", dx: -2000, dy: 1600, unlocked: false, link: "", desc: "Enchâssements, structures clefts, passifs et relatives complexes.", details: "Architecture de la phrase et contraintes syntaxiques." },
 
-                        // --- BRANCHE D3 : LINGUISTIQUE FORMELLE & TOPE ---
-                        { id: "D3.0", icon: "🗣️", label: "Branche Linguistique Formelle & TOPE", parent: "D1", dx: -1000, dy: 1000, unlocked: true, link: "", desc: "Théorie des Opérations Énonciatives (Culioli), syntaxe formelle et sémantique.", details: "Analyse linguistique de niveau universitaire de recherche." },
-                        { id: "D3.1", icon: "📍", label: "Repérage Énonciatif S0/T0/E0 & Subjectivité", parent: "D3.0", dx: -1350, dy: 950, unlocked: false, link: "", desc: "Analyse fine de l'ancrage énonciatif, de la deixis et de l'altérité.", details: "Opérations de repérage, repères-origines et co-énonciation." },
-                        { id: "D3.2", icon: "⚙️", label: "Modalité Épistémique vs Déontique & Modaux", parent: "D3.0", dx: -1350, dy: 1200, unlocked: false, link: "", desc: "Étude formelle des auxiliaires modaux et de la prise en charge (assertion).", details: "Valeurs du possible, du nécessaire et validation du prédicat." },
-                        { id: "D3.3", icon: "⏳", label: "Aspectualité, Quantification & Détermination", parent: "D3.0", dx: -1350, dy: 1450, unlocked: false, link: "", desc: "Valeurs de be+V-ing, have+en, articles (a/the/ø) et structures nominales.", details: "Parcours, rupture, bornage et instanciation du nominal." },
-                        { id: "D3.4", icon: "🔗", label: "Syntaxe Complexe, Subordination & Inversion", parent: "D3.0", dx: -1350, dy: 1700, unlocked: false, link: "", desc: "Enchâssements, structures clefts, passifs et relatives complexes.", details: "Architecture de la phrase et contraintes syntaxiques." },
+                        // --- BRANCHE D4 : PHONÉTIQUE & PHONOLOGIE AVANCÉE (Rayonnement Sud) ---
+                        { id: "D4.0", icon: "🎵", label: "Branche Phonétique, API & Phonologie", parent: "D1", dx: -800, dy: 1800, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables (RP/GA) et phonologie métrique.", details: "Maîtrise des structures suprasegmentales." },
+                        { id: "D4.1", icon: "🔤", label: "Transcription Phonétique Rigoureuse (API)", parent: "D4.0", dx: -1200, dy: 2400, unlocked: false, link: "", desc: "Maîtrise des normes RP et General American sans aucune approximation.", details: "Voyelles, diphtongues, consonnes et variations dialectales standard." },
+                        { id: "D4.2", icon: "⚡", label: "Stress Shift & Rythme (Compound/Phrasal)", parent: "D4.0", dx: -800, dy: 2400, unlocked: false, link: "", desc: "Règles d'alternance rythmique, stress clash et accentuation des composés.", details: "Phonologie métrique et structuration intonative de l'énoncé." },
+                        { id: "D4.3", icon: "🔊", label: "Morpho-phonologie, Liaison, Schwa & Elision", parent: "D4.0", dx: -400, dy: 2400, unlocked: false, link: "", desc: "Phénomènes d'allomorphie des désinences (-ed, -s) et r-linking.", details: "Réductions vocaliques et lois euphoniques en chaîne parlée." },
 
-                        // --- BRANCHE D4 : PHONÉTIQUE & PHONOLOGIE AVANCÉE ---
-                        { id: "D4.0", icon: "🎵", label: "Branche Phonétique, API & Phonologie", parent: "D1", dx: -1000, dy: 1950, unlocked: true, link: "", desc: "Transcriptions phonétiques irréprochables (RP/GA) et phonologie métrique.", details: "Maîtrise des structures suprasegmentales." },
-                        { id: "D4.1", icon: "🔤", label: "Transcription Phonétique Rigoureuse (API)", parent: "D4.0", dx: -1350, dy: 1950, unlocked: false, link: "", desc: "Maîtrise des normes RP et General American sans aucune approximation.", details: "Voyelles, diphtongues, consonnes et variations dialectales standard." },
-                        { id: "D4.2", icon: "⚡", label: "Stress Shift & Rythme (Compound/Phrasal)", parent: "D4.0", dx: -1350, dy: 2200, unlocked: false, link: "", desc: "Règles d'alternance rythmique, stress clash et accentuation des composés.", details: "Phonologie métrique et structuration intonative de l'énoncé." },
-                        { id: "D4.3", icon: "🔊", label: "Morpho-phonologie, Liaison, Schwa & Elision", parent: "D4.0", dx: -1350, dy: 2450, unlocked: false, link: "", desc: "Phénomènes d'allomorphie des désinences (-ed, -s) et r-linking.", details: "Réductions vocaliques et lois euphoniques en chaîne parlée." },
-
-                        // --- BRANCHE D5 : TRADUCTION SAVANTE (THÈME & VERSION) ---
-                        { id: "D5.0", icon: "🔄", label: "Branche Traduction Savante (Thème & Version)", parent: "D1", dx: -1000, dy: 2750, unlocked: true, link: "", desc: "Maîtrise des registres littéraires, archaïques, techniques et de la stylistique comparée.", details: "Excellence traductologique." },
-                        { id: "D5.1", icon: "📖", label: "Version Littéraire & Stylistique (Anglais > Fr)", parent: "D5.0", dx: -1350, dy: 2700, unlocked: false, link: "", desc: "Traduction de textes classiques ou contemporains exigeants.", details: "Rendu des nuances esthétiques, registres et polyphonies textuelles." },
-                        { id: "D5.2", icon: "✍️", label: "Thème Littéraire & Idiomatique (Français > Anglais)", parent: "D5.0", dx: -1350, dy: 2950, unlocked: false, link: "", desc: "Maîtrise de la phraséologie anglaise authentique et élégante.", details: "Évitement des calques, transposition et modulation stylistique." },
-                        { id: "D5.3", icon: "📜", label: "Traduction de Textes Anciens ou Spécifiques", parent: "D5.0", dx: -1350, dy: 3200, unlocked: false, link: "", desc: "Gestion des registres archaïques, de la poésie et des subtilités rhétoriques rares.", details: "Équivalences interlinguistiques de haut vol." }
+                        // --- BRANCHE D5 : TRADUCTION SAVANTE (THÈME & VERSION) (Rayonnement Sud-Sud-Ouest) ---
+                        { id: "D5.0", icon: "🔄", label: "Branche Traduction Savante (Thème & Version)", parent: "D1", dx: -1400, dy: 2200, unlocked: true, link: "", desc: "Maîtrise des registres littéraires, archaïques, techniques et de la stylistique comparée.", details: "Excellence traductologique." },
+                        { id: "D5.1", icon: "📖", label: "Version Littéraire & Stylistique (Anglais > Fr)", parent: "D5.0", dx: -2000, dy: 2400, unlocked: false, link: "", desc: "Traduction de textes classiques ou contemporains exigeants.", details: "Rendu des nuances esthétiques, registres et polyphonies textuelles." },
+                        { id: "D5.2", icon: "✍️", label: "Thème Littéraire & Idiomatique (Français > Anglais)", parent: "D5.0", dx: -2000, dy: 2750, unlocked: false, link: "", desc: "Maîtrise de la phraséologie anglaise authentique et élégante.", details: "Évitement des calques, transposition et modulation stylistique." },
+                        { id: "D5.3", icon: "📜", label: "Traduction de Textes Anciens ou Spécifiques", parent: "D5.0", dx: -2000, dy: 3100, unlocked: false, link: "", desc: "Gestion des registres archaïques, de la poésie et des subtilités rhétoriques rares.", details: "Équivalences interlinguistiques de haut vol." }
                     ]
                 }
             ]
@@ -523,7 +519,7 @@
         let activeNode = null;
         let nodePositions = {};
 
-        let scale = 0.14; 
+        let scale = 0.12; 
         let panX = 0; 
         let panY = 0; 
         let isDragging = false; let startX = 0; let startY = 0;
@@ -534,16 +530,16 @@
         }
 
         function resetView() { 
-            scale = 0.14; 
-            panX = (window.innerWidth / 2) - (7000 * scale);
-            panY = (window.innerHeight / 2) - (7000 * scale);
+            scale = 0.12; 
+            panX = (window.innerWidth / 2) - (9000 * scale);
+            panY = (window.innerHeight / 2) - (9000 * scale);
             updateTransform(); 
         }
 
         function centerOnNode(dx, dy) {
-            scale = 0.50; 
-            panX = (window.innerWidth / 2) - ((7000 + dx) * scale);
-            panY = (window.innerHeight / 2) - ((7000 + dy) * scale);
+            scale = 0.45; 
+            panX = (window.innerWidth / 2) - ((9000 + dx) * scale);
+            panY = (window.innerHeight / 2) - ((9000 + dy) * scale);
             updateTransform();
         }
 
@@ -633,7 +629,7 @@
                 const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 let prevScale = scale;
                 if (e.deltaY < 0) { scale *= (1 + zoomIntensity); } else { scale /= (1 + zoomIntensity); }
-                scale = Math.max(0.03, Math.min(3, scale));
+                scale = Math.max(0.02, Math.min(3, scale));
                 panX = mouseX - (mouseX - panX) * (scale / prevScale);
                 panY = mouseY - (mouseY - panY) * (scale / prevScale);
                 updateTransform();
@@ -641,7 +637,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_full_agregation_complet');
+            const saved = localStorage.getItem('theo_final_app_skills_agregation_spaced');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -664,7 +660,7 @@
                         data[n.id] = { unlocked: n.unlocked, link: n.link };
                     });
                 });
-                localStorage.setItem('theo_final_app_skills_full_agregation_complet', JSON.stringify(data));
+                localStorage.setItem('theo_final_app_skills_agregation_spaced', JSON.stringify(data));
                 setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
                 updateSaveStatus('error');
@@ -686,8 +682,8 @@
             const container = document.getElementById('nodes-container');
             linesGroup.innerHTML = ''; container.innerHTML = '';
 
-            const cx = 7000; 
-            const cy = 7000;
+            const cx = 9000; 
+            const cy = 9000;
 
             nodePositions["CENTER"] = { x: cx, y: cy };
 
@@ -868,9 +864,9 @@
         initGraph();
         buildSidebarMenu();
         
-        scale = 0.14;
-        panX = (window.innerWidth / 2) - (7000 * scale);
-        panY = (window.innerHeight / 2) - (7000 * scale);
+        scale = 0.12;
+        panX = (window.innerWidth / 2) - (9000 * scale);
+        panY = (window.innerHeight / 2) - (9000 * scale);
         updateTransform();
 
         setupPanAndZoom();
