@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version IA & Prompt Engineering)</title>
+    <title>Arbre de Compétences - Théo Legros (Version Sud & Pédagogie IA)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -12,9 +12,8 @@
             --text-muted: #cbd5e1;
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
             --color-b: #3b82f6; /* Est / Bleu - Formation RH */
-            --color-c: #10b981; /* Sud / Vert - Pédagogie Youth Ultime */
+            --color-c: #10b981; /* Sud / Vert - Pédagogie, Youth & IA Pédagogique */
             --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert */
-            --color-e: #06b6d4; /* Zénith / Cyan - IA & Prompt Engineering */
             --locked-color: #475569;
         }
 
@@ -74,7 +73,6 @@
         .connection-line.active-b { stroke: var(--color-b); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-b)); }
         .connection-line.active-c { stroke: var(--color-c); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-c)); }
         .connection-line.active-d { stroke: var(--color-d); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-d)); }
-        .connection-line.active-e { stroke: var(--color-e); stroke-width: 5px; filter: drop-shadow(0 0 10px var(--color-e)); }
 
         #nodes-container {
             width: 10000px; height: 10000px;
@@ -111,7 +109,6 @@
         .skill-node.unlocked-b { border-color: var(--color-b); background: var(--color-b); color: #fff; box-shadow: 0 0 25px var(--color-b); }
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 25px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 25px var(--color-d); }
-        .skill-node.unlocked-e { border-color: var(--color-e); background: var(--color-e); color: #fff; box-shadow: 0 0 25px var(--color-e); }
 
         .node-icon { font-size: 1.8em; }
 
@@ -249,11 +246,10 @@
         </div>
         <div class="hud-scores-box">
             <div style="font-size: 0.75em; font-weight: 800; margin-bottom: 2px; color: #f8fafc;">MAÎTRISE GLOBALE</div>
-            <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord:</span> <span id="score-a">0</span></div>
-            <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est:</span> <span id="score-b">0</span></div>
-            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud:</span> <span id="score-c">0</span></div>
-            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest:</span> <span id="score-d">0</span></div>
-            <div class="hud-row" style="color: var(--color-e);"><span>🪙 Zénith (IA):</span> <span id="score-e">0</span></div>
+            <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (ACM):</span> <span id="score-a">0</span></div>
+            <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (RH):</span> <span id="score-b">0</span></div>
+            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie, Youth & IA):</span> <span id="score-c">0</span></div>
+            <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
     </div>
@@ -371,7 +367,7 @@
                     ]
                 },
                 {
-                    key: "C", name: "🟢 Sud (Pédagogie & Youth Expert Ultime)", color: "var(--color-c)",
+                    key: "C", name: "🟢 Sud (Pédagogie, Youth & IA Pédagogique)", color: "var(--color-c)",
                     nodes: [
                         { id: "C1", icon: "🏕️", label: "Pôle Pédagogie & Youth Management", parent: "CENTER", dx: 0, dy: 600, unlocked: true, link: "", desc: "Maîtrise absolue de la sécurité affective, de la bientraitance et de la démocratie participative.", details: "Encadrement expert de groupes de mineurs et animation d'activités à fort impact éducatif et émancipateur." },
                         { id: "C1.1", icon: "🛡️", label: "Repérage Fin des Signaux Faibles", parent: "C1", dx: -550, dy: 950, unlocked: false, link: "", desc: "Détection précoce du mal-être, de l'isolement et des changements de comportements.", details: "Observation clinique des dynamiques de groupe, écoute active et traçabilité rigoureuse des incidents éducatifs." },
@@ -401,7 +397,14 @@
                         { id: "C6.1", icon: "👥", label: "Sociométrie & Analyse des Leaderships", parent: "C1", dx: 550, dy: 1150, unlocked: false, link: "", desc: "Cartographie des affinités informelles et des sous-groupes au sein d'une colo.", details: "Identification des leaders d'opinion, des enfants isolés ou rejetés et stratégies d'intégration par l'activité." },
                         { id: "C6.2", icon: "🌀", label: "Gestion des Phénomènes de Bouc Émissaire", parent: "C1.2", dx: -1150, dy: 1600, unlocked: false, link: "", desc: "Intervention sociologique face à la stigmatisation collective.", details: "Déconstruction des mécanismes d'exclusion de groupe, protection de la cible et recadrage systémique." },
                         { id: "C6.3", icon: "🧘", label: "Gestion de l'Anxiété de Séparation (Colonies)", parent: "C1", dx: -350, dy: 750, unlocked: false, link: "", desc: "Accompagnement des premiers départs en séjour et mal du pays.", details: "Protocoles d'accueil bienveillant, rituels de transition, gestion relationnelle des parents anxieux." },
-                        { id: "C6.4", icon: "🎯", label: "Évaluation d'Impact Éducatif & qualitatif", parent: "C1", dx: 350, dy: 750, unlocked: false, link: "", desc: "Mesurer les progrès relationnels et l'émancipation des mineurs.", details: "Indicateurs qualitatifs de socialisation, autonomie quotidienne et questionnaires réflexifs de fin de séjour." }
+                        { id: "C6.4", icon: "🎯", label: "Évaluation d'Impact Éducatif & qualitatif", parent: "C1", dx: 350, dy: 750, unlocked: false, link: "", desc: "Mesurer les progrès relationnels et l'émancipation des mineurs.", details: "Indicateurs qualitatifs de socialisation, autonomie quotidienne et questionnaires réflexifs de fin de séjour." },
+                        
+                        // --- SOUS-BRANCHE INTÉGRÉE : IA Générative, Prompts & Pédagogie Numérique ---
+                        { id: "C7.0", icon: "🤖", label: "IA Générative & Prompt Engineering Pédagogique", parent: "C1", dx: 0, dy: 1550, unlocked: true, link: "", desc: "Maîtrise des LLM, des prompts structurés et de l'intégration EdTech en milieu éducatif.", details: "Fondamentaux des modèles génératifs et application directe à la conception pédagogique." },
+                        { id: "C7.1", icon: "📝", label: "Prompts Structurés & Méthode CRAFT", parent: "C7.0", dx: -250, dy: 2000, unlocked: false, link: "", desc: "Création de consignes de rédaction précises et optimisées.", details: "Rôle, Contexte, Contraintes, Format et application de la méthode CRAFT pour l'enseignement." },
+                        { id: "C7.2", icon: "🧠", label: "Few-Shot, CoT & Tuteur Socratique", parent: "C7.1", dx: -500, dy: 2350, unlocked: false, link: "", desc: "Utilisation du raisonnement guidé et simulation de tuteurs intelligents.", details: "Chain-of-Thought et configuration de l'IA pour ne pas donner les réponses mais guider l'élève (maïeutique)." },
+                        { id: "C7.3", icon: "📚", label: "Conception de Séquences & Quiz Adaptatifs", parent: "C7.0", dx: 250, dy: 2000, unlocked: false, link: "", desc: "Génération de plans de cours et d'évaluations par l'IA.", details: "Alignement sur la taxonomie de Bloom et création de parcours d'apprentissage individualisés." },
+                        { id: "C7.4", icon: "⚖️", label: "Différenciation, Remédiation & Inclusivité IA", parent: "C7.3", dx: 500, dy: 2350, unlocked: false, link: "", desc: "Adapter les supports pour les élèves Dys et besoins spécifiques.", details: "Réécriture de textes en langage clair, simplification lexicale et étayage sur-mesure." }
                     ]
                 },
                 {
@@ -437,19 +440,6 @@
                         { id: "D5.3", icon: "🧘", label: "Gestion de Classe & Climat Scolaire", parent: "D5.1", dx: -750, dy: 1400, unlocked: false, link: "", desc: "Autorité bienveillante et prévention de la violence scolaire.", details: "Cadre de travail sécurisant, gestion des conflits et coopération avec la vie scolaire." },
                         { id: "D5.4", icon: "🤝", label: "Partenariat Institutionnel & Équipe", parent: "D5.3", dx: -1150, dy: 1700, unlocked: false, link: "", desc: "Travail en équipe pluridisciplinaire et médico-sociale.", details: "Rôle du professeur principal, relations avec les parents d'élèves et réseaux d'aide." },
                         { id: "D5.5", icon: "🧩", label: "Inclusion & Élèves à Besoins Éducatifs (EBEP)", parent: "D5.3", dx: -750, dy: 1750, unlocked: false, link: "", desc: "Accueil des élèves en situation de handicap.", details: "Coordination avec les AESH, mise en place des PAI/PPS/PAP et adaptations pédagogiques." }
-                    ]
-                },
-                {
-                    key: "E", name: "🪙 Zénith (IA & Prompt Engineering)", color: "var(--color-e)",
-                    nodes: [
-                        { id: "E1", icon: "🤖", label: "Maîtrise des IA Génératives & LLM", parent: "CENTER", dx: 600, dy: -600, unlocked: true, link: "", desc: "Compréhension globale des modèles de langage et des écosystèmes d'IA générative.", details: "Architecture des Transformers, tokens, fenêtres de contexte et choix des modèles (GPT, Claude, Gemini)." },
-                        { id: "E1.1", icon: "📝", label: "Anatomie du Prompt Structuré (R-C-C-F)", parent: "E1", dx: 1050, dy: -900, unlocked: false, link: "", desc: "Maîtrise des composantes fondamentales d'un prompt efficace.", details: "Rôle, Contexte, Contraintes, Format de sortie et exemples pour éliminer l'ambiguïté." },
-                        { id: "E1.2", icon: "🧠", label: "Techniques Avancées (Few-Shot & CoT)", parent: "E1.1", dx: 1550, dy: -1150, unlocked: false, link: "", desc: "Utilisation de méthodes de raisonnement guidé.", details: "Chain-of-Thought (chaîne de pensée), Few-Shot prompting (exemples par l'analogie) et Tree-of-Thoughts." },
-                        { id: "E1.3", icon: "🎭", label: "Roleplay & System Prompts experts", parent: "E1.1", dx: 1550, dy: -900, unlocked: false, link: "", desc: "Assignation de personas et cadrage des comportements de l'IA.", details: "Définition de la posture d'expert, contraintes tonales, limites et boucles de rétroaction." },
-                        { id: "E1.4", icon: "⚙️", label: "Paramétrage Technique (Température & Top-P)", parent: "E1", dx: 1050, dy: -450, unlocked: false, link: "", desc: "Ajustement des hyperparamètres des modèles.", details: "Maîtrise de la température (créativité vs déterminisme), présence penalty et pénalité de fréquence." },
-                        { id: "E1.5", icon: "📚", label: "IA pour la Pédagogie & Formation", parent: "E1.1", dx: 2050, dy: -1050, unlocked: false, link: "", desc: "Génération de plans de cours, quiz adaptatifs et scénarios d'apprentissage.", details: "Automatisation de la conception pédagogique alignée sur la taxonomie de Bloom." },
-                        { id: "E1.6", icon: "🔍", label: "RAG & Agents IA (Workflows)", parent: "E1.5", dx: 2550, dy: -1050, unlocked: false, link: "", desc: "Couplage des IA avec des bases documentaires externes.", details: "Retrieval-Augmented Generation, réduction des hallucinations et construction d'agents autonomes." },
-                        { id: "E1.7", icon: "⚖️", label: "Éthique, Biais & Sécurité des Prompts", parent: "E1", dx: 600, dy: -1050, unlocked: false, link: "", desc: "Esprit critique face aux limites et risques des IA.", details: "Gestion des hallucinations, conformité RGPD, propriété intellectuelle et prompt injection." }
                     ]
                 }
             ]
@@ -544,7 +534,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_zenith_ai');
+            const saved = localStorage.getItem('theo_final_app_skills_sud_ia');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -565,7 +555,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_zenith_ai', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_sud_ia', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
@@ -598,7 +588,7 @@
             centerWrap.onclick = (e) => { e.stopPropagation(); openCenterModal(); };
             container.appendChild(centerWrap);
 
-            let hudScores = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+            let hudScores = { A: 0, B: 0, C: 0, D: 0 };
 
             graphData.regions.forEach(r => {
                 r.nodes.forEach(n => {
@@ -650,7 +640,6 @@
             document.getElementById('score-b').innerText = hudScores.B;
             document.getElementById('score-c').innerText = hudScores.C;
             document.getElementById('score-d').innerText = hudScores.D;
-            document.getElementById('score-e').innerText = hudScores.E;
         }
 
         function openCenterModal() {
