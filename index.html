@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbre de Compétences - Théo Legros (Version Expert IA & Pédagogie)</title>
+    <title>Arbre de Compétences - Théo Legros (Version Directitude BAFA Expert)</title>
     <style>
         :root {
             --bg-color: #0b1120;
@@ -11,7 +11,7 @@
             --text-main: #f8fafc;
             --text-muted: #cbd5e1;
             --color-a: #ef4444; /* Nord / Rouge - Pilotage ACM Expert */
-            --color-b: #3b82f6; /* Est / Bleu - Formation RH */
+            --color-b: #3b82f6; /* Est / Bleu - Formation RH & Directeur BAFA/BAFD */
             --color-c: #10b981; /* Sud / Vert - Pédagogie, Youth & IA Pédagogique */
             --color-d: #a855f7; /* Ouest / Violet - CAPES Anglais Expert */
             --locked-color: #475569;
@@ -247,8 +247,8 @@
         <div class="hud-scores-box">
             <div style="font-size: 0.75em; font-weight: 800; margin-bottom: 2px; color: #f8fafc;">MAÎTRISE GLOBALE</div>
             <div class="hud-row" style="color: var(--color-a);"><span>🔴 Nord (ACM):</span> <span id="score-a">0</span></div>
-            <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (RH):</span> <span id="score-b">0</span></div>
-            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Pédagogie, Youth & IA):</span> <span id="score-c">0</span></div>
+            <div class="hud-row" style="color: var(--color-b);"><span>🔵 Est (RH & Direction BAFA):</span> <span id="score-b">0</span></div>
+            <div class="hud-row" style="color: var(--color-c);"><span>🟢 Sud (Youth & IA):</span> <span id="score-c">0</span></div>
             <div class="hud-row" style="color: var(--color-d);"><span>🟣 Ouest (CAPES):</span> <span id="score-d">0</span></div>
             <button class="reset-view-btn" onclick="resetView()">🎯 Recentrer sur le Noyau</button>
         </div>
@@ -339,31 +339,49 @@
                     ]
                 },
                 {
-                    key: "B", name: "🔵 Est (Formation RH)", color: "var(--color-b)",
+                    key: "B", name: "🔵 Est (Formation RH & Direction BAFA/BAFD Expert)", color: "var(--color-b)",
                     nodes: [
-                        { id: "B1", icon: "🎓", label: "Pôle Ingénierie de Formation", parent: "CENTER", dx: 600, dy: 0, unlocked: true, link: "", desc: "Direction globale de l'ingénierie pédagogique, de l'andragogie et de la conformité RH.", details: "Architecture complète des parcours de formation professionnels et certifiants." },
-                        { id: "B1.1", icon: "🔍", label: "ADDIE - Phase A (Analyse)", parent: "B1", dx: 1050, dy: -750, unlocked: false, link: "", desc: "Cadrage amont de la demande et cartographie des écarts de compétences.", details: "Entretiens de positionnement, analyse des postes de travail et formulation du besoin opérationnel." },
-                        { id: "B1.2", icon: "📐", label: "ADDIE - Phase D (Design)", parent: "B1.1", dx: 1550, dy: -1000, unlocked: false, link: "", desc: "Architecture globale du parcours, découpage en blocs et choix des modalités.", details: "Définition des prérequis, durée, séquençage et stratégie d'évaluation." },
-                        { id: "B1.3", icon: "📝", label: "ADDIE - Phase D2 (Développement)", parent: "B1.1", dx: 1550, dy: -750, unlocked: false, link: "", desc: "Conception complète des supports d'apprentissage.", details: "Création des guides du formateur, livrets apprenants, quiz, fiches consignes et médias." },
-                        { id: "B1.4", icon: "🚀", label: "ADDIE - Phase I (Implémentation)", parent: "B1.1", dx: 1550, dy: -500, unlocked: false, link: "", desc: "Déploiement logistique et animation des sessions pilotes.", details: "Formation des formateurs relais, calage des environnements techniques et gestion du lancement." },
-                        { id: "B1.5", icon: "🔄", label: "ADDIE - Phase E (Évaluation)", parent: "B1.1", dx: 1550, dy: -250, unlocked: false, link: "", desc: "Boucle de rétroaction et mise à jour des contenus.", details: "Analyse des retours d'expérience et mise en œuvre des actions correctives." },
-                        { id: "B2.1", icon: "🎯", label: "Taxonomie de Bloom (Cognitif)", parent: "B1", dx: 1050, dy: -250, unlocked: false, link: "", desc: "Formulations d'objectifs pédagogiques mesurables et univoques.", details: "Utilisation des verbes d'action adaptés aux 6 niveaux (de la mémorisation à la création)." },
-                        { id: "B2.2", icon: "🔗", label: "Alignement Constructif (Biggs)", parent: "B1.2", dx: 2050, dy: -1000, unlocked: false, link: "", desc: "Garantie de cohérence systémique globale.", details: "S'assurer de l'alignement parfait entre Objectifs $\leftrightarrow$ Activités $\leftrightarrow$ Évaluations." },
-                        { id: "B2.3", icon: "🔀", label: "Scénarisation Multimodale", parent: "B1.3", dx: 2050, dy: -750, unlocked: false, link: "", desc: "Hybridation optimale des espaces d'apprentissage.", details: "Dosage précis entre présentiel, e-learning asynchrone, classe virtuelle et AFEST." },
-                        { id: "B2.4", icon: "💻", label: "LMS & Digital Learning", parent: "B2.3", dx: 2550, dy: -750, unlocked: false, link: "", desc: "Administration et ingénierie sur plateforme LMS.", details: "Suivi des parcours, gamification, micro-learning et gestion du *completion rate*." },
-                        { id: "B3.1", icon: "🧠", label: "Principes d'Andragogie (Knowles)", parent: "B1", dx: 1050, dy: 150, unlocked: false, link: "", desc: "Postulats de l'apprentissage des adultes.", details: "Prise en compte de l'expérience, résolution de problèmes réels et autonomie." },
-                        { id: "B3.2", icon: "🤝", label: "Posture de Facilitateur", parent: "B3.1", dx: 1550, dy: 50, unlocked: false, link: "", desc: "Gestion des dynamiques relationnelles et régulation de groupe.", details: "Horizontalité, écoute active, traitement des objections et gestion des profils difficiles." },
-                        { id: "B3.3", icon: "🔍", label: "Groupes d'APP (Pratiques)", parent: "B3.1", dx: 1550, dy: 300, unlocked: false, link: "", desc: "Guidage méthodologique d'Analyse de Pratiques Professionnelles.", details: "Protocole d'explicitation, phase de questionnement et co-construction d'hypothèses." },
-                        { id: "B3.4", icon: "☀️", label: "Météo & Climat de Formation", parent: "B3.2", dx: 2050, dy: 50, unlocked: false, link: "", desc: "Inclusion, désamorçage et sécurité psychologique.", details: "Techniques d'ice-breaker, météo des émotions et maintien d'un climat bienveillant." },
-                        { id: "B4.1", icon: "📑", label: "Qualiopi - Critères 1 à 3", parent: "B1", dx: 1050, dy: 550, unlocked: false, link: "", desc: "Information du public, objectifs et modalités d'accueil.", details: "Indicateurs de transparence, adéquation des prérequis et gestion du handicap." },
-                        { id: "B4.2", icon: "🛡️", label: "Qualiopi - Critères 4 à 7", parent: "B4.1", dx: 1550, dy: 500, unlocked: false, link: "", desc: "Qualification des formateurs, moyens et amélioration continue.", details: "Veille légale/métier, suivi des sous-traitants et traitement des réclamations." },
-                        { id: "B4.3", icon: "💰", label: "Montage Financier & OPCO", parent: "B4.1", dx: 1550, dy: 750, unlocked: false, link: "", desc: "Ingénierie financière et mobilisation des fonds paritaires.", details: "Dossiers OPCO, CPF, FNE-Formation, subventions et bilan pédagogique financier (BPF)." },
-                        { id: "B4.4", icon: "📊", label: "Kirkpatrick - Niveaux 1 & 2", parent: "B4.2", dx: 2050, dy: 500, unlocked: false, link: "", desc: "Mesure de la satisfaction à chaud et validation des acquis.", details: "Questionnaires de satisfaction, quiz sommatifs, grilles d'observation et mises en situation." },
-                        { id: "B4.5", icon: "📈", label: "Kirkpatrick - Niveaux 3 & 4 (ROI)", parent: "B4.4", dx: 2550, dy: 500, unlocked: false, link: "", desc: "Mesure du transfert sur poste et impact économique.", details: "Évaluation à froid (M+3/M+6), indicateurs métier et calcul de rentabilité (ROI/ROE)." },
-                        { id: "B5.1", icon: "🏕️", label: "Arrêté 15 juillet 2015 (BAFA)", parent: "B1", dx: 1050, dy: 1000, unlocked: false, link: "", desc: "Cadre réglementaire strict des sessions de formation d'animation.", details: "Habilitations SDJES, respect des durées minimales, critères de validation et étapes." },
-                        { id: "B5.2", icon: "👥", label: "Supervision & Tutorat Formateurs", parent: "B5.1", dx: 1550, dy: 1000, unlocked: false, link: "", desc: "Accompagnement pédagogique de l'équipe de formation.", details: "Observations en situation, débriefings quotidiens et soutien à la scénarisation." },
-                        { id: "B5.3", icon: "📋", label: "Évaluation Formative Stage", parent: "B5.2", dx: 2050, dy: 950, unlocked: false, link: "", desc: "Suivi individuel des stagiaires BAFA/BAFD.", details: "Entretiens bilans, accompagnement du livret de formation et remédiation." },
-                        { id: "B5.4", icon: "⚖️", label: "Jurys & Délibérations", parent: "B5.2", dx: 2050, dy: 1200, unlocked: false, link: "", desc: "Délivrance argumentée des avis de fin de stage.", details: "Rédaction des appréciations synthétiques, gestion des avis réservés et présentation aux jurys." }
+                        { id: "B1", icon: "🎓", label: "Direction Générale de Formation BAFA/BAFD", parent: "CENTER", dx: 600, dy: 0, unlocked: true, link: "", desc: "Pilotage global, pédagogique, humain et réglementaire des sessions de formation d'animateurs et directeurs.", details: "Garantie de la qualité des stages, encadrement de l'équipe de formateurs et conformité SDJES." },
+                        
+                        // --- SOUS-BRANCHE B1 : Ingénierie de Formation & Modèles Pédagogiques ---
+                        { id: "B1.1", icon: "🔍", label: "ADDIE - Phase A (Analyse du Besoin)", parent: "B1", dx: 1050, dy: -750, unlocked: false, link: "", desc: "Cadrage amont des profils de stagiaires et attentes du secteur.", details: "Positionnement initial, diagnostic des représentations et besoins spécifiques des groupes." },
+                        { id: "B1.2", icon: "📐", label: "ADDIE - Phase D (Design & Scénarisation)", parent: "B1.1", dx: 1550, dy: -1000, unlocked: false, link: "", desc: "Architecture globale du stage (Générale, Perfectionnement, BAFD).", details: "Découpage du planning, alternance théorie/pratique et rythme biologique des stagiaires." },
+                        { id: "B1.3", icon: "📝", label: "ADDIE - Phase D2 (Développement des Fiches)", parent: "B1.1", dx: 1550, dy: -750, unlocked: false, link: "", desc: "Création du livret formateur et des fiches séquences.", details: "Rédaction des déroulés, consignes d'ateliers, supports visuels et matériel nécessaire." },
+                        { id: "B1.4", icon: "🚀", label: "ADDIE - Phase I (Implémentation & Régulation)", parent: "B1.1", dx: 1550, dy: -500, unlocked: false, link: "", desc: "Lancement de la session et ajustements en temps réel.", details: "Pilotage du déroulé quotidien, gestion des imprévus et régulation de l'emploi du temps." },
+                        { id: "B1.5", icon: "🔄", label: "ADDIE - Phase E (Évaluation & Bilan Stage)", parent: "B1.1", dx: 1550, dy: -250, unlocked: false, link: "", desc: "Rétroaction sur la qualité globale du stage.", details: "Analyse des bilans de satisfaction stagiaires et rapport moral du directeur de session." },
+                        { id: "B2.1", icon: "🎯", label: "Taxonomie de Bloom (Cognitif & Affectif)", parent: "B1", dx: 1050, dy: -250, unlocked: false, link: "", desc: "Formulation des objectifs opérationnels du BAFA.", details: "Définition des critères d'évaluation des compétences de l'animateur (savoir, savoir-faire, savoir-être)." },
+                        { id: "B2.2", icon: "🔗", label: "Alignement Constructif (Biggs)", parent: "B1.2", dx: 2050, dy: -1000, unlocked: false, link: "", desc: "Cohérence entre objectifs, mises en situation et évaluation.", details: "S'assurer que chaque temps pratique évalue directement une compétence réglementaire du BAFA." },
+                        { id: "B2.3", icon: "🔀", label: "Pédagogie de l'Alternance & Mises en Situation", parent: "B1.3", dx: 2050, dy: -750, unlocked: false, link: "", desc: "Conception de jeux de rôle, simulations et grands jeux de stage.", details: "Simulation de convocation de parents, gestion de conflits d'enfants et grands jeux thématiques." },
+                        { id: "B2.4", icon: "💻", label: "E-Learning & Outils Digitaux (BAFA Hybride)", parent: "B2.3", dx: 2550, dy: -750, unlocked: false, link: "", desc: "Utilisation des LMS et espaces numériques en formation.", details: "Suivi des parcours en distanciel pour les approfondissements et dépôts de productions." },
+
+                        // --- SOUS-BRANCHE B2 : Cadre Réglementaire SDJES & Habilitations ---
+                        { id: "B5.1", icon: "🏕️", label: "Arrêté du 15 juillet 2015 & Textes de Référence", parent: "B1", dx: 1050, dy: 1000, unlocked: true, link: "", desc: "Maîtrise absolue de la réglementation des brevets BAFA/BAFD.", details: "Durées minimales (8 jours base, 14 jours pratique, 6 jours perf), délais et prérequis d'âge." },
+                        { id: "B5.2", icon: "📋", label: "Gestion Administrative & Télé-procédure FORMFOP", parent: "B5.1", dx: 1550, dy: 1000, unlocked: false, link: "", desc: "Suivi administratif officiel avec les services de l'État.", details: "Inscriptions, gestion des listes de présence, transmission des procès-verbaux et liens SDJES." },
+                        { id: "B5.3", icon: "⚖️", label: "Responsabilité Civile & Pénale du Directeur", parent: "B5.1", dx: 1550, dy: 1250, unlocked: false, link: "", desc: "Sécurisation juridique du centre de formation.", details: "Obligations de moyens, sécurité des locaux d'accueil, assurances et gestion des accidents stagiaires." },
+                        { id: "B5.4", icon: "🏛️", label: "Jurys Départementaux & Rapport d'Avis", parent: "B5.2", dx: 2050, dy: 1000, unlocked: false, link: "", desc: "Soutenance et défense des décisions de stage devant le jury SDJES.", details: "Rédaction des avis synthétiques, défense des dossiers complexes et représentation de l'organisme." },
+
+                        // --- SOUS-BRANCHE B3 : Management & Supervision des Formateurs ---
+                        { id: "B3.1", icon: "👥", label: "Recrutement & Sourcing de l'Équipe de Formateurs", parent: "B1", dx: 1050, dy: 150, unlocked: false, link: "", desc: "Constitution d'une équipe complémentaire et qualifiée.", details: "Sélection des formateurs selon leurs spécialités (grands jeux, petite enfance, réglementation, secourisme)." },
+                        { id: "B3.2", icon: "🤝", label: "Tutorat & Compagnonnage des Nouveaux Formateurs", parent: "B3.1", dx: 1550, dy: 50, unlocked: false, link: "", desc: "Accompagnement des formateurs stagiaires.", details: "Co-animation guidée, observation en situation, feedback constructif et transmission des postures." },
+                        { id: "B3.3", icon: "🗣️", label: "Animation des Réunions d'Équipe de Formation", parent: "B3.1", dx: 1550, dy: 300, unlocked: false, link: "", desc: "Conduite des temps de préparation, bilans quotidiens et régulations.", details: "Mise en place de la réunion préparatoire de session, débriefings de fin de journée et cohésion d'équipe." },
+                        { id: "B3.4", icon: "🧘", label: "Gestion de la Fatigue & Climat d'Équipe", parent: "B3.2", dx: 2050, dy: 50, unlocked: false, link: "", desc: "Prévention du surmenage en stage intensif (pension complète).", details: "Régulation des plannings de garde, équilibre des charges de travail et maintien de la motivation." },
+
+                        // --- SOUS-BRANCHE B4 : Andragogie & Accompagnement des Stagiaires ---
+                        { id: "B4.1", icon: "🧠", label: "Andragogie & Psychologie de l'Adulte en Formation", parent: "B1", dx: 1050, dy: 550, unlocked: false, link: "", desc: "Compréhension des leviers d'apprentissage des jeunes adultes (16-25 ans).", details: "Gestion des représentations, valorisation des expériences antérieures et autonomisation." },
+                        { id: "B4.2", icon: "💬", label: "Entretiens Individuels de Suivi Pédagogique", parent: "B4.1", dx: 1550, dy: 500, unlocked: false, link: "", desc: "Accompagnement réflexif des stagiaires tout au long du stage.", details: "Entretiens de mi-stage, auto-évaluation guidée et fixation d'objectifs personnels de progression." },
+                        { id: "B4.3", icon: "☀️", label: "Sécurité Affective & Gestion des Crises Stagiaires", parent: "B4.1", dx: 1550, dy: 750, unlocked: false, link: "", desc: "Prise en charge du mal-être, stress d'évaluation ou conflits.", details: "Désescalade des tensions en groupe, écoute active, gestion du mal du pays ou des crises anxieuses." },
+                        { id: "B4.4", icon: "🧩", label: "Inclusion & Adaptation Pédagogique (Handicap/Dys)", parent: "B4.2", dx: 2050, dy: 500, unlocked: false, link: "", desc: "Aménagement des épreuves et des supports pour tous les profils.", details: "Adaptation des temps de parole, soutien à l'écrit, aménagement du rythme et bienveillance." },
+
+                        // --- SOUS-BRANCHE B5 : Évaluation Formative, Summative & Délibération ---
+                        { id: "B6.1", icon: "📊", label: "Conception de Grilles d'Évaluation Critériées", parent: "B1", dx: 600, dy: 900, unlocked: false, link: "", desc: "Élaboration d'outils d'évaluation objectifs et partagés.", details: "Définition d'indicateurs observables pour chaque fonction de l'animateur (sécurité, vie quotidienne, projets)." },
+                        { id: "B6.2", icon: "🔍", label: "Observation Armée des Pratiques en Stage", parent: "B6.1", dx: 950, dy: 1200, unlocked: false, link: "", desc: "Prise de notes factuelles pendant les temps d'animation des stagiaires.", details: "Différenciation stricte entre faits observés, interprétations et jugements de valeur." },
+                        { id: "B6.3", icon: "⚖️", label: "Conduite des Conseils de Formateurs (Délibérations)", parent: "B6.1", dx: 600, dy: 1300, unlocked: false, link: "", desc: "Présidence des réunions de décision d'aptitude/inaptitude.", details: "Recherche du consensus d'équipe, neutralisation des biais de confirmation et argumentation factuelle." },
+                        { id: "B6.4", icon: "✍️", label: "Rédaction des Appréciations Synthétiques BAFA", parent: "B6.3", dx: 950, dy: 1500, unlocked: false, link: "", desc: "Rédaction de bilans qualitatifs motivés pour la SDJES.", details: "Formulations constructives, explicitation des motifs d'Ajournement ou de Non-Validation." },
+                        { id: "B6.5", icon: "🚨", label: "Gestion des Ajournements & Non-Validations", parent: "B6.3", dx: 300, dy: 1500, unlocked: false, link: "", desc: "Annonce et accompagnement des décisions défavorables.", details: "Entretien d'annonce sécurisé, explication des voies de recours, conseil d'orientation et posture éthique." },
+
+                        // --- SOUS-BRANCHE B6 : Démarche Qualité Qualiopi & Audit ---
+                        { id: "B7.1", icon: "📑", label: "Conformité Qualiopi - Critères 1 à 3 (Information & Prérequis)", parent: "B1", dx: 1400, dy: 200, unlocked: false, link: "", desc: "Information du public, objectifs et modalités d'accès au stage.", details: "Transparence des tarifs, conditions d'annulation, taux de réussite et accueil des publics PSH." },
+                        { id: "B7.2", icon: "🛡️", label: "Qualiopi - Critères 4 à 7 (Moyens, Veille & Amélioration)", parent: "B7.1", dx: 1850, dy: 200, unlocked: false, link: "", desc: "Gestion des compétences des formateurs et amélioration continue.", details: "Suivi des formations de formateurs, traitement des réclamations, questionnaires de satisfaction et audits." }
                     ]
                 },
                 {
@@ -398,15 +416,11 @@
                         { id: "C6.2", icon: "🌀", label: "Gestion des Phénomènes de Bouc Émissaire", parent: "C1.2", dx: -1150, dy: 1600, unlocked: false, link: "", desc: "Intervention sociologique face à la stigmatisation collective.", details: "Déconstruction des mécanismes d'exclusion de groupe, protection de la cible et recadrage systémique." },
                         { id: "C6.3", icon: "🧘", label: "Gestion de l'Anxiété de Séparation (Colonies)", parent: "C1", dx: -350, dy: 750, unlocked: false, link: "", desc: "Accompagnement des premiers départs en séjour et mal du pays.", details: "Protocoles d'accueil bienveillant, rituels de transition, gestion relationnelle des parents anxieux." },
                         { id: "C6.4", icon: "🎯", label: "Évaluation d'Impact Éducatif & qualitatif", parent: "C1", dx: 350, dy: 750, unlocked: false, link: "", desc: "Mesurer les progrès relationnels et l'émancipation des mineurs.", details: "Indicateurs qualitatifs de socialisation, autonomie quotidienne et questionnaires réflexifs de fin de séjour." },
-                        
-                        // --- SOUS-BRANCHE IA & PÉDAGOGIE APPROFONDIE ---
                         { id: "C7.0", icon: "🤖", label: "IA Générative & Prompt Engineering Pédagogique", parent: "C1", dx: 0, dy: 1550, unlocked: true, link: "", desc: "Maîtrise des LLM, des prompts structurés et de l'intégration EdTech en milieu éducatif.", details: "Fondamentaux des modèles génératifs et application directe à la conception pédagogique." },
                         { id: "C7.1", icon: "📝", label: "Prompts Structurés & Méthode CRAFT", parent: "C7.0", dx: -250, dy: 2000, unlocked: false, link: "", desc: "Création de consignes de rédaction précises et optimisées.", details: "Rôle, Contexte, Contraintes, Format et application de la méthode CRAFT pour l'enseignement." },
                         { id: "C7.2", icon: "🧠", label: "Few-Shot, CoT & Tuteur Socratique", parent: "C7.1", dx: -500, dy: 2350, unlocked: false, link: "", desc: "Utilisation du raisonnement guidé et simulation de tuteurs intelligents.", details: "Chain-of-Thought et configuration de l'IA pour ne pas donner les réponses mais guider l'élève (maïeutique)." },
                         { id: "C7.3", icon: "📚", label: "Conception de Séquences & Quiz Adaptatifs", parent: "C7.0", dx: 250, dy: 2000, unlocked: false, link: "", desc: "Génération de plans de cours et d'évaluations par l'IA.", details: "Alignement sur la taxonomie de Bloom et création de parcours d'apprentissage individualisés." },
                         { id: "C7.4", icon: "⚖️", label: "Différenciation, Remédiation & Inclusivité IA", parent: "C7.3", dx: 500, dy: 2350, unlocked: false, link: "", desc: "Adapter les supports pour les élèves Dys et besoins spécifiques.", details: "Réécriture de textes en langage clair, simplification lexicale et étayage sur-mesure." },
-                        
-                        // NOUVEAUX NŒUDS EXPERTS APPROFONDIS (IA & Pédagogie)
                         { id: "C7.5", icon: "📊", label: "Grilles Critériées & Automatisation de l'Évaluation", parent: "C7.3", dx: 150, dy: 2700, unlocked: false, link: "", desc: "Génération de rubriques d'évaluation formatives objectives.", details: "Création de grilles critériées multicritères et génération de rétroactions nuancées pour les apprenants." },
                         { id: "C7.6", icon: "🗺️", label: "Ingénierie de Séquences en Pédagogie par Projet (PBL)", parent: "C7.0", dx: -150, dy: 2700, unlocked: false, link: "", desc: "Conception de parcours d'apprentissage par projets complexes avec l'IA.", details: "Scénarisation de tâches finales immersives, jalons temporels et ressources documentaires générées par LLM." },
                         { id: "C7.7", icon: "📈", label: "Learning Analytics & Diagnostic des Lacunes", parent: "C7.5", dx: 450, dy: 2950, unlocked: false, link: "", desc: "Exploitation des données de quiz pour repérer les incompréhensions.", details: "Analyse des erreurs récurrentes d'une cohorte et génération automatique de modules de remédiation ciblés." },
@@ -541,7 +555,7 @@
         }
 
         function loadSavedState() {
-            const saved = localStorage.getItem('theo_final_app_skills_sud_ia');
+            const saved = localStorage.getItem('theo_final_app_skills_bafa_expert');
             if (saved) {
                 const data = JSON.parse(saved);
                 graphData.regions.forEach(r => {
@@ -562,7 +576,7 @@
                     data[n.id] = { unlocked: n.unlocked, link: n.link };
                 });
             });
-            localStorage.setItem('theo_final_app_skills_sud_ia', JSON.stringify(data));
+            localStorage.setItem('theo_final_app_skills_bafa_expert', JSON.stringify(data));
         }
 
         function isNodeUnlocked(id) {
