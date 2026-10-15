@@ -120,6 +120,17 @@
         .skill-node.unlocked-c { border-color: var(--color-c); background: var(--color-c); color: #fff; box-shadow: 0 0 20px var(--color-c); }
         .skill-node.unlocked-d { border-color: var(--color-d); background: var(--color-d); color: #fff; box-shadow: 0 0 20px var(--color-d); }
 
+        /* Animation d'identification temporaire au clic depuis le menu */
+        @keyframes pulse-flash {
+            0% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9); }
+            50% { transform: scale(1.5); filter: brightness(1.4); box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.8); z-index: 50; }
+            100% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .skill-node.highlight-flash {
+            animation: pulse-flash 1.5s ease-in-out;
+        }
+
         .node-icon { font-size: 1.6em; transition: transform 0.3s ease; }
         .skill-node-wrapper:hover .node-icon { transform: scale(1.1); }
 
@@ -330,7 +341,6 @@
     </div>
 
     <script>
-        // Clé unique permanente pour conserver votre progression au fil de toutes les versions
         const STORAGE_KEY = 'theo_final_app_skills';
 
         function updateSaveStatus(status) {
@@ -357,10 +367,10 @@
             }
         }
 
-        const R1 = 700;   // Niveau 1
-        const R2 = 1400;  // Niveau 2
-        const R3 = 2200;  // Niveau 3
-        const R4 = 3000;  // Niveau 4
+        const R1 = 700;   
+        const R2 = 1400;  
+        const R3 = 2200;  
+        const R4 = 3000;  
 
         const graphData = {
             center: { id: "CENTER", icon: "🌟", label: "NOYAU CENTRAL", desc: "Nœud central de compétences professionnelles et académiques.", details: "Point de convergence de l'ensemble de vos expertises professionnelles et universitaires." },
@@ -488,7 +498,7 @@
                         { id: "C7.5", icon: "📊", label: "Grilles Critériées & Automatisation des Retours", parent: "C7.3", level: 4, unlocked: false, link: "", desc: "Génération de grilles d'évaluation formatives.", details: "Feedbacks personnalisés et nuancés générés par IA." },
                         { id: "C7.6", icon: "🗺️", label: "Ingénierie de Séquences par Projets (PBL)", parent: "C7.0", level: 4, unlocked: false, link: "", desc: "Scénarisation de grands projets d'apprentissage avec l'IA.", details: "Tâches complexes, jalons temporels et ressources automatisées." },
                         { id: "C7.7", icon: "📈", label: "Learning Analytics & Diagnostic de Cohorte", parent: "C7.5", level: 4, unlocked: false, link: "", desc: "Analyse des erreurs récurrentes d'un groupe d'élèves.", details: "Identification des malentendus cognitifs et remédiation rapide." },
-                        { id: "C7.8", icon: "🛠️", label: "Création d'Agents Pédagogiques (GPTs Sur-Mesure)", parent: "C7.1", level: 4, unlocked: false, link: "", desc: "Configuration d'assistants IA avec base documentaire dédiée.", details: "Custom Instructions, RAG pédagogique et posture fermement cadrée." },
+                        { id: "C7.8", icon: "🛠️", label: "Création d'Agents Pédagogiques (GPTs Sur-Mesure)", parent: "C7.1", level: 4, unlocked: false, link: "", desc: "Configuration d'agents IA avec base documentaire dédiée.", details: "Custom Instructions, RAG pédagogique et posture fermement cadrée." },
                         { id: "C7.9", icon: "🛡️", label: "Éthique, RGPD & Esprit Critique (Hallucinations)", parent: "C7.0", level: 4, unlocked: false, link: "", desc: "Sensibilisation aux limites et règles de confidentialité.", details: "Détection des biais, protection des données des mineurs et fact-checking." }
                     ]
                 },
@@ -555,6 +565,7 @@
 
         let activeNode = null;
         let nodePositions = {};
+        let domNodeElements = {}; // Référence aux éléments DOM des nœuds
 
         let scale = 0.35; 
         let panX = 0; 
@@ -573,11 +584,22 @@
             updateTransform(); 
         }
 
-        function centerOnNode(dx, dy) {
+        function centerOnNode(dx, dy, nodeId = null) {
             scale = 0.65; 
             panX = (window.innerWidth / 2) - ((4500 + dx) * scale);
             panY = (window.innerHeight / 2) - ((4500 + dy) * scale);
             updateTransform();
+
+            // Déclenchement de l'identification temporaire sur le nœud ciblé
+            if (nodeId && domNodeElements[nodeId]) {
+                const el = domNodeElements[nodeId];
+                el.classList.remove('highlight-flash');
+                void el.offsetWidth; // Force reflow pour relancer l'animation
+                el.classList.add('highlight-flash');
+                setTimeout(() => {
+                    el.classList.remove('highlight-flash');
+                }, 1500);
+            }
         }
 
         function toggleSidebar() {
@@ -620,7 +642,7 @@
                         item.className = 'menu-node-item';
                         item.style.paddingLeft = '14px';
                         item.innerHTML = `<span>${n.icon}</span> <span>${n.id} - ${n.label}</span>`;
-                        item.onclick = () => { centerOnNode(n.dx, n.dy); };
+                        item.onclick = () => { centerOnNode(n.dx, n.dy, n.id); };
                         listContainer.appendChild(item);
                     });
                 }
@@ -640,7 +662,7 @@
                         item.style.fontWeight = '700';
                         item.style.color = '#f8fafc';
                         item.innerHTML = `<span>${n.icon}</span> <span>✓ ${n.id} - ${n.label}</span>`;
-                        item.onclick = () => { centerOnNode(n.dx, n.dy); };
+                        item.onclick = () => { centerOnNode(n.dx, n.dy, n.id); };
                         listContainer.appendChild(item);
                     });
                 }
@@ -674,10 +696,7 @@
         }
 
         function loadSavedState() {
-            // On vérifie d'abord la clé permanente
             let saved = localStorage.getItem(STORAGE_KEY);
-            
-            // Récupération des sauvegardes précédentes si la clé permanente est vide
             if (!saved) {
                 const legacyKeys = [
                     'theo_final_app_skills_smooth_hover',
@@ -716,7 +735,6 @@
                         data[n.id] = { unlocked: n.unlocked, link: n.link };
                     });
                 });
-                // Sauvegarde sous la clé unique et permanente
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                 setTimeout(() => { updateSaveStatus('saved'); }, 400);
             } catch (e) {
@@ -766,6 +784,7 @@
             const linesGroup = document.getElementById('svg-lines-group');
             const container = document.getElementById('nodes-container');
             linesGroup.innerHTML = ''; container.innerHTML = '';
+            domNodeElements = {};
 
             const cx = 4500; 
             const cy = 4500;
@@ -817,6 +836,8 @@
                         <span class="node-icon">${n.icon}</span>
                         ${n.unlocked ? `<span class="check-badge" style="color:${r.color}">✓</span>` : ''}
                     `;
+
+                    domNodeElements[n.id] = nodeEl;
 
                     const labelEl = document.createElement('div');
                     labelEl.className = 'node-title-label';
